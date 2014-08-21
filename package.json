@@ -1,4 +1,17 @@
 {
-    "name": "application-name",
-    "version": "0.0.1"
+    "name": "NetcareNode",
+    "version": "0.0.1",
+    "dependencies": {
+        "mocha": "1.x",
+        "superagent": "0.x",
+        "express": "4.x",
+        "ejs": "0.8.x",
+        "body-parser": "1.x",
+        "cookie-parser": "1.x",
+        "express-session": "1.x",
+        "socket.io": "1.0.6",
+        "amqp": "0.2.0",
+        "mongoose": "3.8.x",
+        "async": "0.9.0"
+    }
 }
