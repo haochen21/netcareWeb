@@ -61,7 +61,7 @@ UserSchema
         return this._permissions;
     });
 
-UserSchema.methods.createHashPassword = function(){
+UserSchema.methods.createHashPassword = function () {
     this.salt = this.makeSalt();
     this.hash_password = this.encryptPassword(this._password);
 };
@@ -122,7 +122,8 @@ RoleSchema.methods.addPermission = function (permission, callback) {
     var role = this;
     this.permissions.push(permission);
     this.save(function (err) {
-        console.log(err);
+        if (err)
+            console.log(err);
         permission.roles.push(role);
         permission.save(callback);
     });
@@ -143,7 +144,8 @@ PermissionSchema.methods.addRole = function (role, callback) {
     var permission = this;
     this.roles.push(role);
     this.save(function (err) {
-        console.log(err);
+        if (err)
+            console.log(err);
         role.permissions.push(permission);
         role.save(callback);
     });
