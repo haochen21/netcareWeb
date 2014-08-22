@@ -76,13 +76,13 @@ UserSchema.methods.authenticate = function (password) {
 
 UserSchema.methods.encryptPassword = function (password) {
     if (!password) return '';
-    var encrypred;
+    var encrypred = '';
     try {
         encrypred = crypto.createHmac('sha1', this.salt).update(password).digest('hex');
-        return encrypred;
     } catch (err) {
-        return '';
+        console.log(err);
     }
+    return encrypred;
 };
 
 UserSchema.methods.toString = function () {
