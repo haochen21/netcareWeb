@@ -91,7 +91,6 @@ UserSchema.methods.toString = function () {
 };
 
 UserSchema.methods.addRole = function (role, callback) {
-    var user = this;
     this.roles.push(role);
     this.save(callback);
 };
@@ -123,6 +122,7 @@ RoleSchema.methods.addPermission = function (permission, callback) {
     var role = this;
     this.permissions.push(permission);
     this.save(function (err) {
+        console.log(err);
         permission.roles.push(role);
         permission.save(callback);
     });
@@ -143,6 +143,7 @@ PermissionSchema.methods.addRole = function (role, callback) {
     var permission = this;
     this.roles.push(role);
     this.save(function (err) {
+        console.log(err);
         role.permissions.push(permission);
         role.save(callback);
     });
