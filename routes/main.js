@@ -3,7 +3,7 @@ var User = mongoose.model('User');
 
 exports.checkAdmin = function (request, response, next) {
 	if (request.session && request.session.auth && request.session.userId && request.session.admin) {
-		console.info('Access ADMIN: ' + request.session.userId);
+		//console.info('Access ADMIN: ' + request.session.userId);
 		return next();
 	} else {
 		next('User is not an administrator.');
@@ -12,7 +12,7 @@ exports.checkAdmin = function (request, response, next) {
 
 exports.checkUser = function (req, res, next) {
 	if (req.session && req.session.auth && req.session.userId && (req.session.user.approved || req.session.admin)) {
-		console.info('Access USER: ' + req.session.userId);
+		//console.info('Access USER: ' + req.session.userId);
 		return next();
 	} else {
 		next('User is not logged in.');
@@ -21,7 +21,7 @@ exports.checkUser = function (req, res, next) {
 
 exports.checkApplicant = function (req, res, next) {
 	if (req.session && req.session.auth && req.session.userId && (!req.session.user.approved || req.session.admin)) {
-		console.info('Access USER: ' + req.session.userId);
+		//console.info('Access USER: ' + req.session.userId);
 		return next();
 	} else {
 		next('User is not logged in.');
@@ -71,9 +71,7 @@ exports.logout = function (req, res) {
 	console.info('Logout USER: ' + req.session.userId);
 	req.session.destroy(function (error) {
 		if (!error) {
-			res.send({
-				msg: 'Logged out'
-			});
+            res.redirect('/');
 		}
 	});
 };
