@@ -1,0 +1,575 @@
+#main-navbar {
+	border-color: #e9e9e9;
+	min-height: 46px;
+}
+#main-navbar #main-menu-toggle,
+#main-navbar .navbar-toggle {
+	background: 0 0;
+	border: none;
+	display: block;
+	height: 46px;
+	width: 56px;
+	outline: 0!important;
+	text-align: center;
+	position: absolute;
+	margin: 0;
+	top: 0!important;
+}
+#main-navbar #main-menu-toggle {
+	background: #f8f8f8;
+	z-index: 1034;
+}
+#main-navbar #main-menu-toggle .navbar-icon,
+#main-navbar .navbar-toggle .navbar-icon {
+	font-size: 14px;
+	line-height: 46px;
+}
+#main-menu-toggle .navbar-icon {
+	left: 20px;
+	margin: -23px 0 0 0;
+	padding: 0;
+	position: absolute;
+	line-height: 46px;
+}
+#main-menu-toggle.click >i:after {
+	content: "\f0d9";
+	right: 16px;
+}
+#main-menu-toggle >i:after {
+	content: "\f0da";
+	display: block;
+	font-size: 10px;
+	line-height: 46px;
+	position: absolute;
+	right: -8px;
+	top: 0;
+}
+#main-navbar .navbar-inner {
+	min-height: 46px;
+	width: 100%;
+	position: relative;
+	left: 0;
+}
+#main-navbar .navbar-header {
+	padding: 0 0 0 56px;
+	position: relative;
+	width: auto;
+	z-index: 1033;
+	background: #fff;
+}
+@media (min-width: 768px) {
+	#main-navbar .navbar-header {
+		width: 240px;
+	}
+}
+@media (min-width: 992px) {
+	#main-navbar .navbar-header {
+		width: auto;
+	}
+}
+#main-navbar .navbar-header div {
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 600;
+	color: #555;
+}
+#main-navbar .navbar-brand {
+	display: inline-block;
+	float: none;
+	line-height: 46px;
+	height: auto!important;
+	padding: 0 0 0 14px;
+}
+@media (min-width: 768px) {
+	#main-navbar .navbar-brand {
+		padding-right: 14px;
+	}
+}
+#main-navbar .navbar-brand div {
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	position: relative;
+	margin-right: 4px;
+	top: 4px;
+	background: #1d89cf;
+}
+#main-navbar .navbar-brand div img {
+	display: block;
+	height: 18px;
+	width: 18px;
+}
+@media (min-width: 768px) {
+	#main-navbar .navbar-toggle {
+		display: none!important;
+	}
+}
+#main-navbar .navbar-toggle {
+	padding: 0 17px;
+	right: 0;
+}
+#main-navbar .navbar-toggle .navbar-icon {
+	display: inline-block;
+}
+#main-navbar .navbar-collapse {
+	min-height: 46px;
+	z-index: 1031;
+}
+#main-navbar li a {
+	line-height: 42px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+@media (min-width: 768px) {
+	#main-navbar li a {
+		line-height: 46px;
+	}
+}
+#main-navbar .navbar-collapse {
+	background: #fff;
+	border: none;
+}
+#main-navbar .navbar-nav.navbar-right {
+	padding-right: 10px;
+}
+#main-navbar .navbar-nav.navbar-right>li {
+	border-left: 1px solid #f1f1f1;
+	border-right: none;
+}
+#main-navbar .navbar-nav>li>a {
+	height: 46px;
+	-webkit-transition: all .2s;
+	transition: all .2s;
+}
+.nav .dropdown>.dropdown-toggle .nav-icon {
+	font-size: 12px;
+	display: inline-block;
+	margin-right: 8px;
+}
+.navbar .nav-icon-btn.nav-icon-btn-danger .label {
+	background: #e66454;
+}
+.navbar .nav-icon-btn.nav-icon-btn-success .label {
+	background: #5ebd5e;
+}
+.navbar .nav-icon-btn.nav-icon-btn-info .label {
+	background: #5bc0de;
+}
+.navbar .nav-icon-btn .label {
+	float: right;
+	top: 13px;
+}
+.navbar .label {
+	font-size: 11px;
+	padding: 0 4px;
+	line-height: 16px;
+	top: -1px;
+	position: relative;
+}
+@media (min-width: 768px) {
+	.navbar .nav-icon-btn>a .label {
+		font-size: 8px;
+		padding: 0 2px;
+		line-height: 10px;
+		position: absolute;
+		display: block;
+		right: 12px;
+	}
+}
+.navbar .nav-icon-btn>a .small-screen-text {
+	display: inline-block;
+}
+@media (min-width: 768px) {
+	.navbar .nav-icon-btn>a .small-screen-text {
+		display: none;
+	}
+}
+.nav .dropdown>.dropdown-toggle .nav-icon {
+	font-size: 12px;
+	display: inline-block;
+	margin-right: 8px;
+}
+#main-navbar li a:active,
+#main-navbar li a:focus,
+#main-navbar li a:hover {
+	background: #f8f8f8;
+}
+#main-navbar.navbar-inverse .navbar-nav .open .dropdown-menu>li>a,
+#main-navbar .nav>li>a {
+	color: #555;
+}
+.dropdown-menu.widget-notifications {
+	padding: 0;
+}
+.widget-notifications .notifications-list {
+	overflow: hidden;
+	position: relative;
+}
+.widget-notifications .notification {
+	position: relative;
+	padding: 9px 12px;
+}
+.user-menu .widget-notifications .notification {
+	padding: 15px 12px;
+}
+.widget-notifications .notification+.notification {
+	border-top: 1px solid #e4e4e4;
+}
+.widget-notifications .notification:hover {
+	background-color: #f8f8f8;
+}
+.widget-notifications .notification-description,
+.widget-notifications .notification-title {
+	display: block;
+	margin-right: 35px;
+}
+.widget-notifications .notification-title {
+	font-size: 14px;
+	font-weight: 400;
+	padding-bottom: 1px;
+}
+.widget-notifications .notification-ago {
+	font-size: 11px;
+	font-style: italic;
+	color: #bbb;
+}
+.widget-notifications .notification-icon {
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	text-align: center;
+	border-radius: 2px;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	margin: -13px 12px 0 0;
+	font-size: 14px;
+}
+.widget-notifications .notification-switcher {
+	position: absolute;
+	top: 20%;
+	right: 10px;
+}
+.widget-notifications .notifications-link {
+	text-align: center;
+	padding: 8px 0!important;
+	border-top: 1px solid #e4e4e4;
+	display: block;
+	text-decoration: none!important;
+	font-size: 12px;
+	font-weight: 800;
+	color: #999;
+	line-height: 18px!important;
+	height: auto!important;
+}
+.notification > a,
+.notification > li > a {
+    color: #555;   
+}
+.notification > a:hover,
+.notification > a:focus,
+.notification > li > a:hover,
+.notification > li > a:focus {
+    color: #555;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+}
+li.alarm .widget-notifications,
+li.bizFault .widget-notifications {
+	width: 300px;
+}
+li.user-menu .widget-notifications {
+	width: 200px;
+}
+#main-navbar .user-menu>a>span {
+	display: inline-block;
+	margin-right: 6px;
+	font-size: 14px;
+}
+@media (min-width: 768px) {
+	#main-navbar .user-menu>a>span {
+		margin-right: 12px;
+		font-size: 12px;
+	}
+}
+.click-menu .notification > .notification-icon {
+	visibility: hidden;
+}
+.click-menu .notification.check > .notification-title,
+.click-menu .notification.check > .notification-icon {
+	color: #5bc0de;
+	visibility: visible;
+}
+.widget-notifications .notification.logout .notification-title {
+	margin-right: 0;
+}
+/* -----------------主菜单样式配置--------------------- */
+
+.main-menu-wrapper {
+	width: 60px;
+	border-right: 1px solid #ccc;
+	background-color: #f2f2f2;
+	position: fixed;
+	top: 47px;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	z-index: 10000;
+	-webkit-transform: translateX(-60px);
+	-moz-transform: translateX(-60px);
+	transform: translateX(-60px);
+	-webkit-transition: -webkit-transform 0.2s, width 0.3s;
+	-moz-transition: -moz-transform 0.2s, width 0.3s;
+	transition: transform 0.2s, width 0.3s;
+}
+.main-menu-wrapper.open-all,
+.main-menu-wrapper.open-part {
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+}
+.main-menu-wrapper.open-all {
+	width: 189px;
+}
+.main-menu-nav {
+	margin: 0;
+	padding: 0;
+}
+.main-menu-nav li {
+	list-style: none;
+	overflow: hidden;
+}
+.main-menu-nav > li {
+	position: relative;
+	border-bottom: 1px solid #e5e5e5;
+	margin: 0;
+}
+/* 菜单默认样式 */
+
+.main-menu-nav > li a {
+	display: block;
+	height: 38px;
+	line-height: 38px;
+	margin: 0;
+	padding: 0 16px 0 7px;
+	background-color: #f9f9f9;
+	color: #585858;
+	text-shadow: none!important;
+	font-size: 13px;
+	text-decoration: none;
+}
+.main-menu-nav > li > a:hover {
+	background-color: #FFF;
+	color: #1963aa;
+}
+/* 第一级菜单图标 */
+
+.main-menu-nav > li > a >[class*="fa-"]:first-child {
+	display: inline-block;
+	vertical-align: middle;
+	min-width: 30px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: normal;
+}
+/* 第一级菜单名称 */
+
+.main-menu-nav > li > a > span {
+	padding-left: 5px;
+	vertical-align: middle;
+}
+.main-menu-nav > li > a:hover:before {
+	content: "";
+	position: absolute;
+	top: -1px;
+	bottom: 0;
+	left: 0;
+	;
+	width: 3px;
+	max-width: 3px;
+	overflow: hidden;
+	background-color: #3382af;
+}
+/*如果有子菜单显示下拉图标*/
+
+.main-menu-nav >li a .arrow {
+	display: none;
+	width: 14px!important;
+	height: 14px;
+	line-height: 14px;
+	text-shadow: none;
+	font-size: 18px;
+	position: absolute;
+	right: 9px;
+	top: 11px;
+	padding: 0;
+	color: #666;
+}
+.main-menu-wrapper.open-all .main-menu-nav >li a .arrow {
+	display: inline-block;
+}
+/* 二级菜单 */
+
+.main-submenu {
+	display: none;
+	position: relative;
+	padding: 0;
+}
+/*第二级菜单前竖线*/
+
+.main-submenu:before {
+	content: "";
+	display: block;
+	position: absolute;
+	z-index: 1;
+	left: 18px;
+	top: 0;
+	bottom: 0;
+	border-left: 1px solid #ccd7e2;
+}
+.main-submenu > li {
+	margin-left: 0;
+	position: relative;
+}
+/*第二级菜单前横线*/
+
+.main-menu-nav > li > .main-submenu > li:before {
+	content: "";
+	display: inline-block;
+	position: absolute;
+	width: 8px;
+	left: 18px;
+	top: 17px;
+	border-top: 1px solid #ccd7e2;
+}
+/*第二级菜单hover图标*/
+
+.main-submenu> li > a >[class*="fa-"]:first-child {
+	display: none;
+	font-size: 12px;
+	font-weight: normal;
+	width: 18px;
+	height: auto;
+	line-height: 12px;
+	text-align: center;
+	position: absolute;
+	left: 10px;
+	top: 11px;
+	z-index: 1;
+	background-color: #FFF;
+}
+.main-submenu > li:hover > a >[class*="fa-"]:first-child {
+	display: inline-block;
+}
+.main-submenu > li > a {
+	color: #616161;
+	padding: 0px 0 8px 37px;
+	list-style: none;
+	border-top: 1px dotted #e4e4e4;
+}
+.main-submenu > li > a:focus {
+	text-decoration: none;
+}
+.main-submenu > li > a:hover {
+	text-decoration: none;
+	color: #4b88b7;
+}
+/*第三级菜单*/
+
+.main-submenu .main-submenu > li > a {
+	color: #616161;
+	padding: 0px 0 8px 37px;
+	list-style: none;
+	border-top: 1px dotted #e4e4e4;
+}
+.main-submenu .main-submenu > li> a:hover {
+	background: #5f6f81;
+	padding-left: 20px;
+	margin-left: 18px;
+	color: white;
+}
+/*自定义快捷菜单*/
+
+.main-menu-shortcuts {
+	display: none;
+	background-color: #fafafa;
+	border-bottom: 1px solid #ddd;
+	padding-left: 2px;
+	width: 188px;
+}
+.main-menu-wrapper.open-all > .main-menu-shortcuts {
+	display: block;
+}
+.main-menu-shortcuts > .btn {
+	border-radius: 0px;
+	margin: 3px 6px;
+}
+/*主页面配置*/
+
+.main-panel {
+	background: #fff;
+	position: absolute;
+	top: 47px;
+	bottom: 0;
+	width: 100%;
+}
+@media (max-width: 767px) {
+	.main-panel > .close {
+		margin-right: 10px;
+	}
+}
+.main-panel > span.closeBtn {
+	position: absolute;
+	top: 5px;
+	right: 0;
+	height: 30px;
+	width: 30px;
+	border-radius: 5px 0 0 5px;
+	background: #f1da91;
+	padding: 2px;
+	text-align: center;
+	line-height: 28px;
+	cursor: pointer;
+	visibility: hidden;
+	z-index: 1000;
+}
+.main-panel > span.closeBtn > i {
+	padding: 5px 3px 5px 3px;
+	color: #d9534f;
+}
+.main-panel-content {
+	height: 100%;
+	width: 100%;
+	padding: 0px 0x;
+}
+.cns-panel {
+	height: 100%;
+	width: 100%;
+	padding: 10px 15px;
+}
+/*返回顶部*/
+
+#back-to-top {
+	position: fixed;
+	right: 20px;
+	bottom: 50px;
+	z-index: 1001;
+	width: 45px;
+	height: 45px;
+	background: rgba(0, 0, 0, 0.3);
+	font-size: 16px;
+	text-align: center;
+	line-height: 45px;
+	border: 3px;
+	cursor: pointer;
+	transition: background 0.25s linear;
+}
+#back-to-top:hover {
+	text-decoration: none;
+	background-color: #F90;
+	background: rgba(229, 65, 45, 0.85);
+}
+#back-to-top i {
+	color: #fff;
+}

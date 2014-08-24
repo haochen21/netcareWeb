@@ -1,0 +1,67 @@
+{
+	"loginResult": "SUCCESS",
+	"operator": {
+		"id": 2,
+		"loginName": "hugh",
+		"password": "N39hjijo10Mmw/kslSP77Q==",
+		"admin": true,
+		"name": "陈昊",
+		"mobilePhone": "13564650059",
+		"phone": "88793028",
+		"creator": null,
+		"roles": null,
+		"setting": {
+			"bizFault": true,
+			"alarm": false,
+			"initPanels": ["portal", "bizFault"],
+			"shortButton": ["portal", "bizFault", "customerTopo"],
+			"widgets": [
+				[
+					{
+						"span": 5,
+						"widgetId": "customer",
+						"widgetName": "客户统计"
+				  }, {
+						"span": 7,
+						"widgetId": "cusCircuit",
+						"widgetName": "客户电路数TOP10"
+				  }
+				],
+        [
+					{
+					"span": 5,
+					"widgetId": "bizCircuitStatus",
+					"widgetName": "业务电路状态统计"
+				  }, {
+					"span": 7,
+					"widgetId": "cusVoice",
+					"widgetName": "当日客户语音业务网络接通率TOP10"
+				  }
+				],
+        [
+					{
+					"span": 5,
+					"widgetId": "notice",
+					"widgetName": "系统公告"
+				  }, {
+					"span": 7,
+					"widgetId": "vitalCircuit",
+					"widgetName": "客户重保任务"
+				  }
+				],
+        [
+					{
+					"span": 5,
+					"widgetId": "faultCircuit",
+					"widgetName": "故障电路统计"
+				  }, {
+					"span": 7,
+					"widgetId": "cusSla",
+					"widgetName": "当日大客户SLATOP10"
+				  }
+				]
+			]
+		},
+		"version": 5
+	}
+}

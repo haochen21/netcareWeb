@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>NetCare</title>
+
+	<!-- third-party stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<link rel="stylesheet" href="css/bootstrap-switch.css" />
+	<link rel="stylesheet" href="css/font-awesome.css" />
+
+	<!-- our stylesheets -->
+	<link rel="stylesheet" href="css/cnc.css" />
+	<link rel="stylesheet" href="css/cnc.login.css" />
+	<link rel="stylesheet" href="css/cnc.shell.css" />
+
+	<!-- third-party javascript -->
+	<script src="js/lib/jquery-2.1.1.js"></script>
+	<script src="js/lib/bootstrap.js"></script>
+	<script src="js/lib/bootstrap-switch.js"></script>
+	<script src="js/lib/jquery.event.gevent-0.1.9.js"></script>
+	<script src="js/lib/jquery.noty.packaged.js"></script>
+	<script src="js/lib/taffy.js"></script>
+	<script src="js/lib/amplify.js"></script>
+
+	<!-- our javascript -->
+	<script src="js/cnc.js"></script>
+	<script src="js/cnc.globalModel.js"></script>
+	<script src="js/cnc.login.js"></script>
+	<script src="js/cnc.modelSecurity.js"></script>
+	<script src="js/cnc.shell.js"></script>
+	<script src="js/cnc.portal.js"></script>
+	<script src="js/cnc.customerTopo.js"></script>
+	<script src="js/cnc.bizFault.js"></script>
+	<script src="js/cnc.bizFaultTopic.js"></script>
+	<script>
+		$(function () {
+			cnc.initModule($('#cnc'));
+		});
+	</script>
+</head>
+
+<body>
+	<div id="cnc" class=".container-fluid"></div>
+</body>
+
+</html>

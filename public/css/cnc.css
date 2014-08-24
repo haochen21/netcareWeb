@@ -1,0 +1,97 @@
+body {
+	padding-top: 47px;
+}
+/*---------------------------input radio----------------------------------------*/
+
+input[type=checkbox],
+input[type=radio] {
+	opacity: 0;
+	position: absolute;
+	z-index: 12;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+input[type=checkbox]:checked,
+input[type=radio]:checked,
+input[type=checkbox]:focus,
+input[type=radio]:focus {
+	outline: none!important;
+}
+input[type=checkbox]+.custom-checkbox,
+input[type=radio]+.custom-checkbox {
+	position: relative;
+	z-index: 11;
+	display: inline-block;
+	margin: 0;
+	line-height: 20px;
+	min-height: 18px;
+	min-width: 18px;
+	font-weight: normal;
+}
+input[type=checkbox]+.custom-checkbox::before,
+input[type=radio]+.custom-checkbox::before {
+	font-family: fontAwesome;
+	font-weight: normal;
+	font-size: 12px;
+	color: #32a3ce;
+	content: "\a0";
+	background-color: #fafafa;
+	border: 1px solid #c8c8c8;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	border-radius: 0;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	height: 16px;
+	line-height: 14px;
+	min-width: 16px;
+	margin-right: 1px;
+}
+input[type=checkbox]+.custom-checkbox.padding-4::before,
+input[type=radio].ace+.lbl.padding-4::before {
+	margin-right: 4px;
+}
+input[type=checkbox]+.custom-checkbox.padding-6::before,
+input[type=radio].ace+.lbl.padding-6::before {
+	margin-right: 6px;
+}
+input[type=checkbox]:checked+.custom-checkbox::before,
+input[type=radio]:checked+.custom-checkbox::before {
+	display: inline-block;
+	content: '\f00c';
+	background-color: #f5f8fc;
+	border-color: #adb8c0;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+}
+input[type=checkbox]:hover+.custom-checkbox::before,
+input[type=radio]:hover+.custom-checkbox::before,
+input[type=checkbox]+.custom-checkbox:hover::before,
+input[type=radio]+.custom-checkbox:hover::before {
+	border-color: #ff893c;
+}
+input[type=checkbox]:active+.custom-checkbox::before,
+input[type=radio]:active+.custom-checkbox::before,
+input[type=checkbox]:checked:active+.custom-checkbox::before,
+input[type=radio]:checked:active+.custom-checkbox::before {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+label .custom-checkbox {
+	vertical-align: bottom;
+}
+/*---------------------alarm color----------------------------------------*/
+.alarm-cirtical {
+	background-color: #d9534f;
+}
+.alarm-major {
+	background-color: #ff00ff;
+}
+.alarm-minor {
+	background-color: #ff9900;
+}
+.alarm-warning {
+	background-color: #ffcc00;
+}
+.alarm-unknow {
+	background-color: #666666;
+}
