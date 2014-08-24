@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
+var async = require('async');
 
 var UserSchema = new Schema({
     name: {
@@ -91,18 +92,51 @@ UserSchema.methods.toString = function () {
 };
 
 UserSchema.methods.addRole = function (role, callback) {
+    var user = this;
     this.roles.push(role);
-    this.save(callback);
+    this.save(function (err) {
+        if (err)
+            console.log(err);
+        role.users.push(user);
+        role.save(callback);
+    });
 };
+
+UserSchema.pre('save', function (next) {
+    if(this.password){
+        this.createHashPassword();
+    }
+    next();
+});
+
+UserSchema.pre('remove', function (next) {
+    var user = this;
+    async.series([
+        function (callback) {
+            user.model('Role').update(
+                {_id: {$in: user.roles}},
+                {$pull: {users: user._id}},
+                {multi: true},
+                function (err, numberAffected, raw) {
+                    if (err) console.log(err);
+                    callback(null, 'role');
+                }
+            );
+        }
+    ], function (err, results) {
+        next();
+    });
+});
 
 UserSchema.methods.toJSON = function () {
     return {
-        id: this.id,
+        _id: this._id,
         name: this.name,
         loginName: this.loginName,
         password: this.password,
         salt: this.salt,
         admin: this.admin,
+        roles:this.roles,
         permissions: this._permissions
     }
 };
@@ -110,6 +144,12 @@ UserSchema.methods.toJSON = function () {
 var RoleSchema = new Schema({
     name: String,
     description: String,
+    users: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     permissions: [
         {
             type: Schema.Types.ObjectId,
@@ -117,6 +157,47 @@ var RoleSchema = new Schema({
         }
     ]
 });
+
+RoleSchema.pre('remove', function (next) {
+    var role = this;
+    async.series([
+        function (callback) {
+            role.model('Permission').update(
+                {_id: {$in: role.permissions}},
+                {$pull: {roles: role._id}},
+                {multi: true},
+                function (err, numberAffected, raw) {
+                    if (err) console.log(err);
+                    callback(null, 'permission');
+                }
+            );
+        },
+        function (callback) {
+            role.model('User').update(
+                {_id: {$in: role.users}},
+                {$pull: {roles: role._id}},
+                {multi: true},
+                function (err, numberAffected, raw) {
+                    if (err) console.log(err);
+                    callback(null, 'user');
+                }
+            );
+        }
+    ], function (err, results) {
+        next();
+    });
+});
+
+RoleSchema.methods.addUser = function (user, callback) {
+    var role = this;
+    this.users.push(user);
+    this.save(function (err) {
+        if (err)
+            console.log(err);
+        user.roles.push(role);
+        user.save(callback);
+    });
+};
 
 RoleSchema.methods.addPermission = function (permission, callback) {
     var role = this;
@@ -138,6 +219,18 @@ var PermissionSchema = new Schema({
             ref: 'Role'
         }
     ]
+});
+
+PermissionSchema.pre('remove', function (next) {
+    this.model('Role').update(
+        {_id: {$in: this.roles}},
+        {$pull: {permissions: this._id}},
+        {multi: true},
+        function (err, numberAffected, raw) {
+            if (err) console.log(err);
+            next();
+        }
+    );
 });
 
 PermissionSchema.methods.addRole = function (role, callback) {
