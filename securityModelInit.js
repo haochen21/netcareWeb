@@ -89,7 +89,6 @@ var user = new User({
     admin: true,
     mobilePhone: '13817475681'
 });
-user.createHashPassword();
 
 async.series([
         function (callback) {

@@ -20,7 +20,6 @@ var mongodbConnect = function () {
 };
 mongodbConnect();
 
-// Error handler
 mongoose.connection.on('error', function (err) {
     console.log(err);
 });
@@ -56,8 +55,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-
-
+app.use(express.static(__dirname + '/public'));
 
 function logErrors(err, req, res, next) {
     console.error('logErrors', err.toString());
@@ -72,19 +70,49 @@ function errorHandler(err, req, res, next) {
     });
 }
 
+var router = express.Router();
+
 checkUser = routes.main.checkUser;
 checkAdmin = routes.main.checkAdmin;
 checkApplicant = routes.main.checkApplicant;
 
-app.post('/api/login', routes.main.login);
-app.post('/api/logout', routes.main.logout);
+router.route('/login')
+    .post(routes.main.login);
 
-app.get('/api/users/:id', checkAdmin, routes.security.getUser);
-app.get('/api/users/permissions/:id', checkAdmin, routes.security.getUserPermissions);
-app.post('/api/users', checkAdmin, routes.security.addUser);
-app.put('/api/users/:id', checkAdmin, routes.security.updateUser);
-app.delete('/api/users/:id', checkAdmin, routes.security.deleteUser);
+router.route('/logout')
+    .post(routes.main.logout);
 
+router.route('/users')
+    .get(checkAdmin, routes.security.getUsers)
+    .post(checkAdmin, routes.security.addUser);
+
+router.route('/users/:id')
+    .get(checkAdmin, routes.security.getUser)
+    .put(checkAdmin, routes.security.updateUser)
+    .delete(checkAdmin, routes.security.deleteUser);
+
+router.route('/users/roles/:id')
+    .put(checkAdmin, routes.security.updateUserRoles);
+
+router.route('/roles')
+    .get(checkAdmin, routes.security.getRoles)
+    .post(checkAdmin, routes.security.addRole);
+
+router.route('/roles/:id')
+    .get(checkAdmin, routes.security.getRole)
+    .put(checkAdmin, routes.security.updateRole)
+    .delete(checkAdmin, routes.security.deleteRole);
+
+router.route('/permissions')
+    .get(checkAdmin, routes.security.getPermissions)
+    .post(checkAdmin, routes.security.addPermission);
+
+router.route('/permissions/:id')
+    .get(checkAdmin, routes.security.getPermission)
+    .put(checkAdmin, routes.security.updatePermission)
+    .delete(checkAdmin, routes.security.deletePermission);
+
+app.use('/api', router);
 
 app.use(logErrors);
 app.use(errorHandler);
@@ -97,5 +125,4 @@ if (require.main === module) {
     exports.app = app;
 }
 
-//start fault&alarm socket
 socket.initialize(server);
