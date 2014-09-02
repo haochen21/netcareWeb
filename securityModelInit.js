@@ -202,6 +202,12 @@ async.series([
             });
         },
         function (callback) {
+            user.addRole(role5, function (err, res) {
+                console.log('user:' + user.loginName + ',role:' + role5.name);
+                callback(null,'');
+            });
+        },
+        function (callback) {
             role1.addPermission(permission1, function (err, res) {
                 console.log('role:' + role1.name + ',permission:' + permission1.name);
                 callback(null,'');
