@@ -1,5 +1,5 @@
 exports.Mongodb = {
-    url: "mongodb://127.0.0.1:27017/netcare"
+    url: "mongodb://134.64.14.94:27017/netcare"
 }
 
 exports.Amqp = {
