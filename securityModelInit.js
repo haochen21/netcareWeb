@@ -260,6 +260,12 @@ async.series([
                 console.log('role:' + role3.name + ',permission:' + permission3.name);
                 callback(null,'');
             });
+        },
+        function (callback) {
+            role5.addPermission(permission5, function (err, res) {
+                console.log('role:' + role3.name + ',permission:' + permission5.name);
+                callback(null,'');
+            });
         }
     ],
     // optional callback
