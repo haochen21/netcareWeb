@@ -4,6 +4,10 @@ var crypto = require('crypto');
 var async = require('async');
 
 var UserSchema = new Schema({
+    _class:{
+        type: String,
+        default: 'nsgsw1.netcare.model.security.User'
+    },
     name: {
         type: String,
         required: true,
@@ -142,6 +146,10 @@ UserSchema.methods.toJSON = function () {
 };
 
 var RoleSchema = new Schema({
+    _class:{
+        type: String,
+        default: 'nsgsw1.netcare.model.security.Role'
+    },
     name: String,
     description: String,
     users: [
@@ -211,6 +219,10 @@ RoleSchema.methods.addPermission = function (permission, callback) {
 };
 
 var PermissionSchema = new Schema({
+    _class:{
+        type: String,
+        default: 'nsgsw1.netcare.model.security.Permission'
+    },
     name: String,
     description: String,
     roles: [
@@ -244,6 +256,6 @@ PermissionSchema.methods.addRole = function (role, callback) {
     });
 };
 
-mongoose.model('User', UserSchema);
-mongoose.model('Role', RoleSchema);
-mongoose.model('Permission', PermissionSchema);
+mongoose.model('User', UserSchema,'User');
+mongoose.model('Role', RoleSchema,'Role');
+mongoose.model('Permission', PermissionSchema,'Permission');
