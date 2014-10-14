@@ -1,23 +1,23 @@
-cnc.faultSocket = (function () {
+cnc.alarmSocket = (function () {
 
-	var topicName = 'faultMessage';
+	var topicName = 'alarmMessage';
 
 	var connect, disConnect, publish, subscribe, unsubscribe;
 
-	var faultSocket = io.connect();
-    faultSocket.on('faultMessage', function (msg) {
+	var alarmSocket = io.connect();
+    alarmSocket.on('alarmMessage', function (msg) {
         console.log(msg);
         publish(msg);
     });
 
 	connect = function () {
-        faultSocket.emit('connect-faultSocket');
-		$.gevent.publish('faultStatus', true);
+        alarmSocket.emit('connect-alarmSocket');
+		$.gevent.publish('alarmStatus', true);
 	};
 
 	disConnect = function () {
-        faultSocket.emit('disconnect-faultSocket');
-		$.gevent.publish('faultStatus', false);
+        alarmSocket.emit('disconnect-alarmSocket');
+		$.gevent.publish('alarmStatus', false);
 	};
 
 	publish = function (data) {

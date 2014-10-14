@@ -118,7 +118,7 @@ cnc.shell = (function () {
 		setJqueryMap,initModule,initShell,clickMenuItem,openOrCloseMainMenu,
 	  openOrCloseMainMenu,openPanel,setInitMenus,setClickMenuNum,initBackToTop,
 		closeMainPanel,clickNavBarMenu,setClickMenuColor,changeFaultStatus,
-		openFaultPanel,faultReceive,changeAlarmStatus,logOut;
+		openFaultPanel,faultReceive,changeAlarmStatus,logOut,alarmReceive;
 
 	//--------------------- BEGIN DOM METHODS --------------------
 	setJqueryMap = function () {
@@ -140,6 +140,7 @@ cnc.shell = (function () {
 			$alarmCheck:$container.find('.user-menu .alarm .notification-switcher>input'),
 			$alarmContainer:$container.find('.navbar-nav .alarm'),
 			$alarmStatus:$container.find('.navbar-nav .alarm >a >.label'),
+            $alarmList:$container.find('.navbar-nav .alarm .notifications-list'),
 			$logout:$container.find('.user-menu .logout > a')
 		};
 	};
@@ -171,9 +172,15 @@ cnc.shell = (function () {
         }
 		jqueryMap.$faultCheck.bootstrapSwitch().bootstrapSwitch('state', faultState);
 
+        $.gevent.subscribe(jqueryMap.$alarmStatus, 'alarmStatus', changeAlarmStatus);
+        cnc.alarmSocket.subscribe(alarmReceive);
 		jqueryMap.$alarmCheck.bootstrapSwitch();
 		jqueryMap.$alarmCheck.on('switchChange.bootstrapSwitch', function(event, state) {
-            $.gevent.publish('alarmStatus', state);
+            if(state){
+                cnc.alarmSocket.connect();
+            }else{
+                cnc.alarmSocket.disConnect();
+            }
         });
 
 		jqueryMap.$menu_btn.bind('click', openOrCloseMainMenu);
@@ -297,12 +304,12 @@ cnc.shell = (function () {
 	setClickMenuColor = function(clickMenuId){
 		jqueryMap.$clickMenuList.find('.notification.check').removeClass('check');
 		jqueryMap.$clickMenuList.find('.notification').each(function() {
-      var menuId = $(this).data('menuid');
-			if(menuId === clickMenuId){
-				$(this).addClass('check');
-				return;
-			}
-    });
+        var menuId = $(this).data('menuid');
+		    if(menuId === clickMenuId){
+			    $(this).addClass('check');
+			    return;
+		    }
+        });
 	};
 	//--------------------- END DOM METHODS ----------------------
 
@@ -411,12 +418,12 @@ cnc.shell = (function () {
 	};
 
 	/*系统菜单下拉面板选择*/
-  clickNavBarMenu = function (event){
-    var $item = $(event.target).closest('.notification');
-    var menuId = $item.data('menuid');
-    openPanel(menuId);
+    clickNavBarMenu = function (event){
+        var $item = $(event.target).closest('.notification');
+        var menuId = $item.data('menuid');
+        openPanel(menuId);
 		//这里不能stopPropagation,bootstrap获取不到事件
-  };
+    };
 
 	/*改变业务故障消息接收状态图标*/
 	changeFaultStatus = function(event,state){
@@ -478,6 +485,46 @@ cnc.shell = (function () {
 			jqueryMap.$alarmContainer.addClass('nav-icon-btn-danger');
 		}
 	};
+
+    alarmReceive = function(alarm){
+        var meUpdateTime = new Date();
+        meUpdateTime.setTime(alarm.meUpdateTime);
+        var $notification = $('<div class="notification"></div>');
+        var $title = $('<div class="notification-title text-danger"></div>')
+            .text(alarm.name);
+        var $description = $('<div>',{
+            'class': 'notification-description',
+            'text':alarm.me.name+'@'
+        });
+        var $strongDescription = $('<strong>',{
+            'text':alarm.deviceName
+        });
+        $description.append($strongDescription);
+        var $ago = $('<div class="notification-ago"></div>')
+            .text(meUpdateTime.Format("yyyy-MM-dd hh:mm:ss"));
+        var $icon = $('<div class="notification-icon fa fa-bell-o"></div>');
+        if(alarm.severity === 'CRITICAL')
+            $icon.addClass('alarm-cirtical');
+        else if(alarm.severity === 'MAJOR')
+            $icon.addClass('alarm-major');
+        else if(alarm.severity === 'MINOR')
+            $icon.addClass('alarm-minor');
+        else if(alarm.severity === 'WARNING')
+            $icon.addClass('alarm-warning');
+        else if(alarm.severity === 'UNKNOWN')
+            $icon.addClass('alarm-unknow');
+
+        $notification.append($title);
+        $notification.append($description);
+        $notification.append($ago);
+        $notification.append($icon);
+
+        var $list = jqueryMap.$alarmList.find('.notification');
+        if($list.length>3){
+            $list.first().remove();
+        }
+        jqueryMap.$alarmList.append($notification);
+    };
 
 	logOut = function(){
 		cnc.modelSecurity.logOut();

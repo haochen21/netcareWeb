@@ -13,11 +13,13 @@ exports.initialize = function (server) {
             console.log('leave fault room');
             socket.leave('faultSocket');
         });
-        socket.on('connect-currAlarmSocket', function (room) {
-            socket.join('currAlarmSocket');
+        socket.on('connect-alarmSocket', function (room) {
+            console.log('join alarm room');
+            socket.join('alarmSocket');
         });
-        socket.on('disconnect-currAlarmSocket', function (room) {
-            socket.leave('currAlarmSocket');
+        socket.on('disconnect-alarmSocket', function (room) {
+            console.log('leave alarm room');
+            socket.leave('alarmSocket');
         });
     });
     var rabbitMq = amqp.createConnection({
@@ -37,7 +39,7 @@ exports.initialize = function (server) {
             queue.bind('netcare-fault', '');
             queue.subscribe(function (message, headers, deliveryInfo, messageObject) {
                 var msg = JSON.parse(message.data.toString());
-                console.log(msg);
+                //console.log(msg.id);
                 io.to('faultSocket').emit('faultMessage', msg);
             });
         });
@@ -49,8 +51,8 @@ exports.initialize = function (server) {
             queue.bind('netcare-currAlarm', '');
             queue.subscribe(function (message, headers, deliveryInfo) {
                 var msg = JSON.parse(message.data.toString());
-                //console.log(msg);
-                io.to('currAlarmSocket').emit('currAlarmMessage', msg);
+                console.log(msg.id);
+                io.to('alarmSocket').emit('alarmMessage', msg);
             });
         });
     });
