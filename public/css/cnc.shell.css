@@ -276,7 +276,7 @@
     -webkit-transition: all 0.2s ease;
 }
 li.alarm .widget-notifications,
-li.bizFault .widget-notifications {
+li.fault .widget-notifications {
 	width: 300px;
 }
 li.user-menu .widget-notifications {

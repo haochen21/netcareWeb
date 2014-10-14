@@ -53,9 +53,9 @@ cnc.shell = (function () {
 			              +'<a href="#" class="notifications-link">更多告警</a>'
 			            +'</div>'
 			          +'</li>'
-			          +'<li class="nav-icon-btn nav-icon-btn-success dropdown bizFault">'
+			          +'<li class="nav-icon-btn nav-icon-btn-danger dropdown fault">'
 			            +'<a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">'
-									  +'<i class="label fa fa-level-down"></i>'
+									  +'<i class="label fa fa-times"></i>'
 									  +'<i class="nav-icon fa fa-joomla"></i>'
 									  +'<span class="small-screen-text">故障</span>'
 								  +'</a>'
@@ -70,7 +70,7 @@ cnc.shell = (function () {
 			            +'</a>'
 			            +'<div class="dropdown-menu widget-notifications">'
 			              +'<div class="notifications-list">'
-			                +'<div class="notification bizFault">'
+			                +'<div class="notification fault">'
 			                  +'<div class="notification-title">故障接收</div>'
 			                  +'<div class="notification-switcher">'
 			                    +'<input type="checkbox" data-size="small">'
@@ -117,8 +117,8 @@ cnc.shell = (function () {
 		jqueryMap = {},
 		setJqueryMap,initModule,initShell,clickMenuItem,openOrCloseMainMenu,
 	  openOrCloseMainMenu,openPanel,setInitMenus,setClickMenuNum,initBackToTop,
-		closeMainPanel,clickNavBarMenu,setClickMenuColor,changeBizFaultStatus,
-		openBizFaultPanel,bizFaultReceive,changeAlarmStatus,logOut;
+		closeMainPanel,clickNavBarMenu,setClickMenuColor,changeFaultStatus,
+		openFaultPanel,faultReceive,changeAlarmStatus,logOut;
 
 	//--------------------- BEGIN DOM METHODS --------------------
 	setJqueryMap = function () {
@@ -126,17 +126,17 @@ cnc.shell = (function () {
 		jqueryMap = {
 			$container: $container,
 			$menu_btn: $container.find('#main-menu-toggle'),
-      $mainMenuPanel: $container.find('.main-menu-wrapper'),
+            $mainMenuPanel: $container.find('.main-menu-wrapper'),
 			$mainPanel: $container.find('.main-panel'),
-      $mainPanelCloseBtn:$container.find('.main-panel > span.closeBtn'),
-      $mainPanelContent: $container.find('.main-panel-content'),
+            $mainPanelCloseBtn:$container.find('.main-panel > span.closeBtn'),
+            $mainPanelContent: $container.find('.main-panel-content'),
 			$clickMenuNum:$container.find('.click-menu>a>.label'),
 			$clickMenuList:$container.find('.click-menu .notifications-list'),
-			$bizFaultCheck:$container.find('.user-menu .bizFault .notification-switcher>input'),
-			$bizFaultContainer:$container.find('.navbar-nav .bizFault'),
-			$bizFaultList:$container.find('.navbar-nav .bizFault .notifications-list'),
-			$bizFaultOpenPanel:$container.find('.navbar-nav .bizFault .notifications-link'),
-			$bizFaultStatus:$container.find('.navbar-nav .bizFault >a >.label'),
+			$faultCheck:$container.find('.user-menu .fault .notification-switcher>input'),
+			$faultContainer:$container.find('.navbar-nav .fault'),
+			$faultList:$container.find('.navbar-nav .fault .notifications-list'),
+			$faultOpenPanel:$container.find('.navbar-nav .fault .notifications-link'),
+			$faultStatus:$container.find('.navbar-nav .fault >a >.label'),
 			$alarmCheck:$container.find('.user-menu .alarm .notification-switcher>input'),
 			$alarmContainer:$container.find('.navbar-nav .alarm'),
 			$alarmStatus:$container.find('.navbar-nav .alarm >a >.label'),
@@ -155,31 +155,32 @@ cnc.shell = (function () {
 		setInitMenus();
 		initBackToTop();
 
-		$.gevent.subscribe(jqueryMap.$bizFaultStatus, 'bizFaultStatus', changeBizFaultStatus);                               cnc.bizFaultTopic.subscribe(bizFaultReceive);
-		jqueryMap.$bizFaultCheck.bootstrapSwitch();
-		jqueryMap.$bizFaultCheck.on('switchChange.bootstrapSwitch', function(event, state) {
+		$.gevent.subscribe(jqueryMap.$faultStatus, 'faultStatus', changeFaultStatus);
+        cnc.faultSocket.subscribe(faultReceive);
+		jqueryMap.$faultCheck.bootstrapSwitch();
+		jqueryMap.$faultCheck.on('switchChange.bootstrapSwitch', function(event, state) {
 			if(state){
-				cnc.bizFaultTopic.connect();
+				cnc.faultSocket.connect();
 			}else{
-				cnc.bizFaultTopic.disConnect();
+				cnc.faultSocket.disConnect();
 			}
         });
-        var bizFaultState = false;
-        if( cnc.globalModel.operator.setting){
-            bizFaultState = cnc.globalModel.operator.setting.bizFault;
+        var faultState = false;
+        if(cnc.globalModel.operator.setting){
+            faultState = cnc.globalModel.operator.setting.fault;
         }
-		jqueryMap.$bizFaultCheck.bootstrapSwitch().bootstrapSwitch('state', bizFaultState);
+		jqueryMap.$faultCheck.bootstrapSwitch().bootstrapSwitch('state', faultState);
 
 		jqueryMap.$alarmCheck.bootstrapSwitch();
 		jqueryMap.$alarmCheck.on('switchChange.bootstrapSwitch', function(event, state) {
-      $.gevent.publish('alarmStatus', state);
-    });
+            $.gevent.publish('alarmStatus', state);
+        });
 
 		jqueryMap.$menu_btn.bind('click', openOrCloseMainMenu);
 		jqueryMap.$mainMenuPanel.bind('click',clickMenuItem);
 		jqueryMap.$mainPanelCloseBtn.bind ('click',closeMainPanel);
 		jqueryMap.$clickMenuList.bind ('click',clickNavBarMenu);
-		jqueryMap.$bizFaultOpenPanel.bind('click',openBizFaultPanel)
+		jqueryMap.$faultOpenPanel.bind('click',openFaultPanel)
 		jqueryMap.$logout.bind ('click',logOut);
 
 
@@ -418,48 +419,49 @@ cnc.shell = (function () {
   };
 
 	/*改变业务故障消息接收状态图标*/
-	changeBizFaultStatus = function(event,state){
+	changeFaultStatus = function(event,state){
 		if(state){
-			jqueryMap.$bizFaultStatus.removeClass('fa-times');
-			jqueryMap.$bizFaultStatus.addClass('fa-level-down');
-			jqueryMap.$bizFaultContainer.removeClass('nav-icon-btn-danger');
-			jqueryMap.$bizFaultContainer.addClass('nav-icon-btn-success');
+			jqueryMap.$faultStatus.removeClass('fa-times');
+			jqueryMap.$faultStatus.addClass('fa-level-down');
+			jqueryMap.$faultContainer.removeClass('nav-icon-btn-danger');
+			jqueryMap.$faultContainer.addClass('nav-icon-btn-success');
 		}else{
-			jqueryMap.$bizFaultStatus.removeClass('fa-level-down');
-			jqueryMap.$bizFaultStatus.addClass('fa-times');
-			jqueryMap.$bizFaultContainer.removeClass('nav-icon-btn-success');
-			jqueryMap.$bizFaultContainer.addClass('nav-icon-btn-danger');
+			jqueryMap.$faultStatus.removeClass('fa-level-down');
+			jqueryMap.$faultStatus.addClass('fa-times');
+			jqueryMap.$faultContainer.removeClass('nav-icon-btn-success');
+			jqueryMap.$faultContainer.addClass('nav-icon-btn-danger');
 		}
 	};
 
-	openBizFaultPanel = function(event){
-	  openPanel('bizFault','故障');
+	openFaultPanel = function(event){
+	  openPanel('fault','故障');
 	};
 
-	bizFaultReceive = function(bizFault){
-		console.log('portal:'+bizFault.beginTime);
+	faultReceive = function(fault){
+        var meCreateTime = new Date();
+        meCreateTime.setTime(fault.meCreateTime);
 		var $notification = $('<div class="notification"></div>');
 		var $title = $('<div class="notification-title text-danger"></div>')
-		  .text(bizFault.circuitNo);
+		  .text(fault.no);
 		var $description = $('<div class="notification-description"></div>')
-		  .text(bizFault.customerGroupName);
+		  .text(fault.customerGroupInfo);
 		var $ago = $('<div class="notification-ago"></div>')
-		  .text(bizFault.beginTime);
+		  .text(meCreateTime.Format("yyyy-MM-dd hh:mm:ss"));
 		var $icon = $('<div class="notification-icon fa fa-lightbulb-o bg-info"></div>');
-		if(bizFault.state === 'NEW')
+		if(fault.operation === 'NEW')
 			$icon.addClass('bg-danger');
-		else if (bizFault.state === 'UPDATE')
+		else if (fault.state === 'UPDATE')
 			$icon.addClass('bg-info');
-	  $notification.append($title);
+	    $notification.append($title);
 		$notification.append($description);
 		$notification.append($ago);
 		$notification.append($icon);
 
-		var $list = jqueryMap.$bizFaultList.find('.notification');
+		var $list = jqueryMap.$faultList.find('.notification');
 		if($list.length>3){
 			$list.first().remove();
 		}
-		jqueryMap.$bizFaultList.append($notification);
+		jqueryMap.$faultList.append($notification);
 	};
 
 	/*改变告警消息接收状态图标*/

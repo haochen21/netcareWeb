@@ -3,7 +3,7 @@ cnc.bizFault = (function () {
 
 	var
 		configMap = {
-			main_html: String() + '<div class="cnc-panel customerTopo">' + '<div class="gallery-container">故障' + '</div>'
+			main_html: String() + '<div class="cnc-panel fault">' + '<div class="gallery-container">故障' + '</div>'
 		},
 		stateMap = {
 			$container: undefined
@@ -23,8 +23,10 @@ cnc.bizFault = (function () {
 	};
 
 	//--------------------- EVENT 操作方法 --------------------
-	bizFaultReceive = function (bizFault) {
-		jqueryMap.$galleryPanel.append($('<div>' + bizFault.circuitNo + ' ' + bizFault.customerGroupName + ' ' + bizFault.beginTime + '</div>'));
+	bizFaultReceive = function (fault) {
+        var meCreateTime = new Date();
+        meCreateTime.setTime(fault.meCreateTime);
+		jqueryMap.$galleryPanel.append($('<div>' + fault.no + ' ' + fault.customerGroupInfo + ' ' + meCreateTime.Format("yyyy-MM-dd hh:mm:ss") +' ' +fault.operation + '</div>'));
 	};
 
 	//--------------------- 公共方法 --------------------------
@@ -33,11 +35,11 @@ cnc.bizFault = (function () {
 		$container.html(configMap.main_html);
 		setJqueryMap();
 
-		cnc.bizFaultTopic.subscribe(bizFaultReceive);
+		cnc.faultSocket.subscribe(bizFaultReceive);
 	};
 
 	closeModule = function () {
-		cnc.bizFaultTopic.unsubscribe(bizFaultReceive);
+		cnc.faultSocket.unsubscribe(bizFaultReceive);
 	};
 
 	return {
@@ -47,6 +49,6 @@ cnc.bizFault = (function () {
 })();
 
 cnc.globalModel.panelDb.addPanel({
-	panelId: 'bizFault',
-	panel: cnc.bizFault
+	panelId: 'fault',
+	panel: cnc.fault
 });

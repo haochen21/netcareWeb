@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var mongoose = require('mongoose');
 var config = require('./app/config');
-var socket = require('./app/socket');
 
 var mongodbConnect = function () {
     var options = {
@@ -116,8 +115,12 @@ app.use('/api', router);
 
 app.use(logErrors);
 app.use(errorHandler);
+
+var socket = require('./app/socket');
+socket.initialize(server);
+
 if (require.main === module) {
-    app.listen(app.get('port'), function () {
+    server.listen(app.get('port'), function () {
         console.info('server listening on port ' + app.get('port'));
     });
 } else {
@@ -125,4 +128,3 @@ if (require.main === module) {
     exports.app = app;
 }
 
-socket.initialize(server);

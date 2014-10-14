@@ -3,9 +3,11 @@ exports.Mongodb = {
 }
 
 exports.Amqp = {
-    host: '127.0.0.1',
+    host: '134.64.14.94',
     port: 5672,
     login: 'netcare',
     password: 'netcare',
-    vhost: 'netcare-vhost'
-}	
+    vhost: 'netcare-vhost',
+    faultExchange: 'netcare-fault',
+    currAlarmExchange: 'netcare-currAlarm'
+}
