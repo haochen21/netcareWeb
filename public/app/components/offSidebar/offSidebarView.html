@@ -1,0 +1,14 @@
+<aside class="offsidebar" ng-controller="offSidebarCrtl" ng-class="{'open':isOpen}">
+    <div class="user-name">
+        <img class="login-main-profile-img" src="img/photo.png">
+
+        <p class="user-name">陈昊</p>
+    </div>
+    <div class="divider"></div>
+    <div class="section-name">系统设置</div>
+    <div ui-checkbox check-name="故障接收" check-model="faultReceive"></div>
+    <div ui-checkbox check-name="告警接收" check-model="alarmReceive"></div>
+    <div class="divider"></div>
+    <div><a href="#" class="logout-link"><i class="fa fa-sign-out"></i><span class="text">退出登录</span>
+    </a></div>
+</aside>

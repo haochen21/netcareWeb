@@ -1,204 +1,236 @@
-{
-    "menus": [
-        {
-            "name": "首页",
-            "id": "portal",
-            "icon": "fa fa-desktop"
-        }, {
-            "name": "拓扑",
-            "id":"topo",
-            "icon": "fa fa-sitemap",
-            "submenus": [
-                {
-                    "name": "客户拓扑",
-                    "id": "customerTopo"
-                }, {
-                    "name": "重保电路拓扑",
-                    "id": "vitalCircuitTopo"
-                }, {
-                    "name": "EMS拓扑",
-                    "id": ""
-                }
-            ]
-        }, {
-            "name": "告警",
-            "id":"alarm",
-            "icon": "fa fa-bolt",
-            "submenus": [
-                {
-                    "name": "当前告警",
-                    "id": ""
-                }, {
-                    "name": "历史告警",
-                    "id": ""
-                }, {
-                    "name": "告警经验库",
-                    "id": ""
-                }, {
-                    "name": "告警屏蔽",
-                    "id": ""
-                }
-            ]
-        }, {
-            "name": "故障",
-            "id":"fault",
-            "icon": "fa fa-cogs",
-            "submenus": [
-                {
-                    "name": "故障",
-                    "id": "bizFault"
-                }, {
-                    "name": "故障单",
-                    "id": "bizFaultBill"
-                }
-            ]
-        }, {
-            "name": "资源",
-            "id":"resource",
-            "icon": "fa fa-laptop",
-            "submenus": [
-                {
-                    "name": "电路",
-                    "id":"circuit",
-                    "submenus": [
-                        {
-                            "name": "电路管理",
-                            "id": "circuitMgt"
-                        }, {
-                            "name": "重保电路配置",
-                            "id": "vitalCircuitConfig"
-                        }, {
-                            "name": "业务状态日志",
-                            "id": ""
-                        }, {
-                            "name": "工作时间配置",
-                            "id": ""
-                        }, {
-                            "name": "工作时间电路分配",
-                            "id": ""
-                        }
-                    ]
-                }, {
-                    "name": "客户",
-                    "id":"customer",
-                    "submenus": [
-                        {
-                            "name": "小客户管理",
-                            "id": ""
-                        }, {
-                            "name": "客户管理",
-                            "id": ""
-                        }
-                    ]
-                }, {
-                    "name": "中继群",
-                    "id": ""
-                }, {
-                    "name": "设备",
-                    "id":"device",
-                    "submenus": [
-                        {
-                            "name": "网元管理",
-                            "id": ""
-                        }, {
-                            "name": "数据库信息",
-                            "id": ""
-                        }, {
-                            "name": "采集机管理",
-                            "id": ""
-                        }
-                    ]
-                }, {
-                    "name": "行业应用",
-                    "id":"vpdn",
-                    "submenus": [
-                        {
-                            "name": "无线VPDN配置",
-                            "id": ""
-                        }, {
-                            "name": "行业短信配置",
-                            "id": ""
-                        }
-                    ]
-                }
-            ]
-        }, {
-            "name": "性能",
-            "id":"perf",
-            "icon": "fa fa-bar-chart-o",
-            "submenus": [
-                {
-                    "name": "传输性能",
-                    "id": ""
-                }, {
-                    "name": "数据性能",
-                    "id": ""
-                }, {
-                    "name": "交换性能",
-                    "id": ""
-                }, {
-                    "name": "接入性能",
-                    "id": ""
-                }, {
-                    "name": "模板配置",
-                    "id": ""
-                }
-            ]
-        }, {
-            "name": "系统管理",
-            "id":"system",
-            "icon": "fa fa-windows",
-            "submenus": [
-                {
-                    "name": "系统配置",
-                    "id": "systemSetting"
-                },
-                {
-                    "name": "用户配置",
-                    "id": "userSetting"
-                },
-                {
-                    "name": "权限",
-                    "submenus": [
-                        {
-                            "name": "权限分配",
-                            "id": ""
-                        }, {
-                            "name": "客户分配",
-                            "id": ""
-                        }, {
-                            "name": "联系人管理",
-                            "id": "日志管理"
-                        }
-                    ]
-                }, {
-                    "name": "名片夹",
-                    "submenus": [
-                        {
-                            "name": "名片夹管理",
-                            "id": ""
-                        }, {
-                            "name": "电路配置",
-                            "id": ""
-                        }
-                    ]
-                }, {
-                    "name": "公告管理",
-                    "id": "bulletin"
-                },
-                {
-                    "name": "日志",
-                    "submenus": [
-                        {
-                            "name": "操作日志",
-                            "id": ""
-                        }, {
-                            "name": "短信发送日志",
-                            "id": ""
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "name": "首页",
+        "id": "portal",
+        "icon": "fa fa-desktop"
+    },
+    {
+        "name": "拓扑",
+        "id": "topo",
+        "icon": "fa fa-sitemap",
+        "children": [
+            {
+                "name": "客户拓扑",
+                "id": "customerTopo"
+            },
+            {
+                "name": "重保电路拓扑",
+                "id": "vitalCircuitTopo"
+            },
+            {
+                "name": "EMS拓扑",
+                "id": ""
+            }
+        ]
+    },
+    {
+        "name": "告警",
+        "id": "alarm",
+        "icon": "fa fa-bolt",
+        "children": [
+            {
+                "name": "当前告警",
+                "id": ""
+            },
+            {
+                "name": "历史告警",
+                "id": ""
+            },
+            {
+                "name": "告警经验库",
+                "id": ""
+            },
+            {
+                "name": "告警屏蔽",
+                "id": ""
+            }
+        ]
+    },
+    {
+        "name": "故障",
+        "id": "fault",
+        "icon": "fa fa-cogs",
+        "children": [
+            {
+                "name": "故障",
+                "id": "bizFault"
+            },
+            {
+                "name": "故障单",
+                "id": "bizFaultBill"
+            }
+        ]
+    },
+    {
+        "name": "资源",
+        "id": "resource",
+        "icon": "fa fa-laptop",
+        "children": [
+            {
+                "name": "电路",
+                "id": "circuit",
+                "menus": [
+                    {
+                        "name": "电路管理",
+                        "id": "circuitMgt"
+                    },
+                    {
+                        "name": "重保电路配置",
+                        "id": "vitalCircuitConfig"
+                    },
+                    {
+                        "name": "业务状态日志",
+                        "id": ""
+                    },
+                    {
+                        "name": "工作时间配置",
+                        "id": ""
+                    },
+                    {
+                        "name": "工作时间电路分配",
+                        "id": ""
+                    }
+                ]
+            },
+            {
+                "name": "客户",
+                "id": "customer",
+                "children": [
+                    {
+                        "name": "小客户管理",
+                        "id": ""
+                    },
+                    {
+                        "name": "客户管理",
+                        "id": ""
+                    }
+                ]
+            },
+            {
+                "name": "中继群",
+                "id": ""
+            },
+            {
+                "name": "设备",
+                "id": "device",
+                "children": [
+                    {
+                        "name": "网元管理",
+                        "id": ""
+                    },
+                    {
+                        "name": "数据库信息",
+                        "id": ""
+                    },
+                    {
+                        "name": "采集机管理",
+                        "id": ""
+                    }
+                ]
+            },
+            {
+                "name": "行业应用",
+                "id": "vpdn",
+                "children": [
+                    {
+                        "name": "无线VPDN配置",
+                        "id": ""
+                    },
+                    {
+                        "name": "行业短信配置",
+                        "id": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "性能",
+        "id": "perf",
+        "icon": "fa fa-bar-chart-o",
+        "children": [
+            {
+                "name": "传输性能",
+                "id": ""
+            },
+            {
+                "name": "数据性能",
+                "id": ""
+            },
+            {
+                "name": "交换性能",
+                "id": ""
+            },
+            {
+                "name": "接入性能",
+                "id": ""
+            },
+            {
+                "name": "模板配置",
+                "id": ""
+            }
+        ]
+    },
+    {
+        "name": "系统管理",
+        "id": "system",
+        "icon": "fa fa-windows",
+        "children": [
+            {
+                "name": "系统配置",
+                "id": "systemSetting"
+            },
+            {
+                "name": "用户配置",
+                "id": "userSetting"
+            },
+            {
+                "name": "权限",
+                "children": [
+                    {
+                        "name": "权限分配",
+                        "id": ""
+                    },
+                    {
+                        "name": "客户分配",
+                        "id": ""
+                    },
+                    {
+                        "name": "联系人管理",
+                        "id": "日志管理"
+                    }
+                ]
+            },
+            {
+                "name": "名片夹",
+                "children": [
+                    {
+                        "name": "名片夹管理",
+                        "id": ""
+                    },
+                    {
+                        "name": "电路配置",
+                        "id": ""
+                    }
+                ]
+            },
+            {
+                "name": "公告管理",
+                "id": "bulletin"
+            },
+            {
+                "name": "日志",
+                "children": [
+                    {
+                        "name": "操作日志",
+                        "id": ""
+                    },
+                    {
+                        "name": "短信发送日志",
+                        "id": ""
+                    }
+                ]
+            }
+        ]
+    }
+]

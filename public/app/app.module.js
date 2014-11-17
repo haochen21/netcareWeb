@@ -1,0 +1,1 @@
+angular.module('netcareApp',['uiNavMenu', 'uiCheckbox']);

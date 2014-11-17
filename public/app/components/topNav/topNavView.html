@@ -1,0 +1,65 @@
+<nav id="top-navbar" class="fixed" ng-controller="topNavCtrl">
+    <div class="top-navbar-header">
+        <a href="#/" class="top-navbar-brand">
+            <small>NetCare</small>
+        </a>
+    </div>
+    <div class="top-navbar-wrapper">
+        <ul class="top-nav top-navbar-nav">
+            <li class="sidebar-toggle" ng-click="openMenu($event)">
+                <a href="">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-list"></i>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="fa fa-lock"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="top-nav top-navbar-nav pull-right">
+            <li ng-click="clickShellSearch(true)">
+                <a href="">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+            <li ng-click="clickDropdownMenu($event)">
+                <a href="">
+                    <i class="fa fa-life-ring"></i>
+                </a>
+
+                <div class="dropdown-menu widget-notifications fadeInUp">
+                    <div class="notifications-list">
+                        <div class="notification" ng-repeat="fault in faults">
+                            <div class="notification-title text-danger">{{fault.circuitNo}}</div>
+                            <div class="notification-description">{{fault.customerGroupName}}</div>
+                            <div class="notification-ago">{{fault.beginTime}}</div>
+                            <div class="notification-icon  fa fa-lightbulb-o bg-info"
+                                 ng-class="{'bg-danger':fault.state === '已确认','bg-info':fault.state === '未确认'}"></div>
+                        </div>
+                    </div>
+                    <a href="#" class="notifications-link">更多故障信息</a>
+                </div>
+            </li>
+            <li ng-click="clickOffSidebar($event)">
+                <a href="">
+                    <i class="fa fa-columns"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form role="form" class="navbar-form" ng-controller="shellSearchCtrl"
+          ng-class="{'open':openShellSearch}" ng-submit="submit()">
+        <div class="form-group">
+            <input type="text" class="form-control" id="shellSearchText" ng-model="shellSearchText"
+                   placeholder="输入客户名称或电路编码">
+
+            <div class="fa fa-times form-control-feedback" ng-click="clickShellSearch(false)"></div>
+        </div>
+    </form>
+</nav>
