@@ -26,7 +26,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 998;
 }
 
 .top-navbar-header {
@@ -147,7 +147,7 @@
         position: absolute;
         top: 2px;
         right: 0;
-        z-index: 3001;
+        z-index: 998;
     }
 }
 
@@ -216,6 +216,29 @@
 
 .main-panel-container {
     padding-top: 12px;
+}
+
+#focus-overlay {
+    background: rgba(0,0,0,0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+div[class*="col-"].widget-focus-enabled{
+    position: fixed;
+    bottom: 20px;
+    width:80%;
+    margin: 0 0 0 -40%;
+    left:50%;
+    z-index: 1000;
+}
+
+div[class*="col-"].focus-enabled-hidden{
+    display: none;
 }
 
 .offsidebar {

@@ -1,12 +1,11 @@
 .portal [class*="row"] {
-    margin-top: 10px;
-    margin-bottom: 5px;
     min-height: 250px;
     box-shadow: none;
 }
 
 .panel-toolbar {
     float:right;
+    margin-top: -3px;
 }
 
 .panel-toolbar > li,

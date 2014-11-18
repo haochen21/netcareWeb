@@ -37,6 +37,7 @@
     <script src="app/components/topNav/topNavCtrl.js"></script>
     <script src="app/components/navMenu/navMenuCtrl.js"></script>
     <script src="app/components/offSidebar/offSidebarCtrl.js"></script>
+    <script src="app/components/portal/portalCtrl.js"></script>
 </head>
 
 <body ng-controller="netcareCtrl">
@@ -48,6 +49,7 @@
             <div ng-view></div>
         </div>
     </div>
+    <div id="focus-overlay" ng-show="focusOverlay"></div>
 </body>
 
 </html>
