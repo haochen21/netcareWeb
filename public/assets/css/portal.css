@@ -1,0 +1,53 @@
+.portal [class*="row"] {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    min-height: 250px;
+    box-shadow: none;
+}
+
+.panel-toolbar {
+    float:right;
+}
+
+.panel-toolbar > li,
+.panel-toolbar > a {
+    font-size: 14px;
+    margin: 0 5px;
+    display: inline-block;
+    padding: 0;
+    line-height: 24px;
+}
+
+.panel-toolbar [data-action="settings"]{
+    color: #559aab;
+}
+
+.panel-toolbar [data-action="reload"] {
+    color: #7ca362;
+}
+
+.panel-toolbar [data-action="collapse"] {
+    color: #777;
+}
+
+.panel-toolbar [data-action="close"] {
+    color: #a05656;
+}
+
+.panel-toolbar [data-action="save"] {
+    color: #fff;
+}
+
+.panel-toolbar > a:hover,
+.panel-toolbar > a:focus,
+.panel-toolbar > li > a:hover,
+.panel-toolbar > li > a:focus{
+    color: #c3e3f5;
+    transition: all 1.2s ease;
+    -webkit-transition: all 1.2s ease;
+}
+
+.portal .panel-body {
+    min-height:250px;
+    overflow: hidden;
+}

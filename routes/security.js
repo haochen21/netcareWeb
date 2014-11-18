@@ -94,53 +94,18 @@ exports.updateUser = function (req, res, next) {
 };
 
 exports.updateUserRoles = function (req, res, next) {
-    var roles = req.body;
-    async.waterfall([
-        function (callback) {
-            User.findByIdAndUpdate(req.params.id, {
-                $set: {
-                    updated: new Date()
-                },$set: {
-                    roles: roles
-                }
-            }, {
-                new: true
-            }, function (err, user) {
-                if (err) next(err);
-                callback(null, user);
-            });
-        },
-        function (user, callback) {
-            Role.update(
-                {users: {$in: [user._id]}},
-                {$pull: {users: user._id}},
-                {multi: true}, function (err, numberAffected, raw) {
-                    if (err) next(err);
-                    console.log('delete user from role was %d', numberAffected);
-                    callback(null, user);
-                }
-            );
-        },
-        function (user, callback) {
-            if (roles) {
-                Role.update(
-                    {_id: {$in: roles}},
-                    {$addToSet: {users: user._id}},
-                    {multi: true}, function (err, numberAffected, raw) {
-                        if (err) next(err);
-                        console.log('add user to role was %d', numberAffected);
-                        callback(null, user);
-                    }
-                );
-            } else {
-                callback(null, user);
-            }
+    User.findByIdAndUpdate(req.params.id, {
+        $set: {
+            updated: new Date()
+        }, $set: {
+            roles: req.body
         }
-    ], function (err, result) {
+    }, {
+        new: true
+    }, function (err, user) {
         if (err) next(err);
-        res.status(200).json(result);
+        res.status(200).json(user);
     });
-
 };
 
 exports.deleteUser = function (req, res, next) {

@@ -474,15 +474,6 @@ describe('security', function () {
                         });
                 },
                 function (callback) {
-                    //get role'user
-                    agent.get(port + '/api/roles/'+role1._id)
-                        .end(function (res) {
-                            assert.equal(res.status, 200);
-                            assert(res.body.users.length === 1);
-                            callback(null, '');
-                        });
-                },
-                function (callback) {
                     agent.del(port + '/api/roles/' + role1._id)
                         .end(function (res) {
                             assert.equal(res.status, 200);
@@ -499,23 +490,14 @@ describe('security', function () {
                         });
                 },
                 function (callback) {
-                    agent.del(port + '/api/users/' + user._id)
-                        .end(function (res) {
-                            assert.equal(res.status, 200);
-                            callback(null, '');
-                        });
-                },
-                function (callback) {
-                    //get role'user
-                    agent.get(port + '/api/roles/'+role2._id)
-                        .end(function (res) {
-                            assert.equal(res.status, 200);
-                            assert(res.body.users.length === 0);
-                            callback(null, '');
-                        });
-                },
-                function (callback) {
                     agent.del(port + '/api/roles/' + role2._id)
+                        .end(function (res) {
+                            assert.equal(res.status, 200);
+                            callback(null, '');
+                        });
+                },
+                function (callback) {
+                    agent.del(port + '/api/users/' + user._id)
                         .end(function (res) {
                             assert.equal(res.status, 200);
                             callback(null, '');

@@ -1,1 +1,1 @@
-angular.module('netcareApp',['uiNavMenu', 'uiCheckbox']);
+angular.module('netcareApp',['ngResource','ngRoute','uiNavMenu', 'uiCheckbox']);

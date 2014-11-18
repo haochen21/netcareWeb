@@ -91,7 +91,7 @@
     padding-left: 10px;
     list-style: none;
     float: left;
-    margin: 0px -15px 0px -80px;
+    margin: 0px -15px 0px -15px;
 }
 
 @media (min-width: 768px) {
@@ -214,10 +214,8 @@
     }
 }
 
-.main-panel-content {
-    height: 100%;
-    width: 100%;
-    padding: 0px 0px;
+.main-panel-container {
+    padding-top: 12px;
 }
 
 .offsidebar {

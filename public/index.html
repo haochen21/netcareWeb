@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>NetCare</title>
+    <base href="/">
 
 	<!-- third-party stylesheets -->
 	<link rel="stylesheet" href="assets/css/bootstrap.css" />
@@ -15,6 +16,7 @@
     <link  rel="stylesheet" href="assets/css/uinavmenu.css"/>
     <link  rel="stylesheet" href="assets/css/uicheckbox.css"/>
     <link  rel="stylesheet" href="assets/css/shell.css"/>
+    <link  rel="stylesheet" href="assets/css/portal.css"/>
 
 	<!-- third-party javascript -->
     <script src="/socket.io/socket.io.js"></script>
@@ -42,8 +44,8 @@
     <ng-include src="'app/components/navMenu/navMenuView.html'"></ng-include>
     <ng-include src="'app/components/offSidebar/offSidebarView.html'"></ng-include>
     <div class="main-panel">
-        <div class="main-panel-content">
-            selected: {{ selectMenu.name }}
+        <div class="main-panel-container container-fluid">
+            <div ng-view></div>
         </div>
     </div>
 </body>

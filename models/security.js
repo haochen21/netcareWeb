@@ -101,8 +101,7 @@ UserSchema.methods.addRole = function (role, callback) {
     this.save(function (err) {
         if (err)
             console.log(err);
-        role.users.push(user);
-        role.save(callback);
+        callback();
     });
 };
 
@@ -111,25 +110,6 @@ UserSchema.pre('save', function (next) {
         this.createHashPassword();
     }
     next();
-});
-
-UserSchema.pre('remove', function (next) {
-    var user = this;
-    async.series([
-        function (callback) {
-            user.model('Role').update(
-                {_id: {$in: user.roles}},
-                {$pull: {users: user._id}},
-                {multi: true},
-                function (err, numberAffected, raw) {
-                    if (err) console.log(err);
-                    callback(null, 'role');
-                }
-            );
-        }
-    ], function (err, results) {
-        next();
-    });
 });
 
 UserSchema.methods.toJSON = function () {
@@ -182,7 +162,7 @@ RoleSchema.pre('remove', function (next) {
         },
         function (callback) {
             role.model('User').update(
-                {_id: {$in: role.users}},
+                {roles: role._id},
                 {$pull: {roles: role._id}},
                 {multi: true},
                 function (err, numberAffected, raw) {
@@ -195,17 +175,6 @@ RoleSchema.pre('remove', function (next) {
         next();
     });
 });
-
-RoleSchema.methods.addUser = function (user, callback) {
-    var role = this;
-    this.users.push(user);
-    this.save(function (err) {
-        if (err)
-            console.log(err);
-        user.roles.push(role);
-        user.save(callback);
-    });
-};
 
 RoleSchema.methods.addPermission = function (permission, callback) {
     var role = this;

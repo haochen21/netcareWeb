@@ -17,7 +17,7 @@ var mongodbConnect = function () {
     };
     mongoose.connect(config['Mongodb'].url, options);
 };
-mongodbConnect();
+//mongodbConnect();
 
 mongoose.connection.on('error', function (err) {
     console.log(err);
