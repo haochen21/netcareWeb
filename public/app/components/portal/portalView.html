@@ -1,8 +1,8 @@
 <div class="portal" ng-controller="portalCtrl">
     <div class="row">
         <div class="col-md-6"
-             ng-class="{'focus-enabled-hidden':focusEnabled.eyeSlash && !focusEnabled.customerInfo,'widget-focus-enabled':focusEnabled.customerInfo}">
-            <div class="panel panel-default customerInfo">
+             ng-class="{'widget-focus-enabled':focusEnabled.customerInfo}">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-toolbar">
                         <a href="" data-action="close" ng-click="setFocusOverlay('customerInfo')">
@@ -20,11 +20,13 @@
                         <small>客户统计</small>
                     </h5>
                 </div>
-                <div class="panel-body">1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br></div>
+                <div class="panel-body">
+                    <div hc-pie id="customerInfoPie" height="248" items="customerInfoData"></div>
+                </div>
             </div>
         </div>
         <div class="col-md-6"
-             ng-class="{'focus-enabled-hidden':focusEnabled.eyeSlash && !focusEnabled.circuitStatus,'widget-focus-enabled':focusEnabled.circuitStatus}">
+             ng-class="{'widget-focus-enabled':focusEnabled.circuitStatus}">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-toolbar">
@@ -43,7 +45,9 @@
                         <small>电路状态统计</small>
                     </h5>
                 </div>
-                <div class="panel-body">1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br></div>
+                <div class="panel-body">
+                    <div hc-pie id="circuitStatusPie" height="248" items="circuitStatus"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -51,7 +55,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-12"
-                     ng-class="{'focus-enabled-hidden':focusEnabled.eyeSlash && !focusEnabled.customerCircuit,'widget-focus-enabled':focusEnabled.customerCircuit}">
+                     ng-class="{'widget-focus-enabled':focusEnabled.customerCircuit}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-toolbar">
@@ -70,13 +74,16 @@
                                 <small>电路状态统计</small>
                             </h5>
                         </div>
-                        <div class="panel-body">1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br></div>
+                        <div class="panel-body">
+                            <div hc-column id="customerCircuitColumn" name="电路数" height="248"
+                                 items="customerCircuit"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12"
-                     ng-class="{'focus-enabled-hidden':focusEnabled.eyeSlash && !focusEnabled.sla,'widget-focus-enabled':focusEnabled.sla}">
+                     ng-class="{'widget-focus-enabled':focusEnabled.sla}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-toolbar">
@@ -95,134 +102,42 @@
                                 <small>SLA统计</small>
                             </h5>
                         </div>
-                        <div class="panel-body">1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br>1<br></div>
+                        <div class="panel-body">
+                            <div hc-column id="slaColumn" name="电路可用率" height="248" items="sla"></div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="panel-title">Latest activities</div>
+                    <div class="panel-title"><small>重保任务</small></div>
                 </div>
                 <!-- START list group-->
                 <div class="list-group">
                     <!-- START list group item-->
-                    <div class="list-group-item">
-                        <div class="media">
-                            <div class="pull-left">
-                     <span class="fa-stack">
-                        <em class="fa fa-circle fa-stack-2x text-purple"></em>
-                        <em class="fa fa-cloud-upload fa-stack-1x fa-inverse text-white"></em>
-                     </span>
+                    <div class="list-group-item" ng-repeat="cusVital in cusVitalCirMonitors">
+                        <div class="cusVital">
+                            <div class="pull-left cusVital-status">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x" ng-class="{'text-info':cusVital.status,'text-danger':!cusVital.status}"></i>
+                                    <i class="fa fa-check fa-stack-1x fa-inverse" ng-show="cusVital.status"></i>
+                                    <i class="fa fa-times fa-stack-1x fa-inverse" ng-hide="cusVital.status"></i>
+                                </span>
                             </div>
-                            <div class="media-body clearfix">
-                                <small class="text-muted pull-right ml">15m</small>
-                                <div class="media-heading"><a href="#" class="text-purple m0">NEW FILE</a>
-                                </div>
-                                <p class="m0">
-                                    <small><a href="#">Bootstrap.xls</a>
-                                    </small>
-                                </p>
+                            <div class="cusVital-info">
+                                <small class="cusVital-cirNum pull-right">{{cusVital.circuitNum}}</small>
+                                <div class="cusVital-name">{{cusVital.name}}</div>
+                                <div class="cusVital-time"><small>{{cusVital.beginTime}}&nbsp;&nbsp;-&nbsp;&nbsp;{{cusVital.endTime}}</small></div>
                             </div>
                         </div>
                     </div>
-                    <!-- END list group item-->
-                    <!-- START list group item-->
-                    <div class="list-group-item">
-                        <div class="media">
-                            <div class="pull-left">
-                     <span class="fa-stack">
-                        <em class="fa fa-circle fa-stack-2x text-info"></em>
-                        <em class="fa fa-file-text-o fa-stack-1x fa-inverse text-white"></em>
-                     </span>
-                            </div>
-                            <div class="media-body clearfix">
-                                <small class="text-muted pull-right ml">2h</small>
-                                <div class="media-heading"><a href="#" class="text-info m0">NEW DOCUMENT</a>
-                                </div>
-                                <p class="m0">
-                                    <small><a href="#">Bootstrap.doc</a>
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END list group item-->
-                    <!-- START list group item-->
-                    <div class="list-group-item">
-                        <div class="media">
-                            <div class="pull-left">
-                     <span class="fa-stack">
-                        <em class="fa fa-circle fa-stack-2x text-danger"></em>
-                        <em class="fa fa-exclamation fa-stack-1x fa-inverse text-white"></em>
-                     </span>
-                            </div>
-                            <div class="media-body clearfix">
-                                <small class="text-muted pull-right ml">5h</small>
-                                <div class="media-heading"><a href="#" class="text-danger m0">BROADCAST</a>
-                                </div>
-                                <p class="m0"><a href="#">Read</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END list group item-->
-                    <!-- START list group item-->
-                    <div class="list-group-item">
-                        <div class="media">
-                            <div class="pull-left">
-                     <span class="fa-stack">
-                        <em class="fa fa-circle fa-stack-2x text-success"></em>
-                        <em class="fa fa-clock-o fa-stack-1x fa-inverse text-white"></em>
-                     </span>
-                            </div>
-                            <div class="media-body clearfix">
-                                <small class="text-muted pull-right ml">15h</small>
-                                <div class="media-heading"><a href="#" class="text-success m0">NEW MEETING</a>
-                                </div>
-                                <p class="m0">
-                                    <small>On
-                                        <em>10/12/2015 09:00 am</em>
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END list group item-->
-                    <!-- START list group item-->
-                    <div class="list-group-item">
-                        <div class="media">
-                            <div class="pull-left">
-                     <span class="fa-stack">
-                        <em class="fa fa-circle fa-stack-2x text-warning"></em>
-                        <em class="fa fa-tasks fa-stack-1x fa-inverse text-white"></em>
-                     </span>
-                            </div>
-                            <div class="media-body clearfix">
-                                <small class="text-muted pull-right ml">1w</small>
-                                <div class="media-heading"><a href="#" class="text-warning m0">TASKS COMPLETION</a>
-                                </div>
-                                <div class="progress-xs m0 progress ng-isolate-scope" value="22" type="warning">
-                                    <div class="progress-bar progress-bar-warning"
-                                         ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="22"
-                                         aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent + '%'}"
-                                         aria-valuetext="22%" style="width: 22%;"><span class="ng-scope">22%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END list group item-->
                 </div>
-                <!-- END list group-->
                 <!-- START panel footer-->
                 <div class="panel-footer clearfix">
-                    <a href="#" class="pull-left">
-                        <small>Load more</small>
+                    <a href="" class="cusVital-link">
+                        <small>查看详情</small>
                     </a>
                 </div>
                 <!-- END panel-footer-->

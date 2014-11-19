@@ -229,16 +229,7 @@
 }
 
 div[class*="col-"].widget-focus-enabled{
-    position: fixed;
-    bottom: 20px;
-    width:80%;
-    margin: 0 0 0 -40%;
-    left:50%;
     z-index: 1000;
-}
-
-div[class*="col-"].focus-enabled-hidden{
-    display: none;
 }
 
 .offsidebar {

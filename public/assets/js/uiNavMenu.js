@@ -57,9 +57,9 @@ angular.module('uiNavMenu', [])
                     for(var i=0;i<ulItems.length;i++){
                         var $ulItem = ulItems.eq(i);
                         var $liParent = $ulItem.parent();
-                        if(!angular.equals($liParent,$element)){
+                        if($liParent[0] != $element[0]){
                             $ulItem.scope().displaySubMenu = 'none';
-                       }
+                        }
                     }
                 }
             }

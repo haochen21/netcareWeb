@@ -3,6 +3,11 @@
     box-shadow: none;
 }
 
+.portal .panel{
+    border: 0;
+    box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+}
+
 .panel-toolbar {
     float:right;
     margin-top: -3px;
@@ -49,4 +54,34 @@
 .portal .panel-body {
     min-height:250px;
     overflow: hidden;
+}
+
+div.cusVital-status {
+    padding-right: 10px;
+}
+
+div.cusVital-status > span {
+    font-size: 15px;
+}
+
+div.cusVital-info {
+    padding: 0px 10px;
+}
+
+div.cusVital-time{
+    padding-top:5px;
+}
+
+div.cusVital-info .cusVital-cirNum {
+    color: #909fa7;
+}
+
+.cusVital-link {
+    text-align: center;
+    padding: 8px 0 !important;
+    display: block;
+    text-decoration: none !important;
+    font-size: 12px;
+    font-weight: 800;
+    color: #999;
 }
