@@ -5,15 +5,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-toolbar">
-                        <a href="" data-action="close" ng-click="setFocusOverlay('customerInfo')">
+                        <a href="" ng-click="setFocusOverlay('customerInfo')">
                             <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                             <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                         </a>
-                        <a href="" data-action="reload">
+                        <a href="">
                             <i class="fa fa-refresh"></i>
-                        </a>
-                        <a href="" data-action="collapse">
-                            <i class="fa fa-chevron-up"></i>
                         </a>
                     </div>
                     <h5 class="panel-title">
@@ -37,9 +34,6 @@
                         <a href="" data-action="reload">
                             <i class="fa fa-refresh"></i>
                         </a>
-                        <a href="" data-action="collapse">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
                     </div>
                     <h5 class="panel-title">
                         <small>电路状态统计</small>
@@ -59,22 +53,23 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-toolbar">
-                                <a href="" data-action="close" ng-click="setFocusOverlay('customerCircuit')">
+                                <a href="" ng-click="setFocusOverlay('customerCircuit')">
                                     <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                                     <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                                 </a>
-                                <a href="" data-action="reload">
+                                <a href="">
                                     <i class="fa fa-refresh"></i>
                                 </a>
-                                <a href="" data-action="collapse">
-                                    <i class="fa fa-chevron-up"></i>
+                                <a href="" ng-click="closeWidget('customerCircuit')">
+                                    <i class="fa fa-chevron-up" ng-show="widgetShow.customerCircuit"></i>
+                                    <i class="fa fa-chevron-down" ng-show="!widgetShow.customerCircuit"></i>
                                 </a>
                             </div>
                             <h5 class="panel-title">
                                 <small>电路状态统计</small>
                             </h5>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" ng-show="widgetShow.customerCircuit">
                             <div hc-column id="customerCircuitColumn" name="电路数" height="248"
                                  items="customerCircuit"></div>
                         </div>
@@ -87,22 +82,23 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-toolbar">
-                                <a href="" data-action="close" ng-click="setFocusOverlay('sla')">
+                                <a href="" ng-click="setFocusOverlay('sla')">
                                     <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                                     <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                                 </a>
-                                <a href="" data-action="reload">
+                                <a href="">
                                     <i class="fa fa-refresh"></i>
                                 </a>
-                                <a href="" data-action="collapse">
-                                    <i class="fa fa-chevron-up"></i>
+                                <a href="" ng-click="closeWidget('sla')">
+                                    <i class="fa fa-chevron-up" ng-show="widgetShow.sla"></i>
+                                    <i class="fa fa-chevron-down" ng-show="!widgetShow.sla"></i>
                                 </a>
                             </div>
                             <h5 class="panel-title">
                                 <small>SLA统计</small>
                             </h5>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" ng-show="widgetShow.sla">
                             <div hc-column id="slaColumn" name="电路可用率" height="248" items="sla"></div>
                         </div>
                     </div>
@@ -112,10 +108,16 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <div class="panel-toolbar">
+                        <a href="" ng-click="closeWidget('circuitVitalMonitor')">
+                            <i class="fa fa-chevron-up" ng-show="widgetShow.circuitVitalMonitor"></i>
+                            <i class="fa fa-chevron-down" ng-show="!widgetShow.circuitVitalMonitor"></i>
+                        </a>
+                    </div>
                     <div class="panel-title"><small>重保任务</small></div>
                 </div>
                 <!-- START list group-->
-                <div class="list-group">
+                <div class="list-group" ng-show="widgetShow.circuitVitalMonitor">
                     <!-- START list group item-->
                     <div class="list-group-item" ng-repeat="cusVital in cusVitalCirMonitors">
                         <div class="cusVital">

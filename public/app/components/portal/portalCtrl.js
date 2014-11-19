@@ -15,6 +15,16 @@ angular.module('netcareApp')
             $scope.$emit('focusOverlay');
         }
 
+        $scope.widgetShow = {
+            customerCircuit: true,
+            sla:true,
+            circuitVitalMonitor:true
+        };
+
+        $scope.closeWidget = function (value){
+            $scope.widgetShow[value] = !$scope.widgetShow[value];
+        }
+
         $scope.customerInfoData = [
             { name: "集团直管",
                 y: 91,

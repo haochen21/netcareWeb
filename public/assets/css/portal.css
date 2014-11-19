@@ -1,5 +1,4 @@
 .portal [class*="row"] {
-    min-height: 250px;
     box-shadow: none;
 }
 
@@ -22,24 +21,8 @@
     line-height: 24px;
 }
 
-.panel-toolbar [data-action="settings"]{
-    color: #559aab;
-}
-
-.panel-toolbar [data-action="reload"] {
+.panel-toolbar > a {
     color: #7ca362;
-}
-
-.panel-toolbar [data-action="collapse"] {
-    color: #777;
-}
-
-.panel-toolbar [data-action="close"] {
-    color: #a05656;
-}
-
-.panel-toolbar [data-action="save"] {
-    color: #fff;
 }
 
 .panel-toolbar > a:hover,
