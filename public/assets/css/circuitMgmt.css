@@ -1,3 +1,7 @@
+.circuitMgmt-panel .panel {
+    border-radius: 0;
+}
+
 .circuitMgmt-panel .panel-heading {
     height: 40px;
     line-height: 1px;

@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('circuitMgmtCtrl',function($scope,$http,uiFootableEvent, uiFootablePageEvent,uiFootablePageSize){
+    .controller('circuitMgmtCtrl', function ($scope, $http, uiFootableEvent, uiFootablePageEvent, uiFootablePageSize) {
 
         $scope.sort = '$index';
         $scope.reverse = true;
@@ -25,22 +25,33 @@ angular.module('netcareApp')
         $scope.showAllAttr = false;
 
         $scope.showAll = function () {
-            if($scope.showAllAttr){
+            if ($scope.showAllAttr) {
                 $scope.$broadcast(uiFootableEvent.allRowsCollapse);
-            }else{
+            } else {
                 $scope.$broadcast(uiFootableEvent.allRowsExpand);
             }
             $scope.showAllAttr = !$scope.showAllAttr;
         };
 
         $scope.queryPanelOpen = false;
-        $scope.triggerQueryPanel = function(){
+        $scope.triggerQueryPanel = function () {
             $scope.queryPanelOpen = !$scope.queryPanelOpen;
         };
 
         $scope.queryPanelMoreOpen = false;
-        $scope.triggerQueryPanelMore = function(){
+        $scope.triggerQueryPanelMore = function () {
             $scope.queryPanelMoreOpen = !$scope.queryPanelMoreOpen;
+        };
+
+        $scope.customerGroups = {};
+        $scope.customerGroups.selected = [];
+        $scope.refreshCustomerGroups = function (name) {
+            var params = {name: name, sensor: false};
+            return $http.get(
+                'json/customerGroups.json'
+            ).then(function (response) {
+                    $scope.customerGroupsModel = response.data.customerGroups;
+                });
         };
 
         $scope.queryCircuit();
