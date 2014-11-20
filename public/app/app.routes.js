@@ -12,8 +12,11 @@ angular.module('netcareApp')
         $routeProvider.when("/bizFault", {
             templateUrl: "app/components/bizFault/bizFaultView.html"
         });
+        $routeProvider.when("/circuitMgmt", {
+            templateUrl: "app/components/circuitMgmt/circuitMgmtView.html"
+        });
 
         $routeProvider.otherwise({
-            templateUrl: "app/components/portal/portalView.html"
+            templateUrl: "app/components/circuitMgmt/circuitMgmtView.html"
         });
     })

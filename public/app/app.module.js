@@ -1,1 +1,2 @@
-angular.module('netcareApp',['ngResource','ngRoute','uiNavMenu', 'uiCheckbox','ngHighchart']);
+angular.module('netcareApp',['ngResource','ngRoute','uiNavMenu',
+    'uiCheckbox','uiFootable', 'uiFootablePagination','ngHighchart']);

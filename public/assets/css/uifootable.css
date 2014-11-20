@@ -1,0 +1,172 @@
+tbody > tr > td > span.uifootable-toggle {
+    display: inline-block;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #888888;
+}
+
+tbody > tr > td > span .fa {
+    display: none;
+}
+
+tbody > tr > td > span > :first-child {
+    display: inline-block;
+}
+
+tbody > tr.open-detail-row > td > span .fa {
+    display: inline-block;
+}
+
+tbody > tr.open-detail-row > td > span > :first-child {
+    display: none;
+}
+
+
+.uifootable-row-detail-inner {
+    display: table;
+}
+
+.uifootable-row-detail-row {
+    display: table-row;
+    line-height: 1.5em;
+}
+
+.uifootable-row-detail-group {
+    display: block;
+    line-height: 2em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.uifootable-row-detail-name {
+    display: table-cell;
+    font-weight: bold;
+    width: 75px;
+    padding-right: 0.5em;
+}
+
+.uifootable-row-detail-value {
+    display: table-cell;
+}
+
+.ui-footable-pagination .pagination {
+    margin: 5px 0;
+}
+
+.ui-footable th > .sort-indicator {
+    position: relative;
+}
+
+.ui-footable th > .sort-indicator:before,
+.ui-footable th > .sort-indicator:after{
+    content: "";
+    border-width: 0 4px 4px;
+    border-style: solid;
+    border-color: #000 transparent;
+    visibility: visible;
+    opacity: .3;
+    right: 8px;
+    top: 50%;
+    position: absolute;
+    margin-top: -4px;
+}
+
+.ui-footable th > .sort-indicator:before {
+    margin-top: 2px;
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #000;
+}
+
+.ui-footable th.sort-asc > .sort-indicator:before,
+.ui-footable th.sort-asc > .sort-indicator:after,
+.ui-footable th.sort-desc > .sort-indicator:before,
+.ui-footable th.sort-desc > .sort-indicator:after{
+    visibility: hidden;
+}
+
+.ui-footable th.sortable.sort-desc > .sort-indicator:after {
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #000;
+    visibility: visible;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    filter: alpha(opacity=60);
+    -khtml-opacity: .6;
+    -moz-opacity: .6;
+    opacity: .6;
+}
+
+.ui-footable th.sortable.sort-asc > .sort-indicator:after {
+    visibility: visible;
+    opacity: .6;
+}
+
+label.checkbox {
+    display: inline-block;
+    font-size: 13px;
+    position: relative;
+    margin: 0px;
+}
+
+.ui-footable input[type=checkbox] {
+    opacity: 0;
+    position: absolute;
+    margin: 0;
+    z-index: -100!important;
+    width: 1px!important;
+    height: 1px!important;
+    clip: rect(1px,1px,1px,1px);
+    cursor: pointer;
+}
+
+.ui-footable input[type=checkbox]+.lbl::before {
+    cursor: pointer;
+    font-family: fontAwesome;
+    font-weight: 400;
+    font-size: 12px;
+    color: #32a3ce;
+    content: "\a0";
+    background-color: #FAFAFA;
+    border: 1px solid #c8c8c8;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    border-radius: 0;
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    line-height: 14px;
+    min-width: 16px;
+    margin-right: 1px;
+    position: relative;
+    top: -1px;
+}
+
+.ui-footable input[type=checkbox]:hover+.lbl::before,
+.ui-footable input[type=checkbox]+.lbl:hover::before{
+    border-color:#ff893c;
+}
+
+
+.ui-footable input[type=checkbox]:checked+.lbl::before {
+    display: inline-block;
+    content: '\f00c';
+    background-color: #F5F8FC;
+    border-color: #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 -15px 10px -12px rgba(0,0,0,.05),inset 15px 10px -12px rgba(255,255,255,.1);
+}
+
+.ui-footable label.checked-some input[type=checkbox]+.lbl::before {
+    display: inline-block;
+    content: '\f068';
+    background-color: #F5F8FC;
+    border-color: #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 -15px 10px -12px rgba(0,0,0,.05),inset 15px 10px -12px rgba(255,255,255,.1);
+}
+
+.ui-footable .items-null > td{
+    line-height: 150px;
+}

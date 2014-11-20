@@ -9,7 +9,7 @@
                             <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                             <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                         </a>
-                        <a href="">
+                        <a href="" ng-click="loadingCustomerInfo()">
                             <i class="fa fa-refresh"></i>
                         </a>
                     </div>
@@ -19,6 +19,7 @@
                 </div>
                 <div class="panel-body">
                     <div hc-pie id="customerInfoPie" height="248" items="customerInfoData"></div>
+                    <div ui-reloading reloading-model="reloading.customerInfo"></div>
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
                             <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                             <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                         </a>
-                        <a href="" data-action="reload">
+                        <a href="" ng-click="loadingCircuitStatus()">
                             <i class="fa fa-refresh"></i>
                         </a>
                     </div>
@@ -41,6 +42,7 @@
                 </div>
                 <div class="panel-body">
                     <div hc-pie id="circuitStatusPie" height="248" items="circuitStatus"></div>
+                    <div ui-reloading reloading-model="reloading.circuitStatus"></div>
                 </div>
             </div>
         </div>
@@ -57,7 +59,7 @@
                                     <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                                     <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                                 </a>
-                                <a href="">
+                                <a href="" ng-click="loadingCustomerCircuit()">
                                     <i class="fa fa-refresh"></i>
                                 </a>
                                 <a href="" ng-click="closeWidget('customerCircuit')">
@@ -72,6 +74,7 @@
                         <div class="panel-body" ng-show="widgetShow.customerCircuit">
                             <div hc-column id="customerCircuitColumn" name="电路数" height="248"
                                  items="customerCircuit"></div>
+                            <div ui-reloading reloading-model="reloading.customerCircuit"></div>
                         </div>
                     </div>
                 </div>
@@ -86,7 +89,7 @@
                                     <i class="fa fa-eye" ng-hide="focusEnabled.eyeSlash"></i>
                                     <i class="fa fa-eye fa-eye-slash" ng-show="focusEnabled.eyeSlash"></i>
                                 </a>
-                                <a href="">
+                                <a href="" ng-click="loadingSla()">
                                     <i class="fa fa-refresh"></i>
                                 </a>
                                 <a href="" ng-click="closeWidget('sla')">
@@ -100,6 +103,7 @@
                         </div>
                         <div class="panel-body" ng-show="widgetShow.sla">
                             <div hc-column id="slaColumn" name="电路可用率" height="248" items="sla"></div>
+                            <div ui-reloading reloading-model="reloading.sla"></div>
                         </div>
                     </div>
                 </div>

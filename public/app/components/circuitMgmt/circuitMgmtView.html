@@ -1,0 +1,138 @@
+<div class="circuitMgmt-panel" ng-controller="circuitMgmtCtrl">
+    <div class="panel panel-default" ng-class="{'searchOpen':queryPanelOpen}">
+        <div class="panel-heading">
+            <ul class="pull-right">
+                <li class="btn-header">
+                    <span>
+                        <a href="" ng-click="triggerQueryPanel()">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </span>
+                </li>
+            </ul>
+            <ul>
+                <li class="btn-header">
+                    <span>
+                        <a href="" ng-click="showAll()">
+                            <i class="fa fa-arrows"></i>
+                        </a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <table class="table table-bordered table-hover" ui-footable>
+            <thead>
+            <th data-sort="no" data-toggle="true">电路编码</th>
+            <th data-sort="fault" class="text-center">状态</th>
+            <th data-hide="phone" class="text-center">速率</th>
+            <th data-sort="bizStatus" data-hide="phone" class="text-center">业务状态</th>
+            <th data-hide="phone" class="text-center">资源状态</th>
+            <th data-sort="serviceType" data-hide="phone" class="text-center">业务类型</th>
+            <th data-hide="all">Ａ端网元</th>
+            <th data-hide="all">Ａ端端口</th>
+            <th data-hide="all">Ｚ端网元</th>
+            <th data-hide="all">Ｚ端端口</th>
+            <th data-hide="all" class="text-center">长途编码</th>
+            <th data-hide="all" class="text-center">客户名称</th>
+            <th data-hide="phone,tablet"></th>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="circuit in circuits | orderBy:sort:reverse" ng-show="circuits.length">
+                <td>{{circuit.no}}</td>
+                <td class="text-center"><span class="label" ng-class="circuit.fault?'label-danger':'label-info'">{{circuit.fault | circuitFaultFilter}}</span></td>
+                <td class="text-center">{{circuit.resRate}}</td>
+                <td class="text-center">{{circuit.bizStatus}}</td>
+                <td class="text-center">{{circuit.resStatus}}</td>
+                <td class="text-center">{{circuit.serviceType}}</td>
+                <td class="text-center">{{circuit.aMe}}</td>
+                <td class="text-center">{{circuit.zMe}}</td>
+                <td class="text-center">{{circuit.aPort}}</td>
+                <td class="text-center">{{circuit.zPort}}</td>
+                <td class="text-center">{{circuit.groupNo}}</td>
+                <td class="text-center">{{circuit.customer}}</td>
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-info"></i></button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-sitemap"></i></button>
+                        <button type="button" class="btn btn-primary"><i class="fa fa-bolt"></i></button>
+                    </div>
+                </td>
+            </tr>
+            <tr class="items-null" ng-show="!circuits.length">
+                <td align="center" colspan="{{$columns.length}}">无记录</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr ng-show="pagination.itemSize > 0">
+                <td class="text-center" colspan="{{($columns|filter:{show:true}).length}}">
+                    <div class="ui-footable-pagination" ui-footable-pagination></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <aside class="queryPanel" ng-class="{'open':queryPanelOpen}">
+            <form role="form">
+                <div class="form-group">
+                    <label for="cirMgmt_circuitNo">电路编码</label>
+                    <input type="text" class="form-control" id="cirMgmt_circuitNo" placeholder="01T000789">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>客户信息</span>
+                        </div>
+
+                    </div>
+                    <input type="text" class="form-control" id="cirMgmt_circuitNo1" placeholder="01T000789">
+                </div>
+                <div>
+                    <label>
+                        <span class="name">故障电路</span>
+                        <div ui-footable-checkbox check-model = "isFault"></div>
+                    </label>
+                </div>
+                <hr>
+                <div class="moreOptions">
+                    <a href="" ng-click="triggerQueryPanelMore()">
+                        <i class="fa fa-angle-down" ng-hide="queryPanelMoreOpen"></i>
+                        <i class="fa fa-angle-up" ng-show="queryPanelMoreOpen"></i>
+                    </a>
+                    <div class="morePanel" ng-show="queryPanelMoreOpen">
+                        <div class="form-group">
+                            <label for="cirMgmt_groupNo">长途编码</label>
+                            <input type="text" class="form-control" id="cirMgmt_groupNo" placeholder="北京上海NE0132NP">
+                        </div>
+                        <div class="form-group">
+                            <label for="cirMgmt_bizStatus">业务状态</label>
+                            <select class="form-control" id="cirMgmt_bizStatus">
+                                <option></option>
+                                <option value="0">正常</option>
+                                <option value="1">备份</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cirMgmt_bizRate">电路速率</label>
+                            <input type="text" class="form-control" id="cirMgmt_bizRate" placeholder="2M">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>记录数</label>
+                            <select class="form-control" id="cirMgmt_pageSize">
+                                <option value="10" selected="selected">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-5 col-xs-offset-3">
+                        <button type="button" data-loading-text="查询中..." class="btn btn-default">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+            </form>
+
+    </aside>
+</div>

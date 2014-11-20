@@ -69,10 +69,10 @@
             {
                 "name": "电路",
                 "id": "circuit",
-                "menus": [
+                "children": [
                     {
                         "name": "电路管理",
-                        "id": "circuitMgt"
+                        "id": "circuitMgmt"
                     },
                     {
                         "name": "重保电路配置",

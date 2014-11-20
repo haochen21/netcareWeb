@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('portalCtrl', function ($scope) {
+    .controller('portalCtrl', function ($scope,$timeout) {
 
         $scope.focusEnabled = {
             eyeSlash: false,
@@ -13,7 +13,7 @@ angular.module('netcareApp')
             $scope.focusEnabled.eyeSlash = !$scope.focusEnabled.eyeSlash;
             $scope.focusEnabled[value] = !$scope.focusEnabled[value];
             $scope.$emit('focusOverlay');
-        }
+        };
 
         $scope.widgetShow = {
             customerCircuit: true,
@@ -23,7 +23,42 @@ angular.module('netcareApp')
 
         $scope.closeWidget = function (value){
             $scope.widgetShow[value] = !$scope.widgetShow[value];
-        }
+        };
+
+        $scope.reloading = {
+            customerInfo: false,
+            circuitStatus: false,
+            customerCircuit: false,
+            sla: false
+        };
+
+        $scope.loadingCustomerInfo = function(){
+            $scope.reloading.customerInfo = true;
+            $timeout(function() {
+                $scope.reloading.customerInfo = false;
+            }, parseInt(Math.random() * 1000 + 2000));
+        };
+
+        $scope.loadingCircuitStatus = function(){
+            $scope.reloading.circuitStatus = true;
+            $timeout(function() {
+                $scope.reloading.circuitStatus = false;
+            }, parseInt(Math.random() * 1000 + 2000));
+        };
+
+        $scope.loadingCustomerCircuit = function(){
+            $scope.reloading.customerCircuit = true;
+            $timeout(function() {
+                $scope.reloading.customerCircuit = false;
+            }, parseInt(Math.random() * 1000 + 2000));
+        };
+
+        $scope.loadingSla = function(){
+            $scope.reloading.sla = true;
+            $timeout(function() {
+                $scope.reloading.sla = false;
+            }, parseInt(Math.random() * 1000 + 2000));
+        };
 
         $scope.customerInfoData = [
             { name: "集团直管",

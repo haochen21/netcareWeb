@@ -1,3 +1,7 @@
+.portal{
+    padding: 15px 15px;
+}
+
 .portal [class*="row"] {
     box-shadow: none;
 }
@@ -36,6 +40,7 @@
 
 .portal .panel-body {
     min-height:250px;
+    position: relative;
     overflow: hidden;
 }
 
@@ -67,4 +72,20 @@ div.cusVital-info .cusVital-cirNum {
     font-size: 12px;
     font-weight: 800;
     color: #999;
+}
+
+.panel-body .panel-reload-layer{
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    background-color:rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+.panel-body .panel-reload-layer>[class*="fa"]{
+    position: absolute;
+    text-align: center;
+    top: 30%;
 }
