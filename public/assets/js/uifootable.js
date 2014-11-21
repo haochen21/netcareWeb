@@ -129,6 +129,8 @@ angular.module('uiFootable', [])
                             var isDetail = trItem.eq(i).hasClass(uiFootableClass.detail);
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:table-row;");
+                            }else{
+                                trItem.eq(i).toggleClass(uiFootableClass.toggleOpen);
                             }
                         }
                     });
@@ -140,6 +142,8 @@ angular.module('uiFootable', [])
                             var isDetail = trItem.eq(i).hasClass(uiFootableClass.detail);
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:none;");
+                            }else{
+                                trItem.eq(i).toggleClass(uiFootableClass.toggleOpen);
                             }
                         }
                     });
