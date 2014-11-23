@@ -111,6 +111,9 @@ router.route('/permissions/:id')
     .put(checkAdmin, routes.security.updatePermission)
     .delete(checkAdmin, routes.security.deletePermission);
 
+router.route('/circuit')
+    .post(routes.circuit.getCircuit);
+
 app.use('/api', router);
 
 app.use(logErrors);

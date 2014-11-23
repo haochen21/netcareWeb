@@ -1,6 +1,5 @@
 angular.module('netcareApp')
-    .controller('circuitMgmtCtrl', function ($scope, $http,circuitMgmtService,
-                                             uiFootableEvent, uiFootablePageEvent, uiFootablePageSize) {
+    .controller('circuitMgmtCtrl', function ($scope, $http, circuitMgmtService, uiFootableEvent, uiFootablePageEvent, uiFootablePageSize) {
 
         $scope.sort = '$index';
         $scope.reverse = true;
@@ -12,9 +11,22 @@ angular.module('netcareApp')
 
         $scope.is_loading = false;
         $scope.queryCircuit = function () {
-            console.log($scope.cirQueryCommand);
+            var params = {
+                no: $scope.cirQueryCommand.circuitNo,
+                customerGroups: [].map.call($scope.cirQueryCommand.customerGroups,
+                    function (obj) {
+                        return obj.id;
+                    }),
+                isFault: $scope.cirQueryCommand.isFault,
+                groupNo: $scope.cirQueryCommand.cirGroupNo,
+                bizStatus: $scope.cirQueryCommand.cirBizStatus,
+                bizRate: $scope.cirQueryCommand.cirBizRate,
+                pageSize: $scope.cirQueryCommand.cirTablePageSize
+            };
+            console.log(params);
+
             $scope.is_loading = true;
-            $http.get('json/circuit.json').success(function (data) {
+            $http.post('api/circuit', params).success(function (data) {
                 $scope.pagination.itemSize = data.records;
                 $scope.pagination.pageSize = uiFootablePageSize;
                 $scope.pagination.pageNumber = Math.ceil($scope.pagination.itemSize / $scope.pagination.pageSize);
@@ -33,7 +45,7 @@ angular.module('netcareApp')
         $scope.showAllAttr = false;
 
         $scope.showAll = function () {
-            if(!$scope.circuits.length){
+            if (!$scope.circuits.length) {
                 return;
             }
             if ($scope.showAllAttr) {
@@ -68,8 +80,8 @@ angular.module('netcareApp')
         };
 
         $scope.cirBizStatuses = [
-            {value:0,name:'正常'},
-            {value:1,name:'故障'}
+            {value: 0, name: '正常'},
+            {value: 1, name: '故障'}
         ];
     })
     .filter('circuitFaultFilter', function () {

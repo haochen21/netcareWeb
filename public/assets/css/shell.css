@@ -91,7 +91,7 @@
     padding-left: 10px;
     list-style: none;
     float: left;
-    margin: 0px -15px 0px -95px;
+    margin: 0px -15px 0px -15px;
 }
 
 @media (min-width: 768px) {
