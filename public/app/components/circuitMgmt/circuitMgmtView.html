@@ -17,7 +17,7 @@
                 </li>
             </ul>
         </div>
-        <table class="table table-bordered table-hover" ui-footable>
+        <table class="table table-bordered table-hover" ng-footable>
             <thead>
             <th data-sort="no" data-toggle="true">电路编码</th>
             <th data-sort="fault" class="text-center">状态</th>
@@ -63,7 +63,13 @@
             <tfoot>
             <tr ng-show="pagination.itemSize > 0">
                 <td class="text-center" colspan="{{($columns|filter:{show:true}).length}}">
-                    <div class="ui-footable-pagination" ui-footable-pagination></div>
+                    <ng-footable-pagination
+                            class="ng-footable-pagination"
+                            item-size="pagination.itemSize"
+                            page-num="pagination.pageNumber"
+                            current-page="pagination.currentPage"
+                            on-select-page="selectPage(page)">
+                    </ng-footable-pagination>
                 </td>
             </tr>
             </tfoot>
