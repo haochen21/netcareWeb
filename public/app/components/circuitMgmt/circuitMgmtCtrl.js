@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('circuitMgmtCtrl', function ($scope, $http, circuitMgmtService, uiFootableEvent, uiFootablePageEvent, uiFootablePageSize) {
+    .controller('circuitMgmtCtrl', function ($scope, $http, circuitMgmtService, ngFootableEvent, ngFootablePageEvent, ngFootablePageSize) {
 
         $scope.sort = '$index';
         $scope.reverse = true;
@@ -28,7 +28,7 @@ angular.module('netcareApp')
             $scope.is_loading = true;
             $http.post('api/circuit', params).success(function (data) {
                 $scope.pagination.itemSize = data.records;
-                $scope.pagination.pageSize = uiFootablePageSize;
+                $scope.pagination.pageSize = ngFootablePageSize;
                 $scope.pagination.pageNumber = Math.ceil($scope.pagination.itemSize / $scope.pagination.pageSize);
                 $scope.pagination.currentPage = 1;
                 $scope.pagination.lastPage = $scope.pagination.pageNumber;
@@ -49,9 +49,9 @@ angular.module('netcareApp')
                 return;
             }
             if ($scope.showAllAttr) {
-                $scope.$broadcast(uiFootableEvent.allRowsCollapse);
+                $scope.$broadcast(ngFootableEvent.allRowsCollapse);
             } else {
-                $scope.$broadcast(uiFootableEvent.allRowsExpand);
+                $scope.$broadcast(ngFootableEvent.allRowsExpand);
             }
             $scope.showAllAttr = !$scope.showAllAttr;
         };
@@ -83,6 +83,10 @@ angular.module('netcareApp')
             {value: 0, name: '正常'},
             {value: 1, name: '故障'}
         ];
+
+        $scope.selectPage = function(page){
+            console.log(page);
+        };
     })
     .filter('circuitFaultFilter', function () {
         return function (value) {

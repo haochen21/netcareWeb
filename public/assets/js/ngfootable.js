@@ -1,26 +1,26 @@
-angular.module('uiFootable', [])
-    .constant('uiFootableClass', {
-        toggle: 'uifootable-toggle',
+angular.module('ngFootable', [])
+    .constant('ngFootableClass', {
+        toggle: 'ngfootable-toggle',
         toggleOpen: 'open-detail-row',
-        disabled: 'uifootable-disabled',
-        detail: 'uifootable-row-detail',
-        detailCell: 'uifootable-row-detail-cell',
-        detailInner: 'uifootable-row-detail-inner',
-        detailInnerRow: 'uifootable-row-detail-row',
-        detailInnerGroup: 'uifootable-row-detail-group',
-        detailInnerName: 'uifootable-row-detail-name',
-        detailInnerValue: 'uifootable-row-detail-value',
-        detailShow: 'uifootable-detail-show'
+        disabled: 'ngfootable-disabled',
+        detail: 'ngfootable-row-detail',
+        detailCell: 'ngfootable-row-detail-cell',
+        detailInner: 'ngfootable-row-detail-inner',
+        detailInnerRow: 'ngfootable-row-detail-row',
+        detailInnerGroup: 'ngfootable-row-detail-group',
+        detailInnerName: 'ngfootable-row-detail-name',
+        detailInnerValue: 'ngfootable-row-detail-value',
+        detailShow: 'ngfootable-detail-show'
     })
-    .constant('uiFootableEvent', {
-        allRowsCollapse: 'uifootable_all_row_collapse',
-        allRowsExpand: 'uifootable_all_row_expand'
+    .constant('ngFootableEvent', {
+        allRowsCollapse: 'ngfootable_all_row_collapse',
+        allRowsExpand: 'ngfootable_all_row_expand'
     })
-    .constant('uiFootableBreakPoints', {
+    .constant('ngFootableBreakPoints', {
         phone: 480,
         tablet: 1024
     })
-    .controller('uiFootableCtrl',function($scope){
+    .controller('ngFootableCtrl',function($scope){
 
         $scope.sortBy = function(value,index){
             if($scope.$columns[index].sortType === '') {
@@ -41,14 +41,14 @@ angular.module('uiFootable', [])
 
         }
     })
-    .directive("uiFootable", function ($compile, $window, $document, uiFootableClass, uiFootableEvent, uiFootableBreakPoints) {
+    .directive("ngFootable", function ($compile, $window, $document, ngFootableClass, ngFootableEvent, ngFootableBreakPoints) {
         return {
             restrict: 'A',
             priority: 1001,
-            controller: 'uiFootableCtrl',
+            controller: 'ngFootableCtrl',
             scope: true,
             compile: function (element, attributes) {
-                angular.element(element).addClass('ui-footable');
+                angular.element(element).addClass('ng-footable');
                 var columns = [];
                 var thItems = element.find("th");
                 for (var i = 0; i < thItems.length; i++) {
@@ -84,10 +84,10 @@ angular.module('uiFootable', [])
                 //add tr click listener(open or close detail panel)
                 $trItem.attr('ng-click', 'rowClick($event,$index)');
 
-                var $rowDetail = angular.element('<tr style="display:none;" ng-repeat-end>').addClass(uiFootableClass.detail);
-                var $rowDetailCell = angular.element('<td colspan="{{$columns.length}}">').addClass(uiFootableClass.detailCell);
+                var $rowDetail = angular.element('<tr style="display:none;" ng-repeat-end>').addClass(ngFootableClass.detail);
+                var $rowDetailCell = angular.element('<td colspan="{{$columns.length}}">').addClass(ngFootableClass.detailCell);
                 $rowDetail.append($rowDetailCell);
-                var $rowDetailInner = angular.element('<div>').addClass(uiFootableClass.detailInner);
+                var $rowDetailInner = angular.element('<div>').addClass(ngFootableClass.detailInner);
                 $rowDetailCell.append($rowDetailInner);
 
                 //add detail after tr
@@ -100,20 +100,20 @@ angular.module('uiFootable', [])
                     $thItem.attr('ng-show', '$columns[' + i + '].show');
                     //add open or close toggle to td
                     if (columns[i].toggle) {
-                        $thItem.prepend(angular.element('<span>').addClass(uiFootableClass.toggle)
-                            .addClass(uiFootableClass.toggleClose).
+                        $thItem.prepend(angular.element('<span>').addClass(ngFootableClass.toggle)
+                            .addClass(ngFootableClass.toggleClose).
                             append(angular.element('<i class="fa fa-lg fa-plus-circle"></i><i class="fa fa-lg fa-minus-circle txt-color-red"></i>')));
                     }
                     var $rowDetailRow = angular.element('<div>')
-                        .addClass(uiFootableClass.detailInnerRow);
+                        .addClass(ngFootableClass.detailInnerRow);
                     //if table column is hide then detail row show info
                     $rowDetailRow.attr('ng-show', '!$columns[' + i + '].show');
                     var $rowDetailName = angular.element('<div>')
-                        .addClass(uiFootableClass.detailInnerName).text(columns[i].name);
+                        .addClass(ngFootableClass.detailInnerName).text(columns[i].name);
                     $rowDetailRow.append($rowDetailName);
 
                     var $rowDetailItem = angular.element('<div">' + tdItems[i].innerHTML + '</div>')
-                        .addClass(uiFootableClass.detailInnerValue);
+                        .addClass(ngFootableClass.detailInnerValue);
                     $rowDetailRow.append($rowDetailItem);
 
                     $rowDetailInner.append($rowDetailRow);
@@ -122,28 +122,28 @@ angular.module('uiFootable', [])
                 return function (scope, element, attrs) {
                     scope.$columns = columns;
 
-                    scope.$on(uiFootableEvent.allRowsExpand, function () {
+                    scope.$on(ngFootableEvent.allRowsExpand, function () {
                         var tbodyItem = element.find("tbody").eq(0);
                         var trItem = tbodyItem.find("tr");
                         for (var i = 0; i < trItem.length; i++) {
-                            var isDetail = trItem.eq(i).hasClass(uiFootableClass.detail);
+                            var isDetail = trItem.eq(i).hasClass(ngFootableClass.detail);
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:table-row;");
                             }else{
-                                trItem.eq(i).toggleClass(uiFootableClass.toggleOpen);
+                                trItem.eq(i).toggleClass(ngFootableClass.toggleOpen);
                             }
                         }
                     });
 
-                    scope.$on(uiFootableEvent.allRowsCollapse, function () {
+                    scope.$on(ngFootableEvent.allRowsCollapse, function () {
                         var tbodyItem = element.find("tbody").eq(0);
                         var trItem = tbodyItem.find("tr");
                         for (var i = 0; i < trItem.length; i++) {
-                            var isDetail = trItem.eq(i).hasClass(uiFootableClass.detail);
+                            var isDetail = trItem.eq(i).hasClass(ngFootableClass.detail);
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:none;");
                             }else{
-                                trItem.eq(i).toggleClass(uiFootableClass.toggleOpen);
+                                trItem.eq(i).toggleClass(ngFootableClass.toggleOpen);
                             }
                         }
                     });
@@ -169,7 +169,7 @@ angular.module('uiFootable', [])
                         var $target = angular.element($event.currentTarget);
                         //get toggle column
                         var tdItems = $target.find('td');
-                        $target.toggleClass(uiFootableClass.toggleOpen);
+                        $target.toggleClass(ngFootableClass.toggleOpen);
                         var displayValue = $target.next().attr('style');
                         if (displayValue === 'display:none;') {
                             $target.next().attr('style', 'display:table-row;');
@@ -183,9 +183,9 @@ angular.module('uiFootable', [])
                         for (var i = 0; i < scope.$columns.length; i++) {
                             if (scope.$columns[i].hide.indexOf('all') != -1) {
                                 scope.$columns[i].show = false;
-                            } else if (columns[i].hide.indexOf('phone') != -1 && scope.windowWidth <= uiFootableBreakPoints.phone) {
+                            } else if (columns[i].hide.indexOf('phone') != -1 && scope.windowWidth <= ngFootableBreakPoints.phone) {
                                 scope.$columns[i].show = false;
-                            } else if (columns[i].hide.indexOf('tablet') != -1 && scope.windowWidth <= uiFootableBreakPoints.tablet) {
+                            } else if (columns[i].hide.indexOf('tablet') != -1 && scope.windowWidth <= ngFootableBreakPoints.tablet) {
                                 scope.$columns[i].show = false;
                             } else {
                                 scope.$columns[i].show = true;
@@ -222,7 +222,7 @@ angular.module('uiFootable', [])
             }
         };
     })
-    .directive('uiFootableCheckbox', function () {
+    .directive('ngFootableCheckbox', function () {
         return {
             restrict: 'A',
             replace:true,

@@ -1,4 +1,4 @@
-tbody > tr > td > span.uifootable-toggle {
+tbody > tr > td > span.ngfootable-toggle {
     display: inline-block;
     padding-right: 5px;
     font-size: 14px;
@@ -22,43 +22,43 @@ tbody > tr.open-detail-row > td > span > :first-child {
 }
 
 
-.uifootable-row-detail-inner {
+.ngfootable-row-detail-inner {
     display: table;
 }
 
-.uifootable-row-detail-row {
+.ngfootable-row-detail-row {
     display: table-row;
     line-height: 1.5em;
 }
 
-.uifootable-row-detail-group {
+.ngfootable-row-detail-group {
     display: block;
     line-height: 2em;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-.uifootable-row-detail-name {
+.ngfootable-row-detail-name {
     display: table-cell;
     font-weight: bold;
     width: 75px;
     padding-right: 0.5em;
 }
 
-.uifootable-row-detail-value {
+.ngfootable-row-detail-value {
     display: table-cell;
 }
 
-.ui-footable-pagination .pagination {
+.ng-footable-pagination .pagination {
     margin: 5px 0;
 }
 
-.ui-footable th > .sort-indicator {
+.ng-footable th > .sort-indicator {
     position: relative;
 }
 
-.ui-footable th > .sort-indicator:before,
-.ui-footable th > .sort-indicator:after{
+.ng-footable th > .sort-indicator:before,
+.ng-footable th > .sort-indicator:after{
     content: "";
     border-width: 0 4px 4px;
     border-style: solid;
@@ -71,7 +71,7 @@ tbody > tr.open-detail-row > td > span > :first-child {
     margin-top: -4px;
 }
 
-.ui-footable th > .sort-indicator:before {
+.ng-footable th > .sort-indicator:before {
     margin-top: 2px;
     border-bottom: 0;
     border-left: 4px solid transparent;
@@ -79,14 +79,14 @@ tbody > tr.open-detail-row > td > span > :first-child {
     border-top: 4px solid #000;
 }
 
-.ui-footable th.sort-asc > .sort-indicator:before,
-.ui-footable th.sort-asc > .sort-indicator:after,
-.ui-footable th.sort-desc > .sort-indicator:before,
-.ui-footable th.sort-desc > .sort-indicator:after{
+.ng-footable th.sort-asc > .sort-indicator:before,
+.ng-footable th.sort-asc > .sort-indicator:after,
+.ng-footable th.sort-desc > .sort-indicator:before,
+.ng-footable th.sort-desc > .sort-indicator:after{
     visibility: hidden;
 }
 
-.ui-footable th.sortable.sort-desc > .sort-indicator:after {
+.ng-footable th.sortable.sort-desc > .sort-indicator:after {
     border-bottom: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
@@ -101,7 +101,7 @@ tbody > tr.open-detail-row > td > span > :first-child {
     opacity: .6;
 }
 
-.ui-footable th.sortable.sort-asc > .sort-indicator:after {
+.ng-footable th.sortable.sort-asc > .sort-indicator:after {
     visibility: visible;
     opacity: .6;
 }
@@ -113,7 +113,7 @@ label.checkbox {
     margin: 0px;
 }
 
-.ui-footable input[type=checkbox] {
+.ng-footable input[type=checkbox] {
     opacity: 0;
     position: absolute;
     margin: 0;
@@ -124,7 +124,7 @@ label.checkbox {
     cursor: pointer;
 }
 
-.ui-footable input[type=checkbox]+.lbl::before {
+.ng-footable input[type=checkbox]+.lbl::before {
     cursor: pointer;
     font-family: fontAwesome;
     font-weight: 400;
@@ -145,13 +145,13 @@ label.checkbox {
     top: -1px;
 }
 
-.ui-footable input[type=checkbox]:hover+.lbl::before,
-.ui-footable input[type=checkbox]+.lbl:hover::before{
+.ng-footable input[type=checkbox]:hover+.lbl::before,
+.ng-footable input[type=checkbox]+.lbl:hover::before{
     border-color:#ff893c;
 }
 
 
-.ui-footable input[type=checkbox]:checked+.lbl::before {
+.ng-footable input[type=checkbox]:checked+.lbl::before {
     display: inline-block;
     content: '\f00c';
     background-color: #F5F8FC;
@@ -159,7 +159,7 @@ label.checkbox {
     box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 -15px 10px -12px rgba(0,0,0,.05),inset 15px 10px -12px rgba(255,255,255,.1);
 }
 
-.ui-footable label.checked-some input[type=checkbox]+.lbl::before {
+.ng-footable label.checked-some input[type=checkbox]+.lbl::before {
     display: inline-block;
     content: '\f068';
     background-color: #F5F8FC;
@@ -167,6 +167,6 @@ label.checkbox {
     box-shadow: 0 1px 2px rgba(0,0,0,.05),inset 0 -15px 10px -12px rgba(0,0,0,.05),inset 15px 10px -12px rgba(255,255,255,.1);
 }
 
-.ui-footable .items-null > td{
+.ng-footable .items-null > td{
     line-height: 150px;
 }
