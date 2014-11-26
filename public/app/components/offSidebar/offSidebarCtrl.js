@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('offSidebarCrtl', function ($scope) {
+    .controller('offSidebarCrtl', function ($scope,socketService) {
 
         $scope.isOpen = false;
 
@@ -8,6 +8,11 @@ angular.module('netcareApp')
 
         $scope.$watch("faultReceive", function (newVal) {
             console.log(newVal);
+            if(newVal){
+                socketService.connectFault();
+            }else{
+                socketService.disConnectFault();
+            }
         });
 
         $scope.$on('offSidebarTrigger', function () {

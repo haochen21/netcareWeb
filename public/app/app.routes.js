@@ -19,4 +19,4 @@ angular.module('netcareApp')
         $routeProvider.otherwise({
             templateUrl: "app/components/circuitMgmt/circuitMgmtView.html"
         });
-    })
+    });

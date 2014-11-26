@@ -3,10 +3,15 @@
         <a href="#/" class="top-navbar-brand">
             <small>NetCare</small>
         </a>
+        <li class="sidebar-toggle visual-xs" ng-click="openMenu($event)">
+            <a href="">
+                <i class="fa fa-bars"></i>
+            </a>
+        </li>
     </div>
     <div class="top-navbar-wrapper">
         <ul class="top-nav top-navbar-nav">
-            <li class="sidebar-toggle" ng-click="openMenu($event)">
+            <li class="sidebar-toggle hidden-xs" ng-click="openMenu($event)">
                 <a href="">
                     <i class="fa fa-bars"></i>
                 </a>
@@ -35,12 +40,12 @@
 
                 <div class="dropdown-menu widget-notifications fadeInUp">
                     <div class="notifications-list">
-                        <div class="notification" ng-repeat="fault in faults">
-                            <div class="notification-title text-danger">{{fault.circuitNo}}</div>
-                            <div class="notification-description">{{fault.customerGroupName}}</div>
-                            <div class="notification-ago">{{fault.beginTime}}</div>
+                        <div class="notification" ng-repeat="fault in faults track by fault.id">
+                            <div class="notification-title text-danger">{{fault.no}}</div>
+                            <div class="notification-description">{{fault.customerGroupInfo}}</div>
+                            <div class="notification-ago">{{fault.meCreateTime | date:"yyyy-MM-dd HH:mm:ss"}}</div>
                             <div class="notification-icon  fa fa-lightbulb-o bg-info"
-                                 ng-class="{'bg-danger':fault.state === '已确认','bg-info':fault.state === '未确认'}"></div>
+                                 ng-class="{'bg-danger':fault.faultAck,'bg-info':!fault.faultAck}"></div>
                         </div>
                     </div>
                     <a href="#" class="notifications-link">更多故障信息</a>
