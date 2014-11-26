@@ -130,7 +130,7 @@ angular.module('ngFootable', [])
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:table-row;");
                             }else{
-                                trItem.eq(i).toggleClass(ngFootableClass.toggleOpen);
+                                trItem.eq(i).addClass(ngFootableClass.toggleOpen);
                             }
                         }
                     });
@@ -143,7 +143,7 @@ angular.module('ngFootable', [])
                             if (isDetail) {
                                 trItem.eq(i).attr("style", "display:none;");
                             }else{
-                                trItem.eq(i).toggleClass(ngFootableClass.toggleOpen);
+                                trItem.eq(i).removeClass(ngFootableClass.toggleOpen);
                             }
                         }
                     });

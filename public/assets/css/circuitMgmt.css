@@ -68,17 +68,17 @@
 }
 
 .table td > .btn-group button > i,
-.table td .uifootable-row-detail-value .btn-group button > i {
+.table td .ngfootable-row-detail-value .btn-group button > i {
     width: 12px;
 }
 
 .table td > .btn-group button,
-.table td .uifootable-row-detail-value .btn-group button{
+.table td .ngfootable-row-detail-value .btn-group button{
     margin-right: 3px;
 }
 
 @media (max-width: 480px) {
-    .table td .uifootable-row-detail-value .btn-group button {
+    .table td .ngfootable-row-detail-value .btn-group button {
         margin-right: 17px;
     }
 }
