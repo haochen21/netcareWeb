@@ -31,7 +31,7 @@
             <th data-hide="all">Ｚ端端口</th>
             <th data-hide="all" class="text-center">长途编码</th>
             <th data-hide="all" class="text-center">客户名称</th>
-            <th data-hide="phone,tablet"></th>
+            <th data-noexpand="true" data-hide="phone,tablet"></th>
             </thead>
             <tbody>
             <tr ng-repeat-start="circuit in circuits | orderBy:sort:reverse" ng-show="circuits.length">
@@ -50,9 +50,9 @@
                 <td class="text-center">{{circuit.customer}}</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-info"></i></button>
-                        <button type="button" class="btn btn-primary"><i class="fa fa-sitemap"></i></button>
-                        <button type="button" class="btn btn-primary"><i class="fa fa-bolt"></i></button>
+                        <button type="button" class="btn btn-primary" ng-click="showTextRoute($event,circuit)"><i class="fa fa-info"></i></button>
+                        <button type="button" class="btn btn-primary" ng-click="showRoute($event,circuit)"><i class="fa fa-sitemap"></i></button>
+                        <button type="button" class="btn btn-primary" ng-click="showFault($event,circuit)"><i class="fa fa-bolt"></i></button>
                     </div>
                 </td>
             </tr>

@@ -87,6 +87,18 @@ angular.module('netcareApp')
         $scope.selectPage = function(page){
             console.log(page);
         };
+
+        $scope.showTextRoute = function($event,circuit){
+            $event.stopPropagation();
+        };
+
+        $scope.showRoute = function($event,circuit){
+            $event.stopPropagation();
+        };
+
+        $scope.showFault = function($event,circuit){
+            $event.stopPropagation();
+        };
     })
     .filter('circuitFaultFilter', function () {
         return function (value) {

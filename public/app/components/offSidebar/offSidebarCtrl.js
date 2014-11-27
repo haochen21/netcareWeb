@@ -24,5 +24,5 @@ angular.module('netcareApp')
 
         $scope.$on('offSidebarTrigger', function () {
             $scope.isOpen = !$scope.isOpen;
-        })
+        });
     });

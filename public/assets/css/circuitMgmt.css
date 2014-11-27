@@ -10,21 +10,20 @@
 
 .circuitMgmt-panel .searchOpen {
     border-right:none;
-    -webkit-transform: translateX(-310px);
-    -moz-transform: translateX(-310px);
-    transform: translateX(-310px);
+    -webkit-transform: translateX(-280px);
+    -moz-transform: translateX(-280px);
+    transform: translateX(-280px);
 }
 
 .circuitMgmt-panel .panel > .panel-heading {
-    height: 38px;
+    height: 36px;
     background-color: #fafafa;
+    padding:0;
 }
 
 .panel-heading > ul {
     list-style: none;
     position: relative;
-    margin-right: -14px;
-    margin-top: -11px;
     margin-bottom: 0;
 }
 
@@ -44,7 +43,6 @@
     text-align: center;
     display: inline-block;
     line-height: 36px;
-    margin-top: 2px;
     color: #777;
     border-left: 1px solid rgba(0,0,0,.09);
 }
@@ -95,10 +93,10 @@
     right: 0px;
     padding: 10px 20px;
     display: none;
-    width: 310px;
-    -webkit-transform: translateX(310px);
-    -moz-transform: translateX(310px);
-    transform: translateX(310px);
+    width: 280px;
+    -webkit-transform: translateX(280px);
+    -moz-transform: translateX(280px);
+    transform: translateX(280px);
     -webkit-transition: -webkit-transform 0.05s ease-in-out;
     -moz-transition: -moz-transform 0.05s ease-in-out;
     transition: transform 0.05s ease-in-out;

@@ -294,7 +294,7 @@ div[class*="col-"].widget-focus-enabled{
 }
 
 #lock .panel {
-    height: 30%;
+    height: 200px;
     overflow: auto;
     margin: auto;
     position: absolute;
