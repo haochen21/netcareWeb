@@ -1,5 +1,6 @@
 .circuitMgmt-panel .panel {
     border-radius: 0;
+    border: none;
 }
 
 .circuitMgmt-panel .panel.hideBottomBorder {

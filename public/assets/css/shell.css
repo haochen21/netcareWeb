@@ -91,6 +91,25 @@
     list-style: none;
     float: left;
     margin: 0px -15px 0px -15px;
+    padding-left: 0;
+}
+
+@media (max-width: 768px) {
+    .top-navbar-nav:first-child {
+        list-style: none;
+        margin:0;
+        padding-left: 0;
+        position: absolute;
+        left:0;
+    }
+
+    .top-navbar-nav > li.sidebar-toggle > a {
+        display: block;
+        position: fixed;;
+        top: 2px;
+        right: 0;
+        z-index: 998;
+    }
 }
 
 .top-nav.top-navbar-nav .visual-xs{
@@ -108,7 +127,7 @@
 
 @media (min-width: 768px) {
     .top-navbar-nav {
-        margin: 0px -15px 0px -53px;
+        margin: 0px -15px 0px -15px;
     }
 }
 
@@ -150,16 +169,6 @@ li.sidebar-toggle > a {
 li.sidebar-toggle > a:focus,
 li.sidebar-toggle > a:hover {
     color: #117391;
-}
-
-@media (max-width: 768px) {
-    .sidebar-toggle {
-        display: block;
-        position: absolute;
-        top: 2px;
-        right: 0;
-        z-index: 998;
-    }
 }
 
 #top-navbar .navbar-form {
