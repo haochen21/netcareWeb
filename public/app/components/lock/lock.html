@@ -1,0 +1,14 @@
+<div id="lock"  ng-controller="lockCtrl" ng-show="show">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p class="text-center">输入密码解锁屏幕</p>
+            <form role="form">
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" id="lockInputPassword" placeholder="密码">
+                    <span class="fa fa-lock form-control-feedback text-muted"></span>
+                </div>
+                <button type="button" ng-click="unlock()" class="btn btn-sm btn-primary btn-block">解锁</button>
+            </form>
+        </div>
+    </div>
+</div>

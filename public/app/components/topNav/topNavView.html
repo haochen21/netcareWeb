@@ -14,12 +14,20 @@
                     <i class="fa fa-bars"></i>
                 </a>
             </li>
-            <li>
+            <li ng-click="clickDropdownMenu($event)">
                 <a href="">
                     <i class="fa fa-list"></i>
                 </a>
+                <div class="dropdown-menu shortcut-menu widget-notifications fadeInUp">
+                    <div class="notifications-list">
+                        <div class="dropdown-header"><i class="fa fa-tasks"></i>快捷菜单</div>
+                        <div class="notification" ng-repeat="shortcutMenu in shortcutMenus track by shortcutMenu.id">
+                            <div class="notification-description" ng-click="clickShortcutMenu(shortcutMenu)">{{shortcutMenu.name}}</div>
+                        </div>
+                    </div>
+                </div>
             </li>
-            <li>
+            <li ng-click="lock()">
                 <a href="">
                     <i class="fa fa-lock"></i>
                 </a>
@@ -33,6 +41,7 @@
             </li>
             <li ng-click="clickDropdownMenu($event)">
                 <a href="">
+                    <i class="label fa fa-times" ng-show="!websocketStatus"></i>
                     <i class="fa fa-life-ring"></i>
                 </a>
 

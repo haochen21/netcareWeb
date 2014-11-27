@@ -39,7 +39,7 @@ exports.initialize = function (server) {
             queue.bind('netcare-fault', '');
             queue.subscribe(function (message, headers, deliveryInfo, messageObject) {
                 var msg = JSON.parse(message.data.toString());
-                //console.log(msg.id);
+                console.log(msg.id);
                 io.to('faultSocket').emit('faultMessage', msg);
             });
         });
@@ -51,7 +51,7 @@ exports.initialize = function (server) {
             queue.bind('netcare-currAlarm', '');
             queue.subscribe(function (message, headers, deliveryInfo) {
                 var msg = JSON.parse(message.data.toString());
-                console.log(msg.id);
+                //console.log(msg.id);
                 io.to('alarmSocket').emit('alarmMessage', msg);
             });
         });

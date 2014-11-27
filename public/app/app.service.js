@@ -65,7 +65,8 @@ angular.module('netcareApp')
                     disConnectFault: function () {
                         socket.emit(socketConstant.faultDisconnectCommand);
                         messaging.publish(socketConstant.faultMessageStatus,false);
-                    }
+                    },
+                    socket:socket
                 }
             }
         }

@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('topNavCtrl',function($scope,$rootScope,$timeout,messaging,socketConstant){
+    .controller('topNavCtrl',function($scope,$rootScope,$location,messaging,socketConstant){
 
         $scope.openMenu = function ($event) {
             $rootScope.$broadcast('menuTrigger');
@@ -44,6 +44,27 @@ angular.module('netcareApp')
 
         $scope.$on('$destroy', function(){
             messaging.unsubscribe($scope.faultMessgeHandler);
+        });
+
+        $scope.shortcutMenus = [
+            {name: "首页",id: "portal"},
+            {name: "客户拓扑",id: "customerTopo"},
+            {name: "电路管理",id: "circuitMgmt"}
+        ];
+
+        $scope.clickShortcutMenu = function(menu){
+            $location.path('/'+menu.id);
+        };
+
+        $scope.lock = function(){
+            $rootScope.$broadcast('lock');
+        };
+
+        $scope.websocketStatus = true;
+        $scope.$on(socketConstant.websocketStatus,function(event, value){
+            $scope.$evalAsync(function(){
+                $scope.websocketStatus = value;
+            });
         });
     })
     .controller('shellSearchCtrl', function ($scope) {

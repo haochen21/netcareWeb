@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('offSidebarCrtl', function ($scope,socketService) {
+    .controller('offSidebarCrtl', function ($scope,$rootScope,socketService,socketConstant) {
 
         $scope.isOpen = false;
 
@@ -7,11 +7,18 @@ angular.module('netcareApp')
         $scope.faultReceive = true;
 
         $scope.$watch("faultReceive", function (newVal) {
-            console.log(newVal);
             if(newVal){
                 socketService.connectFault();
             }else{
                 socketService.disConnectFault();
+            }
+            $rootScope.$broadcast(socketConstant.websocketStatus,newVal);
+        });
+
+        $scope.$on(socketConstant.websocketStatus,function(event, value){
+            if(!value){
+                $scope.faultReceive = false;
+                $scope.alarmReceive = false;
             }
         });
 

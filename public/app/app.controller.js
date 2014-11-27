@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('netcareCtrl',function($scope,$location,uiNavMenuEvent){
+    .controller('netcareCtrl',function($scope,$rootScope,$location,uiNavMenuEvent,socketService,socketConstant){
 
         $scope.focusOverlay = false;
 
@@ -11,5 +11,10 @@ angular.module('netcareApp')
 
         $scope.$on('focusOverlay', function () {
             $scope.focusOverlay = !$scope.focusOverlay;
+        });
+
+        socketService.socket.on("disconnect", function(){
+            console.log("client disconnected from server");
+            $rootScope.$broadcast(socketConstant.websocketStatus,false);
         });
     });
