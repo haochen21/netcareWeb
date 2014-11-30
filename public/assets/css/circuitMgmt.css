@@ -10,9 +10,9 @@
 
 .circuitMgmt-panel .searchOpen {
     border-right:none;
-    -webkit-transform: translateX(-280px);
-    -moz-transform: translateX(-280px);
-    transform: translateX(-280px);
+    -webkit-transform: translateX(-310px);
+    -moz-transform: translateX(-310px);
+    transform: translateX(-310px);
 }
 
 .circuitMgmt-panel .panel > .panel-heading {
@@ -93,10 +93,10 @@
     right: 0px;
     padding: 10px 20px;
     display: none;
-    width: 280px;
-    -webkit-transform: translateX(280px);
-    -moz-transform: translateX(280px);
-    transform: translateX(280px);
+    width: 310px;
+    -webkit-transform: translateX(310px);
+    -moz-transform: translateX(310px);
+    transform: translateX(310px);
     -webkit-transition: -webkit-transform 0.05s ease-in-out;
     -moz-transition: -moz-transform 0.05s ease-in-out;
     transition: transform 0.05s ease-in-out;

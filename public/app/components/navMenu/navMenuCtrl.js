@@ -1,17 +1,11 @@
 angular.module('netcareApp')
-    .controller('navMenuCrtl', function ($scope,$http) {
+    .controller('navMenuCrtl', ['$scope','netcareCache',function ($scope,netcareCache) {
 
         $scope.isOpen = false;
-
-        $scope.loadData = function () {
-            $http.get('json/menu.json').success(function (data) {
-                $scope.menus = data;
-            });
-        }
+        $scope.menus = netcareCache.get('menus');
 
         $scope.$on('menuTrigger', function () {
             $scope.isOpen = !$scope.isOpen;
-        })
-
-        $scope.loadData();
-    });
+        });
+    }
+    ]);

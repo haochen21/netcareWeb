@@ -17,7 +17,7 @@ var mongodbConnect = function () {
     };
     mongoose.connect(config['Mongodb'].url, options);
 };
-//mongodbConnect();
+mongodbConnect();
 
 mongoose.connection.on('error', function (err) {
     console.log(err);
@@ -54,7 +54,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
 
 function logErrors(err, req, res, next) {
     console.error('logErrors', err.toString());
@@ -68,6 +67,10 @@ function errorHandler(err, req, res, next) {
         error: err.toString()
     });
 }
+
+app.all('/components/*', function(req, res) {
+    res.redirect('/');
+});
 
 var router = express.Router();
 
@@ -92,6 +95,9 @@ router.route('/users/:id')
 
 router.route('/users/roles/:id')
     .put(checkAdmin, routes.security.updateUserRoles);
+
+router.route('/user/permissions/:id')
+    .get(checkUser, routes.security.getUserPermissions);
 
 router.route('/roles')
     .get(checkAdmin, routes.security.getRoles)

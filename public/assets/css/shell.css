@@ -315,6 +315,7 @@ div[class*="col-"].widget-focus-enabled{
 }
 
 .offsidebar {
+    display:none;
     width: 210px;
     border-left: 1px solid #ccc;
     background-color: #fff;
@@ -340,6 +341,7 @@ div[class*="col-"].widget-focus-enabled{
 }
 
 .offsidebar.open {
+    display:block;
     -webkit-transform: translateX(0px);
     -moz-transform: translateX(0px);
     transform: translateX(0px);

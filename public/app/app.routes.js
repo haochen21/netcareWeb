@@ -3,20 +3,27 @@ angular.module('netcareApp')
 
         $locationProvider.html5Mode(true);
 
-        $routeProvider.when("/portal", {
+        $routeProvider.when("/components/login", {
+            templateUrl: "app/components/login/loginView.html"
+        });
+
+        $routeProvider.when("/components/portal", {
             templateUrl: "app/components/portal/portalView.html"
         });
-        $routeProvider.when("/customerTopo", {
+
+        $routeProvider.when("/components/customerTopo", {
             templateUrl: "app/components/customerTopo/customerTopoView.html"
         });
-        $routeProvider.when("/bizFault", {
+
+        $routeProvider.when("/components/bizFault", {
             templateUrl: "app/components/bizFault/bizFaultView.html"
         });
-        $routeProvider.when("/circuitMgmt", {
+
+        $routeProvider.when("/components/circuitMgmt", {
             templateUrl: "app/components/circuitMgmt/circuitMgmtView.html"
         });
 
         $routeProvider.otherwise({
-            templateUrl: "app/components/circuitMgmt/circuitMgmtView.html"
+            templateUrl: "app/components/login/loginView.html"
         });
     });

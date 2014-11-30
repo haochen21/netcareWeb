@@ -53,7 +53,7 @@ angular.module('netcareApp')
         ];
 
         $scope.clickShortcutMenu = function(menu){
-            $location.path('/'+menu.id);
+            $location.path('/components/'+menu.id);
         };
 
         $scope.lock = function(){

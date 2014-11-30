@@ -2,34 +2,35 @@
 <html ng-app="netcareApp">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>NetCare</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NetCare</title>
     <base href="/">
 
-	<!-- third-party stylesheets -->
-	<link rel="stylesheet" href="assets/css/bootstrap.css" />
-	<link rel="stylesheet" href="assets/css/bootstrap-switch.css" />
-	<link rel="stylesheet" href="assets/css/font-awesome.css" />
-    <link rel="stylesheet" href="assets/css/nv.d3.min.css" />
-    <link rel="stylesheet" href="assets/css/select.min.css" />
-    <link rel="stylesheet" href="assets/css/select2.css" />
-    <link rel="stylesheet" href="assets/css/select2-bootstrap.css" />
+    <!-- third-party stylesheets -->
+    <link rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/bootstrap-switch.css"/>
+    <link rel="stylesheet" href="assets/css/font-awesome.css"/>
+    <link rel="stylesheet" href="assets/css/nv.d3.min.css"/>
+    <link rel="stylesheet" href="assets/css/select.min.css"/>
+    <link rel="stylesheet" href="assets/css/select2.css"/>
+    <link rel="stylesheet" href="assets/css/select2-bootstrap.css"/>
 
-	<!-- our stylesheets -->
-    <link  rel="stylesheet" href="assets/css/uinavmenu.css"/>
-    <link  rel="stylesheet" href="assets/css/uicheckbox.css"/>
-    <link  rel="stylesheet" href="assets/css/ngfootable.css"/>
-    <link  rel="stylesheet" href="assets/css/shell.css"/>
-    <link  rel="stylesheet" href="assets/css/portal.css"/>
-    <link  rel="stylesheet" href="assets/css/circuitMgmt.css"/>
+    <!-- our stylesheets -->
+    <link rel="stylesheet" href="assets/css/uinavmenu.css"/>
+    <link rel="stylesheet" href="assets/css/uicheckbox.css"/>
+    <link rel="stylesheet" href="assets/css/ngfootable.css"/>
+    <link rel="stylesheet" href="assets/css/shell.css"/>
+    <link rel="stylesheet" href="assets/css/portal.css"/>
+    <link rel="stylesheet" href="assets/css/circuitMgmt.css"/>
+    <link rel="stylesheet" href="assets/css/login.css"/>
 
-	<!-- third-party javascript -->
+    <!-- third-party javascript -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="assets/libs/jquery-2.0.3.js"></script>
-	<script src="assets/libs/angular.min.js"></script>
-	<script src="assets/libs/angular-animate.js"></script>
-	<script src="assets/libs/angular-resource.js"></script>
+    <script src="assets/libs/angular.min.js"></script>
+    <script src="assets/libs/angular-animate.js"></script>
+    <script src="assets/libs/angular-resource.js"></script>
     <script src="assets/libs/angular-route.js"></script>
     <script src="assets/libs/select.js"></script>
     <script src="assets/libs/d3.min.js"></script>
@@ -37,9 +38,9 @@
     <script src="assets/libs/angularjs-nvd3-directives.min.js"></script>
     <script src="assets/libs/highcharts.js"></script>
 
-	<!-- our javascript -->
-	<script src="assets/js/uiNavMenu.js"></script>
-	<script src="assets/js/uiCheckbox.js"></script>
+    <!-- our javascript -->
+    <script src="assets/js/uiNavMenu.js"></script>
+    <script src="assets/js/uiCheckbox.js"></script>
     <script src="assets/js/ngfootable.js"></script>
     <script src="assets/js/ngfootablePagination.js"></script>
     <script src="app/app.module.js"></script>
@@ -50,6 +51,7 @@
     <script src="app/shared/highchart/ngHighchart.js"></script>
     <script src="app/shared/reloading/reloading.js"></script>
     <script src="app/shared/btnLoading/btnLoading.js"></script>
+    <script src="app/components/login/loginCtrl.js"></script>
     <script src="app/components/lock/lockCtrl.js"></script>
     <script src="app/components/topNav/topNavCtrl.js"></script>
     <script src="app/components/navMenu/navMenuCtrl.js"></script>
@@ -60,16 +62,18 @@
 </head>
 
 <body ng-controller="netcareCtrl">
+<div ng-if='logined'>
     <ng-include src="'app/components/topNav/topNavView.html'"></ng-include>
     <ng-include src="'app/components/navMenu/navMenuView.html'"></ng-include>
     <ng-include src="'app/components/offSidebar/offSidebarView.html'"></ng-include>
-    <div class="main-panel">
-        <div class="main-panel-container container-fluid">
-            <div ng-view></div>
-        </div>
+</div>
+<div class="main-panel">
+    <div class="main-panel-container container-fluid">
+        <div ng-view></div>
     </div>
-    <div id="focus-overlay" ng-show="focusOverlay"></div>
-    <ng-include src="'app/components/lock/lock.html'"></ng-include>
+</div>
+<div id="focus-overlay" ng-show="focusOverlay"></div>
+<ng-include src="'app/components/lock/lock.html'"></ng-include>
 </body>
 
 </html>

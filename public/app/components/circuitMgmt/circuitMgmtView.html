@@ -87,7 +87,7 @@
                         <span>客户信息</span>
                     </div>
                 </div>
-                <ui-select multiple ng-model="cirQueryCommand.customerGroups" theme="select2" class="form-control">
+                <ui-select multiple ng-model="cirQueryCommand.customerGroups" theme="bootstrap" class="form-control">
                     <ui-select-match placeholder="客户信息...">{{$item.name}}</ui-select-match>
                     <ui-select-choices
                             repeat="customerGroup in customerGroupsModel track by $index | filter: $select.search"

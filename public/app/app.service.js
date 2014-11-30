@@ -1,4 +1,7 @@
 angular.module('netcareApp')
+    .factory('netcareCache', ['$cacheFactory', function ($cacheFactory) {
+        return $cacheFactory('netcare-cache');
+    }])
     .factory('messaging', function () {
 
         var cache = {};
@@ -44,29 +47,29 @@ angular.module('netcareApp')
     .provider('socketService', function () {
         var socket;
         var faultMonitor;
-        return{
+        return {
             init: function () {
                 socket = io();
                 faultMonitor = false;
             },
-            $get: function (socketConstant,messaging) {
-                return{
+            $get: function (socketConstant, messaging) {
+                return {
                     connectFault: function () {
                         socket.emit(socketConstant.faultConnectCommand);
-                        messaging.publish(socketConstant.faultMessageStatus,true);
-                        if(!faultMonitor){
+                        messaging.publish(socketConstant.faultMessageStatus, true);
+                        if (!faultMonitor) {
                             socket.on(socketConstant.faultSocketName, function (fault) {
                                 console.log(fault);
-                                messaging.publish(socketConstant.faultMessageTopicName,[fault]);
+                                messaging.publish(socketConstant.faultMessageTopicName, [fault]);
                             });
                             faultMonitor = true;
                         }
                     },
                     disConnectFault: function () {
                         socket.emit(socketConstant.faultDisconnectCommand);
-                        messaging.publish(socketConstant.faultMessageStatus,false);
+                        messaging.publish(socketConstant.faultMessageStatus, false);
                     },
-                    socket:socket
+                    socket: socket
                 }
             }
         }

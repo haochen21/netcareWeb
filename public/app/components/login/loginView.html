@@ -1,0 +1,40 @@
+<div class="panel panel-primary fadeInUp animation-delay2 login-container" ng-controller="loginCtrl" ng-show="showing">
+    <div class="panel-heading text-center">Netcare</div>
+    <div class="panel-body">
+        <image class="login-img bounceIn animation-delay2" src="assets/img/photo.png"></image>
+        <form name="loginForm" role="form">
+            <div class="form-group bounceIn animation-delay4 loginName">
+                <label for="login-name" class="sr-only">用户名</label>
+
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
+                    <input type="text" class="form-control" id="login-name" name="loginName"
+                           required placeholder="用户名" required ng-model="user.name">
+                </div>
+                <p class="help-block login-errorMsg" ng-show="userNameError">{{errorUserName}}&nbsp;&nbsp;用户名不存在</p>
+            </div>
+            <div class="form-group bounceIn animation-delay4 password">
+                <label for="login-password" class="sr-only">密码</label>
+
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
+                    <input type="password" class="form-control" id="login-password"  name="loginPassoword"
+                           required placeholder="密   码" ng-model="user.password">
+                </div>
+                <p class="help-block login-errorMsg" ng-show="userPasswordError">密码不正确</p>
+            </div>
+            <button type="submit" btn-loading="is_loading" data-loading-text="登录中..." ng-click="login()"
+                    class="btn btn-primary btn-block bounceIn animation-delay6"
+                    ng-disabled="loginForm.$invalid">
+                登&nbsp;&nbsp;&nbsp;录
+            </button>
+            <label class="login-remember bounceIn animation-delay6">
+                <input id="login-check" type="checkbox" value="yes" checked="checked">
+                <span class="custom-checkbox padding-6"></span>在这台电脑免登录
+            </label>
+        </form>
+    </div>
+    <div class="panel-footer hidden text-center bounceIn animation-delay10">
+        <a href="" class="btn btn-link">使用其它帐户登录</a>
+    </div>
+</div>
