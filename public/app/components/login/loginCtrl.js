@@ -1,6 +1,6 @@
 angular.module('netcareApp')
-    .controller('loginCtrl', ['$scope', '$rootScope', '$location', '$http', 'netcareCache',
-        function ($scope, $rootScope, $location, $http, netcareCache) {
+    .controller('loginCtrl', ['$scope', '$location', '$http', 'netcareCache',
+        function ($scope, $location, $http, netcareCache) {
 
             $scope.showing = true;
             $scope.is_loading = false;
@@ -62,7 +62,7 @@ angular.module('netcareApp')
                 if ($scope.completedTasks == $scope.tasks.length) {
                     console.log("checkIfComplete.....");
                     $scope.is_loading = false;
-                    $rootScope.$broadcast('logined');
+                    $scope.loginResult.value = true;
                     $location.path('/components/portal');
                     $scope.showing = false;
                 }

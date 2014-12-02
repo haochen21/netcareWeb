@@ -1,7 +1,9 @@
 angular.module('netcareApp')
     .controller('netcareCtrl',function($scope,$location,uiNavMenuEvent,socketService,socketConstant){
 
-        $scope.logined = false;
+        $scope.loginResult = {
+            value:false
+        };
 
         $scope.focusOverlay = false;
 
@@ -13,10 +15,6 @@ angular.module('netcareApp')
 
         $scope.$on('focusOverlay', function () {
             $scope.focusOverlay = !$scope.focusOverlay;
-        });
-
-        $scope.$on('logined',function(){
-            $scope.logined = true;
         });
 
         socketService.socket.on("disconnect", function(){

@@ -62,7 +62,7 @@
 </head>
 
 <body ng-controller="netcareCtrl">
-<div ng-if='logined'>
+<div ng-if='loginResult.value'>
     <ng-include src="'app/components/topNav/topNavView.html'"></ng-include>
     <ng-include src="'app/components/navMenu/navMenuView.html'"></ng-include>
     <ng-include src="'app/components/offSidebar/offSidebarView.html'"></ng-include>
