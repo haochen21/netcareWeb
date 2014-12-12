@@ -59,7 +59,7 @@ angular.module('netcareApp')
                         messaging.publish(socketConstant.faultMessageStatus, true);
                         if (!faultMonitor) {
                             socket.on(socketConstant.faultSocketName, function (fault) {
-                                console.log(fault);
+                                //console.log(fault);
                                 messaging.publish(socketConstant.faultMessageTopicName, [fault]);
                             });
                             faultMonitor = true;

@@ -12,7 +12,5 @@
             </a>
         </div>
     </div>
-    <div ng-if=displayModule == 'cusFile'>
-    	<ng-include src="'app/components/customerTopo/cusFileView.html'"></ng-include>
-    </div>	
+    <ng-include src="'app/components/customerTopo/cusFileView.html'" ng-show="displayModule == 'cusFile'"></ng-include>
 </div>

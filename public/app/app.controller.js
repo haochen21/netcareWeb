@@ -10,7 +10,7 @@ angular.module('netcareApp')
         $scope.$on(uiNavMenuEvent.clickMenuItem, function (event, menu) {
             $scope.selectMenu = menu;
             $scope.$broadcast('menuTrigger');
-            $location.path('/'+menu.id);
+            $location.path('/components/'+menu.id);
         });
 
         $scope.$on('focusOverlay', function () {

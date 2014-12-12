@@ -133,24 +133,10 @@ angular.module('netcareApp')
                 status:true
             },
             {
-                name:'工商银行VPDN重保',
-                beginTime:'2013-09-01',
-                endTime:'2015-03-01',
-                circuitNum:10,
-                status:true
-            },
-            {
                 name:'宝马大客户重保',
                 beginTime:'2014-08-31',
                 endTime:'2015-01-31',
                 circuitNum:120,
-                status:true
-            },
-            {
-                name:'新华社重保',
-                beginTime:'2013-01-01',
-                endTime:'2015-01-01',
-                circuitNum:36,
                 status:true
             },
             {

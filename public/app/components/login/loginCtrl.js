@@ -1,14 +1,12 @@
 angular.module('netcareApp')
-    .controller('loginCtrl', ['$scope', '$location', '$http', 'netcareCache',
-        function ($scope, $location, $http, netcareCache) {
+    .controller('loginCtrl', ['$scope', '$location', '$http', '$q', 'netcareCache',
+        function ($scope, $location, $http, $q, netcareCache) {
 
             $scope.showing = true;
             $scope.is_loading = false;
             $scope.userNameError = false;
             $scope.userPasswordError = false;
             $scope.errorUserName = '';
-            $scope.completedTasks = 0;
-            $scope.tasks = [];
 
             $scope.user = {};
             $scope.user.name = 'admin';
@@ -32,7 +30,7 @@ angular.module('netcareApp')
                 console.log(params);
                 $http.post('api/login', params).success(function (data) {
                     if (data.type === 'AUTHORIZED') {
-                        netcareCache.put("user",data.user);
+                        netcareCache.put("user", data.user);
                         $scope.loadUserData();
                     } else if (data.type === 'LOGINNAMEERROR') {
                         $scope.errorUserName = params.loginName;
@@ -47,43 +45,35 @@ angular.module('netcareApp')
             };
 
             $scope.loadUserData = function () {
-                $scope.completedTasks = 0;
+                var user = netcareCache.get("user");
 
-                $scope.tasks.push({excuteFun: $scope.getPermissions});
-                $scope.tasks.push({excuteFun: $scope.getMenus});
-
-                for (var task in $scope.tasks) {
-                    $scope.tasks[task].excuteFun($scope.checkIfComplete);
-                }
-            };
-
-            $scope.checkIfComplete = function () {
-                $scope.completedTasks++;
-                if ($scope.completedTasks == $scope.tasks.length) {
-                    console.log("checkIfComplete.....");
-                    $scope.is_loading = false;
-                    $scope.loginResult.value = true;
-                    $location.path('/components/portal');
-                    $scope.showing = false;
-                }
-            };
-
-            $scope.getPermissions = function (callback) {
-                console.log('get permission.....');
-                var user =netcareCache.get("user");
-                $http.get('/api/user/permissions/'+user._id).success(function (data) {
-                    netcareCache.put('permissions',data);
-                    callback();
+                var getPermissionPromise = $http.get('/api/user/permissions/' + user._id);
+                getPermissionPromise.then(function (response) {
+                    netcareCache.put('permissions', response.data);
+                }, function (response) {
+                    throw new Error('getPermissions went wrong...');
                 });
+
+                var getMenusPromise = $http.get('json/menu.json');
+                getMenusPromise.then(function (response) {
+                    netcareCache.put('menus', response.data);
+                }, function (response) {
+                    throw new Error('getMenus went wrong...');
+                });
+
+                var loginPromises = $q.all([getPermissionPromise, getMenusPromise]);
+                loginPromises.then($scope.loginComplete);
             };
 
-            $scope.getMenus = function (callback) {
-                console.log('get systemMenu.....');
-                $http.get('json/menu.json').success(function (data) {
-                    netcareCache.put('menus',data);
-                    callback();
-                });
+            $scope.loginComplete = function () {
+                console.log("loginComplete.....");
+                $scope.is_loading = false;
+                $scope.loginResult.value = true;
+                $location.path('/components/customerTopo');
+                $scope.showing = false;
             };
+
+            $scope.login();
         }
     ]);
 

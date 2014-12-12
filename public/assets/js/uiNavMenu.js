@@ -14,7 +14,7 @@ angular.module('uiNavMenu', [])
     })
     .directive('menu', function ($compile,uiNavMenuEvent) {
         return {
-            restrict: "E",
+            restrict: "A",
             replace: true,
             scope: {
                 menu: '=menu'
