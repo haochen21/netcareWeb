@@ -19,8 +19,17 @@ angular.module('pdf', [])
                 var url = scope.pdfUrl,
                     pdfDoc = null,
                     currPage = 1,
-                    scale = (attrs.scale ? attrs.scale : 1);
+                    scale = 1;
 
+                scope.getViewportWidth = function () {
+                    return $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
+                };
+
+                if(scope.getViewportWidth() <= 768){
+                    scale = 0.7;
+                }else{
+                    scale = 1.5;
+                }
                 scope.pageToDisplay = 1;
                 scope.numPages = 1;
 
@@ -37,7 +46,6 @@ angular.module('pdf', [])
                 element.append($pdfViewer);
 
                 scope.handlePages = function (page) {
-
                     var $aElement = angular.element('<a></a>');
                     $aElement.attr('id','pdfView'+currPage);
 
@@ -61,10 +69,41 @@ angular.module('pdf', [])
                     $pdfViewer.append(angular.element(canvas));
 
                     //Move to next page
+                    if(scope.getViewportWidth() <= 768){
+                      return;
+                    }
                     currPage++;
                     if (pdfDoc !== null && currPage <= scope.numPages) {
                         pdfDoc.getPage(currPage).then(scope.handlePages);
                     }
+                };
+
+                scope.renderPage = function() {
+                    pdfDoc.getPage(scope.pageToDisplay).then(function(page) {
+                        $pdfViewer.empty();
+
+                        var $aElement = angular.element('<a></a>');
+                        $aElement.attr('id','pdfView'+scope.pageToDisplay);
+
+                        $pdfViewer.append($aElement);
+
+                        //This gives us the page's dimensions at full scale
+                        var viewport = page.getViewport(scale);
+
+                        //We'll create a canvas for each page to draw it on
+                        var canvas = $document[0].createElement("canvas");
+                        canvas.style.display = "block";
+                        canvas.className = 'pdfCanvas';
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        //Draw it on the canvas
+                        page.render({canvasContext: context, viewport: viewport});
+
+                        //Add it to the web page
+                        $pdfViewer.append(angular.element(canvas));
+                    });
                 };
 
                 scope.goPrevious = function() {
@@ -72,7 +111,11 @@ angular.module('pdf', [])
                         return;
                     }
                     scope.pageToDisplay = scope.pageToDisplay - 1;
-                    scope.scrollTo();
+                    if(scope.getViewportWidth() <= 768){
+                        scope.renderPage();
+                    }else{
+                        scope.scrollTo();
+                    }
                 };
 
                 scope.goNext = function() {
@@ -80,7 +123,11 @@ angular.module('pdf', [])
                         return;
                     }
                     scope.pageToDisplay = scope.pageToDisplay + 1;
-                    scope.scrollTo();
+                    if(scope.getViewportWidth() <= 768){
+                        scope.renderPage();
+                    }else{
+                        scope.scrollTo();
+                    }
                 };
 
                 scope.scrollTo = function() {
