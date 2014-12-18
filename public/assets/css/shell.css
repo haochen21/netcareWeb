@@ -1,3 +1,5 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 #top-navbar {
     min-height: 45px;
     -webkit-backface-visibility: hidden;

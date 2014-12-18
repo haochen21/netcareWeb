@@ -51,21 +51,6 @@
    background-color: rgba(0,0,0,.05);
 }
 
-.btn-header1 > :first-child > a:active{
-    background-color:#e8e8e8;
-    background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#e8e8e8),color-stop(100%,#ededed));
-    background-image:-webkit-linear-gradient(top,#e8e8e8 0,#ededed 100%);
-    background-image:-webkit-gradient(linear,top left,bottom left,from(#e8e8e8),to(#ededed));
-    background-image:linear-gradient(to bottom,#e8e8e8 0,#ededed 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#ededed', GradientType=0);
-    -webkit-box-shadow:inset 0 0 3px 1px rgba(0,0,0,.15);
-    box-shadow:inset 0 0 3px 1px rgba(0,0,0,.15);
-}
-
-.btn-header1 > :first-child > a > i{
-    width: 15px;
-}
-
 .table td > .btn-group button > i,
 .table td .ngfootable-row-detail-value .btn-group button > i {
     width: 12px;

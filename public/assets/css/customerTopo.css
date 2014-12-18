@@ -687,6 +687,13 @@
     right: 0;
     left: 0;
     background: #474747;
+    color:#fff;
+    z-index:999;
+    box-shadow: inset 1px 0 0 hsla(0,0%,100%,.08),
+    inset 0 1px 1px hsla(0,0%,0%,.15),
+    inset 0 -1px 0 hsla(0,0%,100%,.05),
+    0 1px 0 hsla(0,0%,0%,.15),
+    0 1px 1px hsla(0,0%,0%,.1);
 }
 
 @media (max-width: 767px) {
@@ -695,12 +702,148 @@
     }
 }
 
+.pdfViewToolbarBtn{
+    list-style:none;
+    position: relative;
+    padding-left: 0;
+    float:left;
+}
+
+.pdfViewToolbarBtnCenter{
+    list-style:none;
+    position: relative;
+    float:right;
+    right: 30%;
+}
+
+@media (min-width: 768px) {
+    .pdfViewToolbarBtnCenter{
+        right: 50%;
+    }
+}
+
+.pdfViewToolbarBtn > li,
+.pdfViewToolbarBtnCenter > li{
+    float: left;
+}
+
+.pdfViewToolbarBtn > li > a,
+.pdfViewToolbarBtnCenter > li > a{
+    min-width: 36px;
+    text-align: center;
+    display: inline-block;
+    line-height: 36px;
+    color: hsl(0,0%,95%);
+    border-left: 1px solid hsla(0,0%,0%,.2);
+}
+
+.pdfViewToolbarBtn > li > a,
+.pdfViewToolbarBtnCenter > li > a:last-child{
+    border-right: 1px solid hsla(0,0%,0%,.2);
+}
+
+.pageNum {
+    line-height: 36px;
+}
+
+.currNumPage {
+    padding: 3px 6px;
+    margin: 4px 0 4px 10px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background-color: hsla(0,0%,100%,.09);
+    background-image: linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,100%,0));
+    background-clip: padding-box;
+    border: 1px solid hsla(0,0%,0%,.35);
+    border-color: hsla(0,0%,0%,.32) hsla(0,0%,0%,.38) hsla(0,0%,0%,.42);
+    box-shadow: 0 1px 0 hsla(0,0%,0%,.05) inset, 0 1px 0 hsla(0,0%,100%,.05);
+    color: hsl(0,0%,95%);
+    font-size: 12px;
+    line-height: 14px;
+    min-width: 16px;
+    text-align: right;
+    width: 40px;
+    outline-style: none;
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+}
+
 .pdfViewer {
     width:100%;
     height:100%;
+    margin-top: 40px;
 }
 
 .pdfCanvas {
     margin:0 auto;
     border: 9px solid transparent;
+}
+
+.pdfCanvas.rotate0 { transform: rotate(0deg); -webkit-transform: rotate(0deg);-moz-transform: rotate(0deg);}
+.pdfCanvas.rotate90 { transform: rotate(90deg); -webkit-transform: rotate(90deg);-moz-transform: rotate(90deg);}
+.pdfCanvas.rotate180 { transform: rotate(180deg);-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);}
+.pdfCanvas.rotate270 { transform: rotate(270deg);-webkit-transform: rotate(270deg);-moz-transform: rotate(270deg); }
+
+.checkServicePanel > .checkServiceToolbar {
+    height: 36px;
+    background-color: #fafafa;
+    padding:0;
+}
+
+.checkServicePanel > .checkServiceToolbar > ul {
+    list-style: none;
+    position: relative;
+    margin-bottom: 0;
+    padding-left:0;
+}
+
+.checkServicePanel > .checkServiceToolbar > ul > li{
+    float: left;
+}
+
+.checkServicePanel > .checkServiceToolbar > li {
+    float: left;
+    list-style: none;
+    display: block;
+    padding-right:15px;
+}
+
+.checkServicePanel > .checkServiceToolbar .btn-header > a {
+    min-width: 36px;
+    text-align: center;
+    display: inline-block;
+    line-height: 36px;
+    color: #777;
+    border-right: 1px solid rgba(0,0,0,.09);
+}
+
+.checkServicePanel > .checkServiceToolbar .btn-header > a:hover{
+    background-color: rgba(0,0,0,.05);
+}
+
+.checkServicePanel .carousel-inner img{
+    width:100%;
+    height:100%;
+    margin:0 auto;
+    background: #474747;
+}
+
+.checkServicePanel .carousel-caption {
+    top: 15px;
+    bottom: auto;
+    color: #585858;
+}
+
+.checkServicePanel .carousel-indicators li {
+    border: 1px solid #585858;
+}
+
+.checkServicePanel .carousel-indicators .active{
+    background-color: #585858;
+}
+
+.carousel-indicators {
+    top: 15px;
+    bottom: auto;
 }

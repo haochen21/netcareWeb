@@ -14,5 +14,6 @@
     </div>
     <div ng-if="displayModule == 'cusFile'">
     	<ng-include src="'app/components/customerTopo/cusFileView.html'"></ng-include>
-    </div>	
+    </div>
+    <ng-include src="'app/components/customerTopo/checkServiceView.html'" ng-show="displayModule == 'checkService'"></ng-include>
 </div>

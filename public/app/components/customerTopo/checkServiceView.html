@@ -1,0 +1,19 @@
+<div class="checkServicePanel">
+    <div class="checkServiceToolbar">
+        <ul  class="checkServiceToolbarBtn">
+            <li class="btn-header">
+                <a href="" ng-click="backToCustomerMenu()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <carousel noTransition="myNoTransition">
+      <slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.image}}">
+        <div class="carousel-caption">
+          <p>{{slide.text}}</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>

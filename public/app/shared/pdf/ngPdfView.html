@@ -1,0 +1,42 @@
+<div class="pdfViewContainer">
+    <div class="pdfViewToolbar">
+        <ul  class="pdfViewToolbarBtn">
+            <li class="btn-header">
+                <a href="" ng-click="goBack()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+            <li class="btn-header">
+                <a href="" ng-click="goPrevious()">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+            <li class="btn-header">
+                <a href="" ng-click="goNext()">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li class="btn-header">
+                <a href="" ng-click="rotate()">
+                    <i class="fa fa-rotate-right"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="pdfViewToolbarBtnCenter">
+            <li class="btn-header">
+                <a href="" ng-click="zoomIn()">
+                    <i class="fa fa-minus"></i>
+                </a>
+            </li>
+            <li class="btn-header">
+                <a href="" ng-click="zoomOut()">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="pageNum">
+            <input type="text" class="currNumPage" min=1 ng-model="pageToDisplay">
+            <span> / {{numPages}}</span>
+        </div>
+    </div>
+</div>
