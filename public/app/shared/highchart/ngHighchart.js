@@ -42,7 +42,7 @@ angular.module('ngHighchart', [])
                             cursor: "pointer",
                             dataLabels: {
                                 enabled: true,
-                                color: '#ffffff',
+                                color: labelColor,
                                 connectorColor: labelConnectorColor,
                                 connectorPadding: 3,
                                 formatter: function () {
