@@ -73,4 +73,16 @@ angular.module('netcareApp')
             });
         };
 
+        $scope.cusCircuitDonutData = [
+            {
+                name: "正常",
+                y: 820,
+                color: '#ffffff'
+            },
+            { name: "故障",
+                y: 20,
+                color: '#3bbfb4'
+            }
+        ];
+
     }]);

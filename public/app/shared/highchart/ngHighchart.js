@@ -10,6 +10,11 @@ angular.module('ngHighchart', [])
 
             },
             link: function (scope, element, attrs) {
+                var outSize = attrs.outSize ? attrs.outSize : '100%',
+                    innerSize = attrs.innerSize ? attrs.innerSize : '0%',
+                    backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
+                    labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
+                    labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
 
                 var chart = new Highcharts.Chart({
                     chart: {
@@ -17,7 +22,8 @@ angular.module('ngHighchart', [])
                         height: angular.element(element).attr('height'),
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
-                        plotShadow: false
+                        plotShadow: false,
+                        backgroundColor:backgroundColor
                     },
                     title: {
                         text: null
@@ -36,8 +42,8 @@ angular.module('ngHighchart', [])
                             cursor: "pointer",
                             dataLabels: {
                                 enabled: true,
-                                color: "#4383b4",
-                                connectorColor: "#000000",
+                                color: '#ffffff',
+                                connectorColor: labelConnectorColor,
                                 connectorPadding: 3,
                                 formatter: function () {
                                     return "<b>" + this.point.name + "</b>:" + this.y;
@@ -49,6 +55,8 @@ angular.module('ngHighchart', [])
                         {
                             type: 'pie',
                             name: 'Browser share',
+                            size: outSize,
+                            innerSize: innerSize,
                             data: scope.items
                         }
                     ]
@@ -56,7 +64,6 @@ angular.module('ngHighchart', [])
                 scope.$watch("items", function (newValue) {
                     chart.series[0].setData(newValue, true);
                 }, true);
-
             }
         }
     })
