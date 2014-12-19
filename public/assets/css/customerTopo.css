@@ -61,9 +61,7 @@
     margin: -2em;
     border-radius: 50%;
     box-shadow: 2px 2px 6px #aeaeae;
-    background: -webkit-radial-gradient(100px 100px, #98CAFF, #7C7C7C);
-    background: -moz-radial-gradient(100px 100px, #98CAFF, #7C7C7C);
-    background: radial-gradient(100px 100px, #98CAFF, #7C7C7C);
+    background: #72a7d3;
 }
 
 .customerTopo .small-circle a {
@@ -72,6 +70,10 @@
     text-align: center;
     vertical-align: middle;
     color: #fff;
+}
+
+.customerTopo .small-circle:hover{
+     background: #5b99cb;
 }
 
 .deg0 {
