@@ -1454,7 +1454,7 @@ a.info-tiles {
     list-style:none;
     position: relative;
     float:right;
-    right: 30%;
+    right: 10%;
 }
 
 @media (min-width: 768px) {
