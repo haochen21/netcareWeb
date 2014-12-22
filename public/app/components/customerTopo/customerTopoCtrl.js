@@ -48,7 +48,7 @@ angular.module('netcareApp')
             $scope.singleCustomerGroupView = false;
             $scope.displayModule = customerMenu.id;
             if (customerMenu.id === 'cusFile') {
-                //$scope.pdfURL = "assets/cusfile/CF_10005_201412.pdf";
+                //$scope.pdfUrl = "/assets/cusfile/test.pdf";
                 $scope.pdfUrl = "/assets/cusfile/CF_10005_201412.pdf";
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
