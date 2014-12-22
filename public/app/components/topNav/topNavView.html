@@ -66,10 +66,10 @@
         </ul>
     </div>
     <form role="form" class="navbar-form" ng-controller="shellSearchCtrl"
-          ng-class="{'open':openShellSearch}" ng-submit="submit()">
+          ng-class="{'open':openShellSearch}">
         <div class="form-group">
             <input type="text" class="form-control" id="shellSearchText" ng-model="shellSearchText"
-                   placeholder="输入客户名称或电路编码">
+                   placeholder="输入客户名称或电路编码" ng-change="shellSearchUpdate()">
 
             <div class="fa fa-times form-control-feedback" ng-click="clickShellSearch(false)"></div>
         </div>

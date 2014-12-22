@@ -1,0 +1,128 @@
+   <a href="" ng-click="backToCustomerGroupsView()" class="backToCustomerGroupsView">
+       <i class="fa fa-hand-o-left"></i>
+   </a>
+   <div class="circle-container">
+        <figure class="center">
+            <img src="assets/img/pabx.jpg">
+            <figcaption class="image-name">中国平安保险(集团)股份有限公司</figcaption>
+        </figure>
+        <div ng-repeat="customerMenu in customerMenus"
+             ng-class="{true: customerMenu.angle, false: '' }[true]"
+             class="small-circle">
+            <a href="" ng-click="showSubModule(customerMenu)">
+                <span>{{customerMenu.name}}</span>
+            </a>
+        </div>
+    </div>
+    <div class="customerInfoPanel">
+        <div class="row">
+            <div class="col-md-4">
+                <a class="info-tiles tiles-info has-pie" href="#">
+			        <div class="tiles-heading">
+			            <div>基本信息</div>
+			        </div>
+			        <div class="tiles-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">客户级别:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">钻石客户</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">所属行业:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">保险</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">上海市浦东唐镇上丰路1158号</p>
+                                </div>
+                            </div>
+                        </form>
+                        <div hc-pie id="cusCircuitDonut" height="132" items="cusCircuitDonutData"
+                             out-size="100%" inner-size="90%" background-color="#3bbfb4"
+                             label-color="#FFFFFF" label-connector-color="#FFFFFF"></div>
+			        </div>
+			    </a>
+            </div>
+            <div class="col-md-4">
+                <a class="info-tiles tiles-blue" href="#">
+			        <div class="tiles-heading">
+			            <div>客户经理</div>
+			        </div>
+			        <div class="tiles-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">姓名:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">孙磊</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">电话:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">18602188588</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">sunlei@chinaunicom.cn</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">姓名:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">范纪明(值班)</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">电话:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">18601722189</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">fanjiming1@chinaunicom.cn</p>
+                                </div>
+                            </div>
+                        </form>
+			        </div>
+			    </a>
+            </div>
+            <div class="col-md-4">
+                <a class="info-tiles tiles-midnightblue" href="#">
+			        <div class="tiles-heading">
+			            <div>客户联系人</div>
+			        </div>
+			        <div class="tiles-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">姓名:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">蒋辉</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">电话:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">13701905307</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <p class="form-control-static">JIANGHUI006@pingan.com.cn</p>
+                                </div>
+                            </div>
+                        </form>
+			        </div>
+			    </a>
+            </div>
+        </div>
+    </div>

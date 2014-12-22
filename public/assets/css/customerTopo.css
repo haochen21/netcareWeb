@@ -8,6 +8,32 @@
     margin: 3em auto 0;
 }
 
+.backToCustomerGroupsView {
+    position: fixed;
+    left: 20px;
+    top: 95px;
+    z-index: 1001;
+    width: 36px;
+    height: 36px;
+    background: #72a7d3;
+    font-size: 16px;
+    text-align: center;
+    line-height: 35px;
+    border: 3px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.25s linear;
+}
+
+.backToCustomerGroupsView:hover {
+    text-decoration: none;
+    background: #5b99cb;
+}
+
+.backToCustomerGroupsView i {
+    color: #fff;
+}
+
 @media (min-width: 768px) {
     .customerTopo .circle-container {
         width: 24em;
@@ -16,6 +42,10 @@
 
     .customerTopo .circle-container {
        margin: 8em auto 0;
+    }
+
+    .backToCustomerGroupsView {
+        top:50px;
     }
 }
 
@@ -676,6 +706,10 @@
     padding: 20px;
 }
 
+.customerGroupsPanel {
+    margin:10px 10px;
+}
+
 .tiles-heading,
 .tiles-body,
 .tiles-footer {
@@ -739,6 +773,14 @@ a.info-tiles {
     padding: 6px 10px;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
+}
+
+.info-tiles.shortcut-tiles .tiles-body {
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    line-height: 35px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 .info-tiles.tiles-info {

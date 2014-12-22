@@ -67,12 +67,12 @@ angular.module('netcareApp')
             });
         });
     })
-    .controller('shellSearchCtrl', function ($scope) {
+    .controller('shellSearchCtrl', function ($scope,$rootScope) {
 
-        $scope.submit = function () {
-            $scope.clickShellSearch(false);
-            if ($scope.shellSearchText) {
-                console.log($scope.shellSearchText);
+        $scope.shellSearchUpdate = function(){
+            $rootScope.$broadcast('shellSearch',$scope.shellSearchText);
+            if($scope.shellSearchText === ''){
+                $scope.clickShellSearch(false);
             }
         };
     });
