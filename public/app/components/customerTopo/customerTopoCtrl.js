@@ -113,6 +113,15 @@ angular.module('netcareApp')
             }
         ];
 
+        $scope.slaDisplayModule = 'chart';
+        $scope.changeSlaInfoPanel = function(){
+            if($scope.slaDisplayModule === 'chart'){
+                $scope.slaDisplayModule = 'table';
+            }else if($scope.slaDisplayModule === 'table'){
+                $scope.slaDisplayModule = 'chart';
+            }
+        };
+
         $scope.slaRawDatas = [
             {
               name:'联通端/第三方',
@@ -124,15 +133,11 @@ angular.module('netcareApp')
             },
             {
                 name:'联通端/异地故障',
-                netDuration: 457
+                netDuration: 67
             },
             {
                 name:'客户端/原因不明',
-                netDuration: 74
-            },
-            {
-                name:'客户端/自行恢复',
-                netDuration: 148
+                netDuration: 54
             },
             {
                 name:'客户端/客户设备',
@@ -183,6 +188,43 @@ angular.module('netcareApp')
                     });
                 }
             };
-            console.log($scope.subSlaData);
         };
+
+        $scope.faultSheets=[
+            {
+                no:'上海-201410-A0386',
+                brokenDate:'2014/10/24',
+                cause:'已恢复，经倒换话务成功后',
+                source:'异地联通',
+                locate:'联通端/异地故障',
+                duration:'67',
+                circuitNo:'95512.0'
+            },
+            {
+                no:'上海-201410-A0388',
+                brokenDate:'2014/10/24',
+                cause:'已报异地联通处理',
+                source:'不明原因',
+                locate:'联通端/第三方',
+                duration:'491',
+                circuitNo:'95511.0'
+            },
+            {
+                no:'上海-201410-A0452',
+                brokenDate:'2014/10/28',
+                cause:'广西反馈联系用户拨测，反馈目前发现可以正幑',
+                source:'不明原因',
+                locate:'客户端/原因不明',
+                duration:'54',
+                circuitNo:'6.0750447E7'
+            },{
+                no:'SH-20141030-0035',
+                brokenDate:'2014/10/30',
+                cause:'更换光电已恢复',
+                source:'本地接入段',
+                locate:'联通端/光电',
+                duration:'67',
+                circuitNo:'21T012475'
+            }
+        ];
     }]);

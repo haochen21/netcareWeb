@@ -1630,3 +1630,40 @@ a.info-tiles {
     top: 15px;
     bottom: auto;
 }
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar {
+    height: 36px;
+    background-color: #fafafa;
+    padding:0;
+}
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar > ul {
+    list-style: none;
+    position: relative;
+    margin-bottom: 0;
+    padding-left:0;
+}
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar > ul > li{
+    float: left;
+}
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar > li {
+    float: left;
+    list-style: none;
+    display: block;
+    padding-right:15px;
+}
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar .btn-header > a {
+    min-width: 36px;
+    text-align: center;
+    display: inline-block;
+    line-height: 36px;
+    color: #777;
+    border-right: 1px solid rgba(0,0,0,.09);
+}
+
+.customerGroupSlaPanel > .customerGroupSlaToolbar .btn-header > a:hover{
+    background-color: rgba(0,0,0,.05);
+}

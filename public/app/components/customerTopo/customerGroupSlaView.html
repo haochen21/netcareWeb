@@ -1,2 +1,50 @@
-<div hc-pie-donut id="cusGroupSlaDonut" height="500" inner-items="faultSlaData" outer-items="subSlaData"
-     out-size="80%" inner-size="60%"></div>
+<div class="customerGroupSlaPanel">
+    <div class="customerGroupSlaToolbar">
+        <ul class="slaPanelBtnBar">
+            <li class="btn-header">
+                <a href="" ng-click="backToCustomerMenu()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+            <li class="btn-header">
+                <a href="" ng-click="changeSlaInfoPanel()">
+                    <i class="fa fa-columns" ng-show="slaDisplayModule == 'chart'"></i>
+                    <i class="fa fa-bar-chart-o" ng-show="slaDisplayModule == 'table'"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="slaDisplayModule == 'chart'">
+        <div hc-pie-donut id="cusGroupSlaDonut" height="400" inner-items="faultSlaData" outer-items="subSlaData"
+             out-size="80%" inner-size="60%">
+        </div>
+    </div>
+    <div ng-show="slaDisplayModule == 'table'">
+        <table class="table table-bordered table-hover" ng-footable>
+            <thead>
+            <th data-sort="no" data-toggle="true">故障单号</th>
+            <th data-sort="brokenDate" class="text-center">发生时间</th>
+            <th data-sort="duration" data-hide="phone" class="text-center">故障时长</th>
+            <th data-sort="source" data-hide="phone" class="text-center">故障源</th>
+            <th data-sort="locate" data-hide="phone" class="text-center">故障定位</th>
+            <th data-hide="all">故障原因</th>
+            <th data-hide="all">电路编码</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="faultSheet in faultSheets | orderBy:sort" ng-show="faultSheets.length">
+                <td>{{faultSheet.no}}</td>
+                <td class="text-center">{{faultSheet.brokenDate}}</td>
+                <td class="text-center">{{faultSheet.duration}}</td>
+                <td class="text-center">{{faultSheet.source}}</td>
+                <td class="text-center">{{faultSheet.locate}}</td>
+                <td class="text-center">{{faultSheet.cause}}</td>
+                <td class="text-center">{{faultSheet.circuitNo}}</td>
+            </tr>
+            <tr class="items-null" ng-show="!faultSheets.length">
+                <td align="center" colspan="{{$columns.length}}">无记录</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

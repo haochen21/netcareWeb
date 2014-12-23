@@ -67,7 +67,7 @@ angular.module('ngHighchart', [])
             }
         }
     })
-    .directive('hcPieDonut', function () {
+    .directive('hcPieDonut', function ($window) {
         return {
             restrict: 'AE',
             replace: true,
@@ -85,6 +85,8 @@ angular.module('ngHighchart', [])
                     labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
                     labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
 
+                var windowWidth = $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
+
                 var chart = new Highcharts.Chart({
                     chart: {
                         type: 'pie',
@@ -96,14 +98,14 @@ angular.module('ngHighchart', [])
                         backgroundColor:backgroundColor
                     },
                     title: {
-                        text: '2014年10月故障统计'
+                        text: '2014年10月故障统计(分钟)'
                     },
                     credits: {
                         enabled: false
                     },
                     tooltip: {
                         formatter: function () {
-                            return "<b>" + this.point.name + "</b>: " + Highcharts.numberFormat(this.percentage, 1) + " %";
+                            return "<b>" + this.point.name +":"+this.point.y+"分钟"+ "</b></b><br/>" + Highcharts.numberFormat(this.percentage, 1) + " %";
                         }
                     },
                     plotOptions: {
@@ -118,7 +120,7 @@ angular.module('ngHighchart', [])
                             size: innerSize,
                             dataLabels: {
                                 formatter: function () {
-                                    return '<b>' + this.point.name + ':</b> ' + this.y + '分钟';
+                                    return '<b>' + this.point.name + ':</b> ' + this.y + '';
                                 },
                                 color: 'white',
                                 distance: -50
@@ -130,8 +132,9 @@ angular.module('ngHighchart', [])
                             innerSize: innerSize,
                             dataLabels: {
                                 formatter: function () {
-                                    return '<b>' + this.point.name + ':</b> ' + this.y + '分钟';
-                                }
+                                    return '<b>' + this.point.name + '</b><br><br> ' + this.y + '';
+                                },
+                                distance: windowWidth>768?40:10
                             }
                         }
                     ]
