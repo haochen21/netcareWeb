@@ -66,7 +66,7 @@
         </ul>
     </div>
     <form role="form" class="navbar-form" ng-controller="shellSearchCtrl"
-          ng-class="{'open':openShellSearch}">
+          ng-class="{'open':openShellSearch}" ng-submit="submit()">
         <div class="form-group">
             <input type="text" class="form-control" id="shellSearchText" ng-model="shellSearchText"
                    placeholder="输入客户名称或电路编码" ng-change="shellSearchUpdate()">

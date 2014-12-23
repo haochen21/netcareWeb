@@ -75,5 +75,9 @@ angular.module('netcareApp')
                 $scope.clickShellSearch(false);
             }
         };
+
+        $scope.submit = function(){
+            $scope.clickShellSearch(false);
+        };
     });
 
