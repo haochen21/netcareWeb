@@ -1,8 +1,8 @@
 <div class="customerGroupSlaPanel">
-    <div class="customerGroupSlaToolbar">
-        <ul class="slaPanelBtnBar">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
             <li class="btn-header">
-                <a href="" ng-click="backToCustomerMenu()">
+                <a href="" ng-click="back()">
                     <i class="fa fa-hand-o-left"></i>
                 </a>
             </li>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <div ng-show="slaDisplayModule == 'chart'">
-        <div hc-pie-donut id="cusGroupSlaDonut" height="400" inner-items="faultSlaData" outer-items="subSlaData"
+        <div class="cusGroupSlaDonut" hc-pie-donut id="cusGroupSlaDonut" height="400" inner-items="faultSlaData" outer-items="subSlaData"
              out-size="80%" inner-size="60%">
         </div>
     </div>
@@ -25,13 +25,13 @@
             <th data-sort="no" data-toggle="true">故障单号</th>
             <th data-sort="brokenDate" class="text-center">发生时间</th>
             <th data-sort="duration" data-hide="phone" class="text-center">故障时长</th>
-            <th data-sort="source" data-hide="phone" class="text-center">故障源</th>
+            <th data-hide="phone" class="text-center">故障源</th>
             <th data-sort="locate" data-hide="phone" class="text-center">故障定位</th>
             <th data-hide="all">故障原因</th>
             <th data-hide="all">电路编码</th>
             </thead>
             <tbody>
-            <tr ng-repeat-start="faultSheet in faultSheets | orderBy:sort" ng-show="faultSheets.length">
+            <tr ng-repeat-start="faultSheet in faultSheets | orderBy:sort:reverse" ng-show="faultSheets.length">
                 <td>{{faultSheet.no}}</td>
                 <td class="text-center">{{faultSheet.brokenDate}}</td>
                 <td class="text-center">{{faultSheet.duration}}</td>

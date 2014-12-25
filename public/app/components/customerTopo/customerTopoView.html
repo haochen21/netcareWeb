@@ -1,8 +1,8 @@
 <div class="customerTopo" ng-controller="customerTopoCtrl">
     <div class="customerGroupsPanel" ng-show="customerGroupsView">
-        <div class="row">
+        <div class="row" ng-repeat="row in customerGroupsArray">
             <div class="col-md-3"
-                 ng-repeat="customerGroup in customerGroups | orderBy:'-classify' | filter:customerGroupCriteria">
+                 ng-repeat="customerGroup in customerGroups.slice(4*$index, 4*$index + 4) | filter:customerGroupCriteria">
                 <a class="info-tiles shortcut-tiles" href=""
                    ng-class="{'tiles-midnightblue':customerGroup.classify === '集团直管客户','tiles-info':customerGroup.classify === '钻石客户','tiles-inverse':customerGroup.classify === '金牌客户'}"
                    ng-click="singleCustomerGroup(customerGroup)">
@@ -13,8 +13,8 @@
             </div>
         </div>
     </div>
-    <div ng-if="singleCustomerGroupView">
-        <ng-include src="'app/components/customerTopo/singleCustomerInfoView.html'"></ng-include>
+    <div ng-if="basicInfoView">
+        <ng-include src="'app/components/customerTopo/basicInfoView.html'"></ng-include>
     </div>
     <div ng-if="displayModule == 'cusFile'">
         <ng-include src="'app/components/customerTopo/cusFileView.html'"></ng-include>
@@ -22,6 +22,9 @@
     <ng-include src="'app/components/customerTopo/checkServiceView.html'"
                 ng-show="displayModule == 'checkService'"></ng-include>
     <div ng-if="displayModule == 'sla'">
-        <ng-include src="'app/components/customerTopo/customerGroupSlaView.html'"></ng-include>
+        <ng-include src="'app/components/customerTopo/slaView.html'"></ng-include>
+    </div>
+    <div ng-if="displayModule == 'bizStatus'">
+        <ng-include src="'app/components/customerTopo/bizStatusView.html'"></ng-include>
     </div>
 </div>
