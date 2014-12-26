@@ -1702,3 +1702,10 @@ a.info-tiles {
 .bizStatusCircuitDonut{
     margin-top: 10px;
 }
+
+.bizStatusTopo {
+    position: absolute;
+    top: 41px;
+    bottom: 0;
+    width: 100%;
+}

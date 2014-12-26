@@ -45,8 +45,8 @@ angular.module('netcareApp')
         };
 
         $scope.back = function () {
-            if($scope.displayModule == 'bizStatus'
-                && $scope.bizStatusModule == 'bizStatusTopo'){
+            if ($scope.displayModule == 'bizStatus'
+                && $scope.bizStatusModule == 'bizStatusTopo') {
                 $scope.bizStatusModule = 'bizStatusPanel';
                 return;
             }
@@ -354,24 +354,128 @@ angular.module('netcareApp')
                 $scope.bizStatusDatas[k].dountData = [{
                     name: "正常",
                     y: $scope.bizStatusDatas[k].circuitNum - $scope.bizStatusDatas[k].faultCircuitNum,
-                    color:Highcharts.getOptions().colors[7]
+                    color: Highcharts.getOptions().colors[7]
                 },
-                {
-                    name: "故障",
-                    y: $scope.bizStatusDatas[k].faultCircuitNum,
-                    color:Highcharts.getOptions().colors[5]
-                }];
+                    {
+                        name: "故障",
+                        y: $scope.bizStatusDatas[k].faultCircuitNum,
+                        color: Highcharts.getOptions().colors[5]
+                    }];
             }
             var arrayLength = Math.ceil($scope.bizStatusDatas.length / 4);
             $scope.bizStatusArray = new Array(arrayLength);
             for (var l = 0; l < arrayLength; l++) {
                 $scope.bizStatusArray[l] = l;
             }
-            console.log( $scope.bizStatusDatas);
+            console.log($scope.bizStatusDatas);
         };
 
-        $scope.showBizStatusTopo = function(bizStatusData){
+        $scope.showBizStatusTopo = function (bizStatusData) {
             $scope.bizStatusModule = 'bizStatusTopo';
+            $scope.getBizStatusTopoData();
+        };
+
+        $scope.bizStatusTopoDatas = null;
+        $scope.getBizStatusTopoData = function () {
+            $scope.bizStatusTopoDatas = {};
+            $scope.bizStatusTopoDatas = {
+                nodes: [
+                    {
+                        "name": "Creighton Hospital"
+                    },
+                    {
+                        "name": "Heart Hospital"
+                    },
+                    {
+                        "name": "Marshall Regional Medical Center"
+                    },
+                    {
+                        "name": "McKennan Hospital & University Health Center"
+                    },
+                    {
+                        "name": "Queen of Peace Hospital"
+                    },
+                    {
+                        "name": "Sacred Heart Hospital"
+                    },
+                    {
+                        "name": "St. Luke's Hospital"
+                    },
+                    {
+                        "name": "St. Mary's Hospital"
+                    },
+                    {
+                        "name": "Milbank Area Hospital"
+                    },
+                    {
+                        "name": "Pipestone County Medical Center"
+                    },
+                    {
+                        "name": "St. Michael's Hospital"
+                    },
+                    {
+                        "name": "Wagner Community Memorial Hospital"
+                    }
+                ],
+                links: [
+                    {
+                        "source": 0,
+                        "target": 0
+                    },
+                    {
+                        "source": 1,
+                        "target": 1
+                    },
+                    {
+                        "source": 1,
+                        "target": 7
+                    },
+                    {
+                        "source": 2,
+                        "target": 2
+                    },
+                    {
+                        "source": 3,
+                        "target": 1
+                    },
+                    {
+                        "source": 3,
+                        "target": 3
+                    },
+                    {
+                        "source": 3,
+                        "target": 9
+                    },
+                    {
+                        "source": 4,
+                        "target": 4
+                    },
+                    {
+                        "source": 6,
+                        "target": 5
+                    },
+                    {
+                        "source": 6,
+                        "target": 3
+                    },
+                    {
+                        "source": 8,
+                        "target": 8
+                    },
+                    {
+                        "source": 10,
+                        "target": 3
+                    },
+                    {
+                        "source": 11,
+                        "target": 3
+                    },
+                    {
+                        "source": 11,
+                        "target": 11
+                    }
+                ]
+            };
         };
 
 
