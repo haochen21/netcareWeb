@@ -13,39 +13,19 @@
             <div class="row" ng-repeat="row in bizStatusArray">
                 <div class="col-md-3"
                      ng-repeat="bizStatusData in bizStatusDatas.slice(4*$index, 4*$index + 4)">
-                    <a class="info-tiles shortcut-tiles" href=""
-                       ng-class="{'tiles-green':$index == 0,'tiles-sky':$index == 1,'tiles-orange':$index == 2,'tiles-indigo':$index == 3}"
-                       ng-click="showBizStatusTopo(bizStatusData)">
-                        <div class="tiles-body">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">业务类型:</label>
-
-                                    <div class="col-sm-8">
-                                        <p class="form-control-static">{{bizStatusData.type}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">电&nbsp;路&nbsp;数&nbsp;:</label>
-
-                                    <div class="col-sm-8">
-                                        <p class="form-control-static">{{bizStatusData.circuitNum}}</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">故障电路:</label>
-
-                                    <div class="col-sm-8">
-                                        <p class="form-control-static">{{bizStatusData.faultCircuitNum}}</p>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="text-center">{{bizStatusData.normalPercent}}%</div>
-                            <div class="normalCircuitPercent progress">
-                                <div class="progress-bar" ng-style="{'width':bizStatusData.normalPercent+'%'}"></div>
-                            </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a href="" class="pull-right" ng-click="showBizStatusTopo(bizStatusData)">
+                                <i class="fa fa-sitemap fa-lg"></i>
+                            </a>
+                            <div class="text-center">{{bizStatusData.type}}</div>
                         </div>
-                    </a>
+                        <div class="panel-body">
+                            <div class="text-center">电路:{{bizStatusData.circuitNum}}</div>
+                            <div hc-pie class="bizStatusCircuitDonut" id={{bizStatusData.type+'-circuitDonut'}} height="132" items="bizStatusData.dountData"
+                                 out-size="100%" inner-size="90%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

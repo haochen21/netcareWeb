@@ -1,5 +1,5 @@
 angular.module('ngHighchart', [])
-    .directive('hcPie', function () {
+    .directive('hcPie', function ($timeout) {
         return {
             restrict: 'AE',
             replace: true,
@@ -10,60 +10,62 @@ angular.module('ngHighchart', [])
 
             },
             link: function (scope, element, attrs) {
-                var outSize = attrs.outSize ? attrs.outSize : '100%',
-                    innerSize = attrs.innerSize ? attrs.innerSize : '0%',
-                    backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
-                    labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
-                    labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
-
-                var chart = new Highcharts.Chart({
-                    chart: {
-                        renderTo: angular.element(element).attr('id'),
-                        height: angular.element(element).attr('height'),
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        backgroundColor:backgroundColor
-                    },
-                    title: {
-                        text: null
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return "<b>" + this.point.name + "</b>: " + Highcharts.numberFormat(this.percentage, 1) + " %";
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: "pointer",
-                            dataLabels: {
-                                enabled: true,
-                                color: labelColor,
-                                connectorColor: labelConnectorColor,
-                                connectorPadding: 3,
-                                formatter: function () {
-                                    return "<b>" + this.point.name + "</b>:" + this.y;
+                $timeout(function(){
+                    var outSize = attrs.outSize ? attrs.outSize : '100%',
+                        innerSize = attrs.innerSize ? attrs.innerSize : '0%',
+                        backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
+                        labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
+                        labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
+                    var chart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: angular.element(element).attr('id'),
+                            height: angular.element(element).attr('height'),
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            backgroundColor:backgroundColor
+                        },
+                        title: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return "<b>" + this.point.name + "</b>: " + Highcharts.numberFormat(this.percentage, 1) + " %";
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: false,
+                                cursor: "pointer",
+                                dataLabels: {
+                                    enabled: true,
+                                    color: labelColor,
+                                    connectorColor: labelConnectorColor,
+                                    connectorPadding: 3,
+                                    formatter: function () {
+                                        return "<b>" + this.point.name + "</b>:" + this.y;
+                                    }
                                 }
                             }
-                        }
-                    },
-                    series: [
-                        {
-                            type: 'pie',
-                            name: 'Browser share',
-                            size: outSize,
-                            innerSize: innerSize,
-                            data: scope.items
-                        }
-                    ]
-                });
-                scope.$watch("items", function (newValue) {
-                    chart.series[0].setData(newValue, true);
-                }, true);
+                        },
+                        series: [
+                            {
+                                type: 'pie',
+                                name: 'Browser share',
+                                size: outSize,
+                                innerSize: innerSize,
+                                data: scope.items
+                            }
+                        ]
+                    });
+                    scope.$watch("items", function (newValue) {
+                       chart.series[0].setData(newValue, true);
+                    }, true);
+                },0);
+
             }
         }
     })

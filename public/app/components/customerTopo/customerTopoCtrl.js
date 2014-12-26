@@ -75,6 +75,7 @@ angular.module('netcareApp')
         var slides = $scope.slides = [];
 
         $scope.getCheckService = function () {
+            slides = $scope.slides = [];
             slides.push({
                 image: '/assets/checkservice/SA_10005_201303_001.jpg',
                 text: '2013第一季度1'
@@ -350,16 +351,33 @@ angular.module('netcareApp')
                 }
             }
             for (var k = 0; k < $scope.bizStatusDatas.length; k++) {
-                $scope.bizStatusDatas[k].normalPercent = Math.round(parseFloat($scope.bizStatusDatas[k].circuitNum - $scope.bizStatusDatas[k].faultCircuitNum) / parseFloat($scope.bizStatusDatas[k].circuitNum) * 10000) / 100.00;
+                $scope.bizStatusDatas[k].dountData = [{
+                    name: "正常",
+                    y: $scope.bizStatusDatas[k].circuitNum - $scope.bizStatusDatas[k].faultCircuitNum,
+                    color:Highcharts.getOptions().colors[7]
+                },
+                {
+                    name: "故障",
+                    y: $scope.bizStatusDatas[k].faultCircuitNum,
+                    color:Highcharts.getOptions().colors[5]
+                }];
             }
             var arrayLength = Math.ceil($scope.bizStatusDatas.length / 4);
             $scope.bizStatusArray = new Array(arrayLength);
             for (var l = 0; l < arrayLength; l++) {
                 $scope.bizStatusArray[l] = l;
             }
+            console.log( $scope.bizStatusDatas);
         };
 
         $scope.showBizStatusTopo = function(bizStatusData){
             $scope.bizStatusModule = 'bizStatusTopo';
         };
+
+
+        $scope.customerGroupsView = false;
+        $scope.basicInfoView = false;
+        $scope.displayModule = 'bizStatus';
+        $scope.bizStatusModule = 'bizStatusPanel';
+        $scope.getBizStatusData();
     }]);
