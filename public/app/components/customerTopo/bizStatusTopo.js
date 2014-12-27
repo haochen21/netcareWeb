@@ -3,8 +3,9 @@ angular.module('netcareApp')
         return {
             restrict: 'A',
             link: function (scope, element) {
-                var width = element[0].offsetWidth
-                    height = element[0].offsetHeight;
+                var width = element[0].offsetWidth,
+                    height = element[0].offsetHeight,
+                    charge = element[0].offsetWidth > 768? -1500: -1000;
                 var color = d3.scale.category20();
 
                 var vis = d3.select(element[0])
@@ -21,7 +22,7 @@ angular.module('netcareApp')
                     }
 
                     var force = d3.layout.force()
-                        .charge([-1500])
+                        .charge([charge])
                         .linkDistance([250])
                         .gravity(0.3)
                         .size([width, height])
@@ -32,10 +33,24 @@ angular.module('netcareApp')
                     var edges = vis.selectAll("line")
                         .data(topoDatas.links)
                         .enter()
-                        .append("line")
-                        .style("stroke", "#ccc")
+                        .append("path")
+                        .attr("id", function(d) { return d.source.index + "_" + d.target.index; })
+                        .style("fill", "none")
+                        .style("stroke", "#585858")
                         .style("stroke-width", 1)
-                        .attr("marker-end", "url(#end)");
+                        .attr("marker-end", function(d) { return "url(#" + d.value + ")"; });;
+
+                    var path_label = vis.append("svg:g").selectAll(".path_label")
+                        .data(force.links())
+                        .enter().append("svg:text")
+                        .attr("class", "path_label")
+                        .append("svg:textPath")
+                        .attr("startOffset", "50%")
+                        .attr("text-anchor", "middle")
+                        .attr("xlink:href", function(d) { return "#" + d.source.index + "_" + d.target.index; })
+                        .style("fill", "#000")
+                        .style("font-family", "Arial")
+                        .text(function(d) { return d.value; });
 
                     var nodes = vis.selectAll("node")
                         .data(topoDatas.nodes)
@@ -59,10 +74,31 @@ angular.module('netcareApp')
                         .text(function(d) { return d.name });
 
                     force.on("tick", function() {
-                        edges.attr("x1", function(d) { return d.source.x; })
-                            .attr("y1", function(d) { return d.source.y; })
-                            .attr("x2", function(d) { return d.target.x; })
-                            .attr("y2", function(d) { return d.target.y; });
+                        edges.attr("d", function(d) {
+                            // Self edge.
+                            var x1 = d.source.x,
+                                y1 = d.source.y,
+                                x2 = d.target.x,
+                                y2 = d.target.y;
+                            if ( x1 === x2 && y1 === y2 ) {
+                                var dx1= x1-40,
+                                    dy1= y1-40,
+                                    dx2= dx1+80,
+                                    dy2= dy1,
+                                    dx3= x1,
+                                    dy3= y1;
+
+                                return "M " + x1 + " " + y1 + " L " + dx1 + " " + dy1+ " L " + dx2 + " " + dy2+ " L " + dx3 + " " + dy3;
+                            }else{
+                                var leftHand = d.source.x < d.target.x;
+                                if(leftHand){
+                                    return "M " + x1 + " " + y1 + " L " + x2 + " " + y2;
+                                }else{
+                                    return "M " + x2 + " " + y2 + " L " + x1 + " " + y1;
+                                }
+                            }
+                        });
+
                         nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
                     })

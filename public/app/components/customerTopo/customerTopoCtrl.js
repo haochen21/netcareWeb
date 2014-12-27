@@ -420,59 +420,73 @@ angular.module('netcareApp')
                 links: [
                     {
                         "source": 0,
-                        "target": 0
+                        "target": 0,
+                        "value": 2
                     },
                     {
                         "source": 1,
-                        "target": 1
+                        "target": 1,
+                        "value": 30
                     },
                     {
                         "source": 1,
-                        "target": 7
+                        "target": 7,
+                        "value": 30
                     },
                     {
                         "source": 2,
-                        "target": 2
+                        "target": 2,
+                        "value": 110
                     },
                     {
                         "source": 3,
-                        "target": 1
+                        "target": 1,
+                        "value": 45
                     },
                     {
                         "source": 3,
-                        "target": 3
+                        "target": 3,
+                        "value": 1
                     },
                     {
                         "source": 3,
-                        "target": 9
+                        "target": 9,
+                        "value": 68
                     },
                     {
                         "source": 4,
-                        "target": 4
+                        "target": 4,
+                        "value": 55
                     },
                     {
                         "source": 6,
-                        "target": 5
+                        "target": 5,
+                        "value": 65
                     },
                     {
                         "source": 6,
-                        "target": 3
+                        "target": 3,
+                        "value": 63
                     },
                     {
                         "source": 8,
-                        "target": 8
+                        "target": 8,
+                        "value": 88
                     },
                     {
                         "source": 10,
-                        "target": 3
+                        "target": 3,
+                        "value": 103
                     },
                     {
                         "source": 11,
-                        "target": 3
+                        "target": 3,
+                        "value": 113
                     },
                     {
                         "source": 11,
-                        "target": 11
+                        "target": 11,
+                        "value": 22
                     }
                 ]
             };
