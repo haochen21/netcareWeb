@@ -381,112 +381,54 @@ angular.module('netcareApp')
             $scope.bizStatusTopoDatas = {
                 nodes: [
                     {
-                        "name": "Creighton Hospital"
+                        "name": "市北"
                     },
                     {
-                        "name": "Heart Hospital"
+                        "name": "平安保险(唐镇)"
                     },
                     {
-                        "name": "Marshall Regional Medical Center"
+                        "name": "中国平安金融大厦"
                     },
                     {
-                        "name": "McKennan Hospital & University Health Center"
+                        "name": "平安保险(浦东)"
                     },
                     {
-                        "name": "Queen of Peace Hospital"
+                        "name": "上海润和院"
                     },
                     {
-                        "name": "Sacred Heart Hospital"
-                    },
-                    {
-                        "name": "St. Luke's Hospital"
-                    },
-                    {
-                        "name": "St. Mary's Hospital"
-                    },
-                    {
-                        "name": "Milbank Area Hospital"
-                    },
-                    {
-                        "name": "Pipestone County Medical Center"
-                    },
-                    {
-                        "name": "St. Michael's Hospital"
-                    },
-                    {
-                        "name": "Wagner Community Memorial Hospital"
+                        "name": "东亚银行(四川中路299号)"
                     }
                 ],
                 links: [
                     {
                         "source": 0,
-                        "target": 0,
+                        "target": 1,
                         "value": 2
                     },
                     {
-                        "source": 1,
-                        "target": 1,
-                        "value": 30
-                    },
-                    {
-                        "source": 1,
-                        "target": 7,
-                        "value": 30
-                    },
-                    {
-                        "source": 2,
+                        "source": 0,
                         "target": 2,
-                        "value": 110
+                        "value": 12
                     },
                     {
-                        "source": 3,
-                        "target": 1,
-                        "value": 45
-                    },
-                    {
-                        "source": 3,
+                        "source": 0,
                         "target": 3,
+                        "value": 8
+                    },
+                    {
+                        "source": 0,
+                        "target": 4,
                         "value": 1
                     },
                     {
-                        "source": 3,
-                        "target": 9,
-                        "value": 68
-                    },
-                    {
-                        "source": 4,
-                        "target": 4,
-                        "value": 55
-                    },
-                    {
-                        "source": 6,
+                        "source": 0,
                         "target": 5,
-                        "value": 65
+                        "value": 1
                     },
                     {
-                        "source": 6,
-                        "target": 3,
-                        "value": 63
-                    },
-                    {
-                        "source": 8,
-                        "target": 8,
-                        "value": 88
-                    },
-                    {
-                        "source": 10,
-                        "target": 3,
-                        "value": 103
-                    },
-                    {
-                        "source": 11,
-                        "target": 3,
-                        "value": 113
-                    },
-                    {
-                        "source": 11,
-                        "target": 11,
-                        "value": 22
+                        "source": 1,
+                        "target": 1,
+                        "value": 2
                     }
                 ]
             };

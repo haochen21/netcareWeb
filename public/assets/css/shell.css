@@ -271,6 +271,23 @@ li.sidebar-toggle > a:hover {
     height: 100%;
 }
 
+.main-panel-view {
+    transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+}
+
+.main-panel-view.ng-leave,
+.main-panel-view.ng-enter-active{
+    opacity: 1;
+}
+
+.main-panel-view.ng-enter,
+.main-panel-view.ng-leave-active{
+    opacity: 0;
+}
+
 #focus-overlay {
     background: rgba(0,0,0,0.95);
     position: fixed;
