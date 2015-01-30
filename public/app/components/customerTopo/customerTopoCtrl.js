@@ -58,7 +58,6 @@ angular.module('netcareApp')
             $scope.basicInfoView = false;
             $scope.displayModule = customerMenu.id;
             if (customerMenu.id === 'cusFile') {
-                //$scope.pdfUrl = "/assets/cusfile/test.pdf";
                 $scope.pdfUrl = "/assets/cusfile/CF_10005_201412.pdf";
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
@@ -67,7 +66,10 @@ angular.module('netcareApp')
             } else if (customerMenu.id === 'bizStatus') {
                 $scope.getBizStatusData();
             }
+        };
 
+        $scope.download = function(){
+            window.open('/file' + $scope.pdfUrl, '_blank', '');
         };
 
         $scope.myInterval = 2000;

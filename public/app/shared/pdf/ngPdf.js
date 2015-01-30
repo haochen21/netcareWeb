@@ -6,7 +6,8 @@ angular.module('pdf', [])
             templateUrl: 'app/shared/pdf/ngPdfView.html',
             scope: {
                 pdfUrl: '=',
-                onGoBack: '&'
+                onGoBack: '&',
+                onDownload: '&'
             },
             link: function (scope, element, attrs) {
                 var url = scope.pdfUrl,
@@ -168,6 +169,10 @@ angular.module('pdf', [])
                 scope.goBack = function(){
                     scope.onGoBack();
                 };
+
+                scope.download = function(){
+                    scope.onDownload();
+                }
             }
         }
     }]);

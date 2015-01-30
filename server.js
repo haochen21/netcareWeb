@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
@@ -71,6 +72,8 @@ function errorHandler(err, req, res, next) {
 app.all('/components/*', function(req, res) {
     res.redirect('/');
 });
+
+app.get('/file/assets/:type/:fileName', routes.cusServiceInfo.downloadFile);
 
 var router = express.Router();
 
