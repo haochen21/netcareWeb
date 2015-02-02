@@ -11,6 +11,7 @@ exports.downloadFile  = function(req,res,next){
     };
 
     var fileName = req.params.fileName;
+
     res.sendFile(fileName, options, function (err) {
         if (err) {
             if (err.code === "ECONNABORT" && res.statusCode == 304) {
