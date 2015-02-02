@@ -1584,6 +1584,15 @@ a.info-tiles {
 .pdfCanvas.rotate180 { transform: rotate(180deg);-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);}
 .pdfCanvas.rotate270 { transform: rotate(270deg);-webkit-transform: rotate(270deg);-moz-transform: rotate(270deg); }
 
+.cusFilePanelTable{
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.cusFilePanel > .subPanelToolbar {
+    border-bottom: 1px solid transparent;
+    border-color: #ddd;
+}
+
 .checkServicePanel > .checkServiceToolbar {
     height: 36px;
     background-color: #fafafa;

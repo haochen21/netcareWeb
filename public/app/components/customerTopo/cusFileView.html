@@ -1,5 +1,54 @@
-<ng-pdf
-        pdf-url="pdfUrl"
-        on-go-back="back()"
-        on-download="download()">
-</ng-pdf>
+<div class="cusFilePanel" ng-if="cusFileDisplayModule == 'table'">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
+            <li class="btn-header">
+                <a href="" ng-click="back()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="cusFilePanelTable">
+        <div class="row">
+            <div class="col-md-4"
+                 ng-repeat="cusFile in cusFiles">
+                <a class="info-tiles tiles-blue" href=""
+                   ng-click="showCusFile(cusFile)">
+                    <div class="tiles-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">文&nbsp;件&nbsp;名&nbsp;:</label>
+
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{cusFile.name}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">上传时间:</label>
+
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{cusFile.takeTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">同步时间:</label>
+
+                                <div class="col-sm-7">
+                                    <p class="form-control-static">{{cusFile.syncTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="cusFilePanel" ng-if="cusFileDisplayModule == 'file'">
+    <ng-pdf
+            pdf-url="pdfUrl"
+            on-go-back="goBackCusFileTable()"
+            on-download="download()">
+    </ng-pdf>
+</div>

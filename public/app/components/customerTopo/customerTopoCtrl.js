@@ -24,6 +24,8 @@ angular.module('netcareApp')
 
         $scope.basicInfoView = false;
         $scope.singleCustomerGroup = function (customerGroup) {
+            customerGroup.id = 10005;
+            customerGroup.name = '中国平安保险(集团)股份有限公司';
             $scope.customerGroupsView = false;
             $scope.basicInfoView = true;
             $scope.customerGroup = customerGroup;
@@ -58,7 +60,7 @@ angular.module('netcareApp')
             $scope.basicInfoView = false;
             $scope.displayModule = customerMenu.id;
             if (customerMenu.id === 'cusFile') {
-                $scope.pdfUrl = "/assets/cusfile/CF_10005_201412.pdf";
+                $scope.getCusFiles();
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
             } else if (customerMenu.id === 'sla') {
@@ -68,8 +70,45 @@ angular.module('netcareApp')
             }
         };
 
-        $scope.download = function(){
+        $scope.download = function () {
             window.open('/file' + $scope.pdfUrl, '_blank', '');
+        };
+
+        $scope.getCusFiles = function () {
+            $scope.cusFiles = [{
+                id: 38818,
+                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年4季度）',
+                takeTime: 1420698778000,
+                syncTime: 1420740143000,
+                fileName: '10005_325667'
+            }, {
+                id: 35102,
+                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年3季度）',
+                takeTime: 1414116411000,
+                syncTime: 1418264704000,
+                fileName: '10005_275277'
+            }, {
+                id: 35168,
+                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年2季度）',
+                takeTime: 1404786489000,
+                syncTime: 1418265397000,
+                fileName: '10005_210229'
+            }, {
+                id: 35172,
+                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年1季度）',
+                takeTime: 1398318829000,
+                syncTime: 1418265402000,
+                fileName: '10005_176122'
+            }];
+        };
+        $scope.cusFileDisplayModule = 'table';
+        $scope.goBackCusFileTable = function(){
+            $scope.cusFileDisplayModule = 'table';
+        } ;
+        $scope.showCusFile = function (cusFile) {
+            $scope.cusFileDisplayModule = 'file';
+            $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/2/'+cusFile.fileName+'.pdf';
+            console.log($scope.pdfUrl);
         };
 
         $scope.myInterval = 2000;
@@ -437,9 +476,9 @@ angular.module('netcareApp')
         };
 
 
-        $scope.customerGroupsView = false;
-        $scope.basicInfoView = false;
-        $scope.displayModule = 'bizStatus';
-        $scope.bizStatusModule = 'bizStatusPanel';
+        //$scope.customerGroupsView = false;
+        //$scope.basicInfoView = false;
+        //$scope.displayModule = 'bizStatus';
+        //$scope.bizStatusModule = 'bizStatusPanel';
         $scope.getBizStatusData();
     }]);
