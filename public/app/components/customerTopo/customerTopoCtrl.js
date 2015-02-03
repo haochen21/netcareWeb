@@ -108,7 +108,10 @@ angular.module('netcareApp')
         $scope.showCusFile = function (cusFile) {
             $scope.cusFileDisplayModule = 'file';
             $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/2/'+cusFile.fileName+'.pdf';
-            console.log($scope.pdfUrl);
+        };
+        $scope.downloadCusFile = function (cusFile,$event) {
+            window.open('/file' + '/assets/cusfile/'+$scope.customerGroup.id+'/2/'+cusFile.fileName+'.pdf', '_blank', '');
+            $event.stopPropagation();
         };
 
         $scope.myInterval = 2000;
