@@ -51,10 +51,11 @@ app.use(expressSession({
     saveUninitialized: true,
     resave: true
 }));
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(bodyParser.json());
 
 function logErrors(err, req, res, next) {
     console.error('logErrors', err.toString());
@@ -69,11 +70,11 @@ function errorHandler(err, req, res, next) {
     });
 }
 
-app.all('/components/*', function(req, res) {
+app.all('/components/*', function (req, res) {
     res.redirect('/');
 });
 
-app.get('/file/assets/cusfile/:customerGroupId/:type/:fileName', routes.cusServiceInfo.downloadFile);
+app.post('/file/assets/cusfile/:customerGroupId/:type', routes.cusServiceInfo.downloadFile);
 
 var router = express.Router();
 
@@ -122,6 +123,9 @@ router.route('/permissions/:id')
 
 router.route('/circuit')
     .post(routes.circuit.getCircuit);
+
+router.route('/customerService/cusResource/:customerGroupId')
+    .get(routes.cusServiceInfo.getCusResourceLog);
 
 app.use('/api', router);
 

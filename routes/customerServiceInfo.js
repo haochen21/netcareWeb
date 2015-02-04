@@ -1,17 +1,15 @@
 var path = require('path');
+var request = require("request");
+var config = require('../config');
 
-exports.downloadFile  = function(req,res,next){
-    var options = {
-        root: path.join(__dirname, '..','public','assets','cusfile',req.params.customerGroupId,req.params.type),
-        dotfiles: 'ignore',
-        headers: {
-            'x-timestamp': Date.now(),
-            'x-sent': true
-        }
-    };
+console.log(config.netCareServer); // this is the value for foo
 
-    var fileName = req.params.fileName;
-    res.sendFile(fileName, options, function (err) {
+exports.downloadFile = function (req, res, next) {
+    var fileUrl=req.body.fileUrl;
+    var fileName=req.body.fileName;
+
+    var fileDir = path.join(__dirname, '..', 'public', 'assets', 'cusfile', req.params.customerGroupId, req.params.type,fileUrl);
+    res.download(fileDir, fileName, function(err){
         if (err) {
             if (err.code === "ECONNABORT" && res.statusCode == 304) {
                 // No problem, 304 means client cache hit, so no data sent.
@@ -22,9 +20,24 @@ exports.downloadFile  = function(req,res,next){
             if (err.status) {
                 res.status(err.status).end();
             }
-        }
-        else {
+        } else {
             console.log('Sent:', fileName);
         }
     });
 };
+
+exports.getCusResourceLog = function (req, res, next) {
+    var customerGroupId = req.params.customerGroupId;
+    request(config.netCareServer + "/" + config.customerServiceName + "/cusResource?customerGroupId=" + customerGroupId, function (err, response, body) {
+        var jsonObject = JSON.parse(body);
+        console.log(body);
+        if (err) {
+            console.error("get customer resource file error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
+};
+

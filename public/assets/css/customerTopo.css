@@ -1593,6 +1593,11 @@ a.info-tiles {
     border-color: #ddd;
 }
 
+.cusFilePanelTable .panel-body > a{
+    color:#333;
+    text-decoration: none;
+}
+
 .checkServicePanel > .checkServiceToolbar {
     height: 36px;
     background-color: #fafafa;

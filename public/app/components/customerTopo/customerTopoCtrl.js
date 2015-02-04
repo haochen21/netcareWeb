@@ -32,7 +32,7 @@ angular.module('netcareApp')
             $window.scrollTo(0, 0);
         };
         $scope.customerMenus = [
-            {name: '客户资料', angle: 'deg0', id: 'cusFile'},
+            {name: '客户资料', angle: 'deg0', id: 'cusResourceFile'},
             {name: '运行报告', angle: 'deg45', id: 'operationReport'},
             {name: '业务状态', angle: 'deg135', id: 'bizStatus'},
             {name: '服务例会', angle: 'deg180', id: 'serviceMeeting'},
@@ -59,8 +59,8 @@ angular.module('netcareApp')
         $scope.showSubModule = function (customerMenu) {
             $scope.basicInfoView = false;
             $scope.displayModule = customerMenu.id;
-            if (customerMenu.id === 'cusFile') {
-                $scope.getCusFiles();
+            if (customerMenu.id === 'cusResourceFile') {
+                $scope.getCusResourceFiles();
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
             } else if (customerMenu.id === 'sla') {
@@ -74,44 +74,47 @@ angular.module('netcareApp')
             window.open('/file' + $scope.pdfUrl, '_blank', '');
         };
 
-        $scope.getCusFiles = function () {
-            $scope.cusFiles = [{
-                id: 38818,
-                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年4季度）',
-                takeTime: 1420698778000,
-                syncTime: 1420740143000,
-                fileName: '10005_325667'
-            }, {
-                id: 35102,
-                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年3季度）',
-                takeTime: 1414116411000,
-                syncTime: 1418264704000,
-                fileName: '10005_275277'
-            }, {
-                id: 35168,
-                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年2季度）',
-                takeTime: 1404786489000,
-                syncTime: 1418265397000,
-                fileName: '10005_210229'
-            }, {
-                id: 35172,
-                name: '网络运行报告---中国平安保险(集团)股份有限公司（2014年1季度）',
-                takeTime: 1398318829000,
-                syncTime: 1418265402000,
-                fileName: '10005_176122'
-            }];
+        $scope.getCusResourceFiles = function () {
+            $http.get(
+                'api/customerService/cusResource/'+$scope.customerGroup.id
+            ).then(function (response) {
+                    $scope.cusResourceFiles = response.data.logs;
+            });
         };
-        $scope.cusFileDisplayModule = 'table';
-        $scope.goBackCusFileTable = function(){
-            $scope.cusFileDisplayModule = 'table';
+        $scope.cusResourceFileDisplayModule = 'table';
+        $scope.goBackCusResourceFileTable = function(){
+            $scope.cusResourceFileDisplayModule = 'table';
         } ;
-        $scope.showCusFile = function (cusFile) {
-            $scope.cusFileDisplayModule = 'file';
-            $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/2/'+cusFile.fileName+'.pdf';
+        $scope.showCusResourceFile = function (file) {
+            $scope.cusResourceFileDisplayModule = 'file';
+            $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/1/'+file.fileUrl+'.pdf';
         };
-        $scope.downloadCusFile = function (cusFile,$event) {
-            window.open('/file' + '/assets/cusfile/'+$scope.customerGroup.id+'/2/'+cusFile.fileName+'.pdf', '_blank', '');
-            $event.stopPropagation();
+        $scope.downloadCusResourceFile = function (file,$event) {
+            var fileType = file.fileName;
+            var lastIndex = fileType.lastIndexOf(".");
+            if(lastIndex !== -1){
+                fileType = fileType.substr(lastIndex+1);
+            }
+
+            var form = $('<form></form>');
+            form.attr('method', 'post');
+            form.attr('action', '/file/assets/cusfile/'+$scope.customerGroup.id+'/1');
+            form.attr('target', 'formresult');
+            var field = $('<input></input>');
+            field.attr('type', 'hidden');
+            field.attr('name', 'fileUrl');
+            field.attr('text-wrap','none');
+            field.attr('value', file.fileUrl+'.'+fileType);
+            form.append(field);
+            var field2 = $('<input></input>');
+            field2.attr('type', 'hidden');
+            field2.attr('name', 'fileName');
+            field2.attr('value', file.fileName);
+            form.append(field2);
+            window.open('/file/assets/cusfile/'+$scope.customerGroup.id+'/1','formresult');
+            form.submit();
+            //window.open('/file' + '/assets/cusfile/'+$scope.customerGroup.id+'/1/'+file.fileUrl+'.'+fileType, '_blank', '');
+            //$event.stopPropagation();
         };
 
         $scope.myInterval = 2000;
