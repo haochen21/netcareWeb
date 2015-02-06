@@ -74,7 +74,7 @@ app.all('/components/*', function (req, res) {
     res.redirect('/');
 });
 
-app.post('/file/assets/cusfile/:customerGroupId/:type', routes.cusServiceInfo.downloadFile);
+app.get('/file/assets/cusfile/:logFileId', routes.cusServiceInfo.downloadFile);
 
 var router = express.Router();
 

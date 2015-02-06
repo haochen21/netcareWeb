@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window', function ($scope, $http, $filter, $window) {
+    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window','$timeout', function ($scope, $http, $filter, $window,$timeout) {
 
         $scope.customerGroupsView = true;
         var orderBy = $filter('orderBy');
@@ -71,7 +71,7 @@ angular.module('netcareApp')
         };
 
         $scope.download = function () {
-            window.open('/file' + $scope.pdfUrl, '_blank', '');
+            downloadFileHelper();
         };
 
         $scope.getCusResourceFiles = function () {
@@ -80,6 +80,61 @@ angular.module('netcareApp')
             ).then(function (response) {
                     $scope.cusResourceFiles = response.data.logs;
             });
+            $scope.cusResourceFiles1 = [{
+                customerGroupId: 10005,
+                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
+                fileType: "客户资源",
+                fileUrl: "10005_303095",
+                id: 35101,
+                syncResult: "success",
+                syncTime: 1418264641000,
+                taskTime: 1417678177000
+            },{
+                customerGroupId: 10005,
+                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
+                fileType: "客户资源",
+                fileUrl: "10005_235940",
+                id: 35170,
+                syncResult: "success",
+                syncTime: 1418265402000,
+                taskTime: 1408951623000
+            },{
+                customerGroupId: 10005,
+                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
+                fileType: "客户资源",
+                fileUrl: "10005_196297",
+                id: 35166,
+                syncResult: "success",
+                syncTime: 1418265396000,
+                taskTime: 1402277965000
+            },{
+                customerGroupId: 10005,
+                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
+                fileType: "客户资源",
+                fileUrl: "10005_189433",
+                id: 35163,
+                syncResult: "success",
+                syncTime: 1418265390000,
+                taskTime: 1401093730000
+            },{
+                customerGroupId: 10005,
+                fileName: "电路信息20140526.xls",
+                fileType: "客户资源",
+                fileUrl: "10005_189299",
+                id: 35167,
+                syncResult: "success",
+                syncTime: 1418265396000,
+                taskTime: 1401088092000
+            },{
+                customerGroupId: 10005,
+                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
+                fileType: "客户资源",
+                fileUrl: "10005_162503",
+                id: 35174,
+                syncResult: "success",
+                syncTime: 1418265408000,
+                taskTime: 1394602604000
+            }]
         };
         $scope.cusResourceFileDisplayModule = 'table';
         $scope.goBackCusResourceFileTable = function(){
@@ -88,33 +143,67 @@ angular.module('netcareApp')
         $scope.showCusResourceFile = function (file) {
             $scope.cusResourceFileDisplayModule = 'file';
             $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/1/'+file.fileUrl+'.pdf';
+            $scope.file = file;
         };
-        $scope.downloadCusResourceFile = function (file,$event) {
-            var fileType = file.fileName;
-            var lastIndex = fileType.lastIndexOf(".");
-            if(lastIndex !== -1){
-                fileType = fileType.substr(lastIndex+1);
-            }
+        $scope.downloadCusResourceFile = function (file) {
+            $scope.file = file;
+            $scope.downloadFileHelper();
+        };
 
-            var form = $('<form></form>');
-            form.attr('method', 'post');
-            form.attr('action', '/file/assets/cusfile/'+$scope.customerGroup.id+'/1');
-            form.attr('target', 'formresult');
-            var field = $('<input></input>');
-            field.attr('type', 'hidden');
-            field.attr('name', 'fileUrl');
-            field.attr('text-wrap','none');
-            field.attr('value', file.fileUrl+'.'+fileType);
-            form.append(field);
-            var field2 = $('<input></input>');
-            field2.attr('type', 'hidden');
-            field2.attr('name', 'fileName');
-            field2.attr('value', file.fileName);
-            form.append(field2);
-            window.open('/file/assets/cusfile/'+$scope.customerGroup.id+'/1','formresult');
-            form.submit();
-            //window.open('/file' + '/assets/cusfile/'+$scope.customerGroup.id+'/1/'+file.fileUrl+'.'+fileType, '_blank', '');
-            //$event.stopPropagation();
+        $scope.downloadFileHelper = function(){
+            window.open('/file/assets/cusfile/'+$scope.file.id, '_blank', '');
+        };
+
+
+        $scope.slaQueryPanelOpen = true;
+        $scope.triggerSlaQueryPanel = function () {
+            $scope.slaQueryPanelOpen = !$scope.slaQueryPanelOpen;
+        };
+        var nowDate = new Date();
+        $scope.slaQueryParam = {};
+        $scope.slaQueryBeginDate = function() {
+            $scope.slaQueryParam.bd = new Date(nowDate.getFullYear(), nowDate.getMonth()-1);
+        };
+        $scope.slaQueryBeginDate();
+
+        $scope.slaQueryEndDate = function() {
+            $scope.slaQueryParam.ed = new Date(nowDate.getFullYear(), nowDate.getMonth()-1);
+        };
+        $scope.slaQueryEndDate();
+
+        $scope.clearSlaQueryBeginDate = function () {
+            $scope.slaQueryBd = null;
+        };
+
+        $scope.clearSlaQueryEndDate = function () {
+            $scope.slaQueryEd = null;
+        };
+
+        $scope.openSlaQueryBeginDate = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.datepicker = {'slaQueryBdOpened': true};
+        };
+
+        $scope.openSlaQueryEndDate = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.datepicker = {'slaQueryEdOpened': true};
+        };
+
+        $scope.is_loading = false;
+        $scope.querySla = function () {
+            var beginDate = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth(), 1,0,0,0);
+            var endDate = new Date($scope.slaQueryParam.ed.getFullYear(), $scope.slaQueryParam.ed.getMonth() + 1, 0,23,59,59);
+            console.log(beginDate.getTime());
+            console.log(endDate.getTime());
+            $scope.is_loading = true;
+            $timeout(function(){
+                $scope.is_loading = false;
+                $scope.triggerSlaQueryPanel();
+            },1000);
         };
 
         $scope.myInterval = 2000;
