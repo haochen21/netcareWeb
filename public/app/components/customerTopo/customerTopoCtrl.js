@@ -155,6 +155,11 @@ angular.module('netcareApp')
         };
 
 
+        $scope.slaDisplayModule = 'chart';
+        $scope.changeSlaInfoPanel = function (type) {
+            $scope.slaDisplayModule = type;
+        };
+
         $scope.slaQueryPanelOpen = true;
         $scope.triggerSlaQueryPanel = function () {
             $scope.slaQueryPanelOpen = !$scope.slaQueryPanelOpen;
@@ -162,15 +167,14 @@ angular.module('netcareApp')
         var nowDate = new Date();
         $scope.slaQueryParam = {};
         $scope.slaQueryBeginDate = function() {
-            $scope.slaQueryParam.bd = new Date(nowDate.getFullYear(), nowDate.getMonth()-1);
+            $scope.slaQueryParam.bd = new Date(nowDate.getFullYear(), nowDate.getMonth()-2);
         };
         $scope.slaQueryBeginDate();
 
-        $scope.slaQueryEndDate = function() {
-            $scope.slaQueryParam.ed = new Date(nowDate.getFullYear(), nowDate.getMonth()-1);
-        };
-        $scope.slaQueryEndDate();
-
+        $scope.$watch('slaQueryParam.bd', function(){
+            $scope.slaQueryParam.endMinDate = $scope.slaQueryParam.bd;
+            $scope.slaQueryParam.ed = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth());
+        });
         $scope.clearSlaQueryBeginDate = function () {
             $scope.slaQueryBd = null;
         };
@@ -194,15 +198,21 @@ angular.module('netcareApp')
         };
 
         $scope.is_loading = false;
+        $scope.cusGroupSlaDonutTitle = '故障统计(分钟)';
         $scope.querySla = function () {
             var beginDate = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth(), 1,0,0,0);
             var endDate = new Date($scope.slaQueryParam.ed.getFullYear(), $scope.slaQueryParam.ed.getMonth() + 1, 0,23,59,59);
-            console.log(beginDate.getTime());
-            console.log(endDate.getTime());
+            var beginDateValue = $filter('date')(beginDate,'yyyy-M');
+            var endDateValue = $filter('date')(endDate,'yyyy-M');
             $scope.is_loading = true;
             $timeout(function(){
                 $scope.is_loading = false;
                 $scope.triggerSlaQueryPanel();
+                if(beginDateValue === endDateValue){
+                    $scope.cusGroupSlaDonutTitle = beginDateValue+' 故障统计';
+                }else{
+                    $scope.cusGroupSlaDonutTitle = beginDateValue+' 到 '+endDateValue+'&nbsp;&nbsp;故障统计';
+                }
             },1000);
         };
 
@@ -264,14 +274,8 @@ angular.module('netcareApp')
             }
         ];
 
-        $scope.slaDisplayModule = 'chart';
-        $scope.changeSlaInfoPanel = function () {
-            if ($scope.slaDisplayModule === 'chart') {
-                $scope.slaDisplayModule = 'table';
-            } else if ($scope.slaDisplayModule === 'table') {
-                $scope.slaDisplayModule = 'chart';
-            }
-        };
+
+
 
         $scope.slaRawDatas = [
             {

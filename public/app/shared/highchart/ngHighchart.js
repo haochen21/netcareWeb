@@ -69,84 +69,91 @@ angular.module('ngHighchart', [])
             }
         }
     })
-    .directive('hcPieDonut', function ($window) {
+    .directive('hcPieDonut', function ($window,$timeout) {
         return {
             restrict: 'AE',
             replace: true,
             scope: {
                 innerItems: '=',
-                outerItems: '='
+                outerItems: '=',
+                title: '='
             },
             controller: function ($scope, $element, $attrs) {
 
             },
             link: function (scope, element, attrs) {
-                var outSize = attrs.outSize ? attrs.outSize : '100%',
-                    innerSize = attrs.innerSize ? attrs.innerSize : '0%',
-                    backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
-                    labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
-                    labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
+                $timeout(function(){
+                    var outSize = attrs.outSize ? attrs.outSize : '100%',
+                        innerSize = attrs.innerSize ? attrs.innerSize : '0%',
+                        backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
+                        labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
+                        labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
 
-                var windowWidth = $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
+                    var windowWidth = $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
 
-                var chart = new Highcharts.Chart({
-                    chart: {
-                        type: 'pie',
-                        renderTo: angular.element(element).attr('id'),
-                        height: angular.element(element).attr('height'),
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        backgroundColor:backgroundColor
-                    },
-                    title: {
-                        text: '2014年10月故障统计(分钟)'
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return "<b>" + this.point.name +":"+this.point.y+"分钟"+ "</b></b><br/>" + Highcharts.numberFormat(this.percentage, 1) + " %";
-                        }
-                    },
-                    plotOptions: {
-                        pie: {
-                            shadow: false,
-                            center: ['50%', '50%']
-                        }
-                    },
-                    series: [
-                        {
-                            data: scope.innerItems,
-                            size: innerSize,
-                            dataLabels: {
-                                formatter: function () {
-                                    return '<b>' + this.point.name + ':</b> ' + this.y + '';
-                                },
-                                color: 'white',
-                                distance: -50
+                    var chart = new Highcharts.Chart({
+                        chart: {
+                            type: 'pie',
+                            renderTo: angular.element(element).attr('id'),
+                            height: angular.element(element).attr('height'),
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            backgroundColor:backgroundColor
+                        },
+                        title: {
+                            text: scope.title
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return "<b>" + this.point.name +":"+this.point.y+"分钟"+ "</b></b><br/>" + Highcharts.numberFormat(this.percentage, 1) + " %";
                             }
                         },
-                        {
-                            data: scope.outerItems,
-                            size: outSize,
-                            innerSize: innerSize,
-                            dataLabels: {
-                                formatter: function () {
-                                    return '<b>' + this.point.name + '</b><br><br> ' + this.y + '';
-                                },
-                                distance: windowWidth>768?40:10
+                        plotOptions: {
+                            pie: {
+                                shadow: false,
+                                center: ['50%', '50%']
                             }
-                        }
-                    ]
-                });
-                scope.$watch("innerItems", function (newValue) {
-                    chart.series[0].setData(newValue, true);
-                }, true);
-                scope.$watch("outerItems", function (newValue) {
-                    chart.series[1].setData(newValue, true);
-                }, true);
+                        },
+                        series: [
+                            {
+                                data: scope.innerItems,
+                                size: innerSize,
+                                dataLabels: {
+                                    formatter: function () {
+                                        return '<b>' + this.point.name + ':</b> ' + this.y + '';
+                                    },
+                                    color: 'white',
+                                    distance: -50
+                                }
+                            },
+                            {
+                                data: scope.outerItems,
+                                size: outSize,
+                                innerSize: innerSize,
+                                dataLabels: {
+                                    formatter: function () {
+                                        return '<b>' + this.point.name + '</b><br><br> ' + this.y + '';
+                                    },
+                                    distance: windowWidth>768?40:10
+                                }
+                            }
+                        ]
+                    });
+
+                    scope.$watch("innerItems", function (newValue) {
+                        chart.series[0].setData(newValue, true);
+                    }, true);
+                    scope.$watch("outerItems", function (newValue) {
+                        chart.series[1].setData(newValue, true);
+                    }, true);
+                    scope.$watch("title", function (newValue) {
+                        chart.setTitle({text: newValue});
+                    }, true);
+                },0);
             }
         }
     })
