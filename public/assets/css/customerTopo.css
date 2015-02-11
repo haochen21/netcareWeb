@@ -1779,3 +1779,7 @@ a.info-tiles {
     -moz-transform: translateX(-310px);
     transform: translateX(-310px);
 }
+
+.cusGroupSlaDoc .slaDocNoData .items-null > td {
+    line-height: 150px;
+}

@@ -1,5 +1,5 @@
 angular.module('netcareApp')
-    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window','$timeout', function ($scope, $http, $filter, $window,$timeout) {
+    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window', '$timeout', '$q', function ($scope, $http, $filter, $window, $timeout, $q) {
 
         $scope.customerGroupsView = true;
         var orderBy = $filter('orderBy');
@@ -64,7 +64,7 @@ angular.module('netcareApp')
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
             } else if (customerMenu.id === 'sla') {
-                $scope.buildSlaData();
+
             } else if (customerMenu.id === 'bizStatus') {
                 $scope.getBizStatusData();
             }
@@ -74,75 +74,21 @@ angular.module('netcareApp')
             downloadFileHelper();
         };
 
+        /* ----------Customer Resource File------------------------*/
         $scope.getCusResourceFiles = function () {
             $http.get(
-                'api/customerService/cusResource/'+$scope.customerGroup.id
+                'api/customerService/cusResource/' + $scope.customerGroup.id
             ).then(function (response) {
                     $scope.cusResourceFiles = response.data.logs;
-            });
-            $scope.cusResourceFiles1 = [{
-                customerGroupId: 10005,
-                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
-                fileType: "客户资源",
-                fileUrl: "10005_303095",
-                id: 35101,
-                syncResult: "success",
-                syncTime: 1418264641000,
-                taskTime: 1417678177000
-            },{
-                customerGroupId: 10005,
-                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
-                fileType: "客户资源",
-                fileUrl: "10005_235940",
-                id: 35170,
-                syncResult: "success",
-                syncTime: 1418265402000,
-                taskTime: 1408951623000
-            },{
-                customerGroupId: 10005,
-                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
-                fileType: "客户资源",
-                fileUrl: "10005_196297",
-                id: 35166,
-                syncResult: "success",
-                syncTime: 1418265396000,
-                taskTime: 1402277965000
-            },{
-                customerGroupId: 10005,
-                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
-                fileType: "客户资源",
-                fileUrl: "10005_189433",
-                id: 35163,
-                syncResult: "success",
-                syncTime: 1418265390000,
-                taskTime: 1401093730000
-            },{
-                customerGroupId: 10005,
-                fileName: "电路信息20140526.xls",
-                fileType: "客户资源",
-                fileUrl: "10005_189299",
-                id: 35167,
-                syncResult: "success",
-                syncTime: 1418265396000,
-                taskTime: 1401088092000
-            },{
-                customerGroupId: 10005,
-                fileName: "技术资料维护--中国平安保险(集团)股份有限公司.doc",
-                fileType: "客户资源",
-                fileUrl: "10005_162503",
-                id: 35174,
-                syncResult: "success",
-                syncTime: 1418265408000,
-                taskTime: 1394602604000
-            }]
+                });
         };
         $scope.cusResourceFileDisplayModule = 'table';
-        $scope.goBackCusResourceFileTable = function(){
+        $scope.goBackCusResourceFileTable = function () {
             $scope.cusResourceFileDisplayModule = 'table';
-        } ;
+        };
         $scope.showCusResourceFile = function (file) {
             $scope.cusResourceFileDisplayModule = 'file';
-            $scope.pdfUrl = '/assets/cusfile/'+$scope.customerGroup.id+'/1/'+file.fileUrl+'.pdf';
+            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/1/' + file.fileUrl + '.pdf';
             $scope.file = file;
         };
         $scope.downloadCusResourceFile = function (file) {
@@ -150,11 +96,12 @@ angular.module('netcareApp')
             $scope.downloadFileHelper();
         };
 
-        $scope.downloadFileHelper = function(){
-            window.open('/file/assets/cusfile/'+$scope.file.id, '_blank', '');
+        $scope.downloadFileHelper = function () {
+            window.open('/file/assets/cusfile/' + $scope.file.id, '_blank', '');
         };
 
 
+        /*---------------------- SLA------------------------------*/
         $scope.slaDisplayModule = 'chart';
         $scope.changeSlaInfoPanel = function (type) {
             $scope.slaDisplayModule = type;
@@ -164,56 +111,147 @@ angular.module('netcareApp')
         $scope.triggerSlaQueryPanel = function () {
             $scope.slaQueryPanelOpen = !$scope.slaQueryPanelOpen;
         };
+
         var nowDate = new Date();
         $scope.slaQueryParam = {};
-        $scope.slaQueryBeginDate = function() {
-            $scope.slaQueryParam.bd = new Date(nowDate.getFullYear(), nowDate.getMonth()-2);
+        var slaQueryBeginDate = function () {
+            $scope.slaQueryParam.bd = new Date(nowDate.getFullYear(), nowDate.getMonth() - 2);
         };
-        $scope.slaQueryBeginDate();
-
-        $scope.$watch('slaQueryParam.bd', function(){
+        slaQueryBeginDate();
+        $scope.$watch('slaQueryParam.bd', function () {
             $scope.slaQueryParam.endMinDate = $scope.slaQueryParam.bd;
             $scope.slaQueryParam.ed = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth());
         });
         $scope.clearSlaQueryBeginDate = function () {
             $scope.slaQueryBd = null;
         };
-
         $scope.clearSlaQueryEndDate = function () {
             $scope.slaQueryEd = null;
         };
-
-        $scope.openSlaQueryBeginDate = function($event) {
+        $scope.openSlaQueryBeginDate = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
-
             $scope.datepicker = {'slaQueryBdOpened': true};
         };
-
-        $scope.openSlaQueryEndDate = function($event) {
+        $scope.openSlaQueryEndDate = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
-
             $scope.datepicker = {'slaQueryEdOpened': true};
         };
 
         $scope.is_loading = false;
-        $scope.cusGroupSlaDonutTitle = '故障统计(分钟)';
+        $scope.cusGroupSlaDonutTitle = '故障统计';
         $scope.querySla = function () {
-            var beginDate = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth(), 1,0,0,0);
-            var endDate = new Date($scope.slaQueryParam.ed.getFullYear(), $scope.slaQueryParam.ed.getMonth() + 1, 0,23,59,59);
-            var beginDateValue = $filter('date')(beginDate,'yyyy-M');
-            var endDateValue = $filter('date')(endDate,'yyyy-M');
+            $scope.slaQueryParam.beginDate = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth(), 1, 0, 0, 0);
+            $scope.slaQueryParam.endDate = new Date($scope.slaQueryParam.ed.getFullYear(), $scope.slaQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
+            var beginDateValue = $filter('date')($scope.slaQueryParam.beginDate, 'yyyy-M');
+            var endDateValue = $filter('date')($scope.slaQueryParam.endDate, 'yyyy-M');
             $scope.is_loading = true;
-            $timeout(function(){
+            if (beginDateValue === endDateValue) {
+                $scope.cusGroupSlaDonutTitle = beginDateValue + ' 故障统计';
+            } else {
+                $scope.cusGroupSlaDonutTitle = beginDateValue + ' 到 ' + endDateValue + '&nbsp;&nbsp;故障统计';
+            }
+
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                beginDate: $scope.slaQueryParam.beginDate.getTime(),
+                endDate: $scope.slaQueryParam.endDate.getTime()
+            };
+
+            var chartPromise = $http.post('api/customerService/slaChart', form);
+            chartPromise.then(function (response) {
+                $scope.slaRawDatas = response.data.duration;
+                buildSlaData();
+            }, function (response) {
+                throw new Error('get sla chart went wrong...');
+            });
+
+            var tablePromise = $http.post('api/customerService/slaTable', form);
+            tablePromise.then(function (response) {
+                $scope.faultSheets = response.data.declarationReport;
+            }, function (response) {
+                throw new Error('get sla table went wrong...');
+            });
+
+            var slaPromises = $q.all([chartPromise, tablePromise]);
+            slaPromises.then(function () {
                 $scope.is_loading = false;
                 $scope.triggerSlaQueryPanel();
-                if(beginDateValue === endDateValue){
-                    $scope.cusGroupSlaDonutTitle = beginDateValue+' 故障统计';
-                }else{
-                    $scope.cusGroupSlaDonutTitle = beginDateValue+' 到 '+endDateValue+'&nbsp;&nbsp;故障统计';
+            });
+        };
+
+        var buildSlaData = function () {
+            var colors = Highcharts.getOptions().colors;
+            $scope.faultSlaData = [];
+            $scope.subSlaData = [];
+            for (var i = 0; i < $scope.slaRawDatas.length; i++) {
+                var slaRawData = $scope.slaRawDatas[i];
+                if (slaRawData.name.indexOf('联通端') > -1) {
+                    if (!$scope.faultSlaData[0]) {
+                        $scope.faultSlaData[0] = {
+                            name: '联通端',
+                            color: colors[5],
+                            y: slaRawData.netDuration
+                        };
+                    } else {
+                        $scope.faultSlaData[0].y = $scope.faultSlaData[0].y + slaRawData.netDuration;
+                    }
+                } else if (slaRawData.name.indexOf('客户端') > -1) {
+                    if (!$scope.faultSlaData[1]) {
+                        $scope.faultSlaData[1] = {
+                            name: '客户端',
+                            color: colors[0],
+                            y: slaRawData.netDuration
+                        };
+                    } else {
+                        $scope.faultSlaData[1].y = $scope.faultSlaData[1].y + slaRawData.netDuration;
+                    }
                 }
-            },1000);
+            }
+
+            var slaUnicomDataLen = 0,
+                slaCusDataLen = 0;
+            for (var m = 0; m < $scope.slaRawDatas.length; m++) {
+                var slaRawData = $scope.slaRawDatas[m];
+                if (slaRawData.name.indexOf('联通端') > -1) {
+                    slaUnicomDataLen++;
+                } else if (slaRawData.name.indexOf('客户端') > -1) {
+                    slaCusDataLen++;
+                }
+            }
+            for (var j = 0; j < $scope.slaRawDatas.length; j++) {
+                var brightness = 0.2 - (j / slaUnicomDataLen) / 5;
+                var slaRawData = $scope.slaRawDatas[j];
+                if (slaRawData.name.indexOf('联通端') > -1) {
+                    $scope.subSlaData.push({
+                        name: slaRawData.name.substring(4),
+                        y: slaRawData.netDuration,
+                        color: Highcharts.Color($scope.faultSlaData[0].color).brighten(brightness).get()
+                    });
+                }
+            }
+
+            for (var k = 0; k < $scope.slaRawDatas.length; k++) {
+                var brightness = 0.2 - (k / slaCusDataLen) / 5;
+                var slaRawData = $scope.slaRawDatas[k];
+                if (slaRawData.name.indexOf('客户端') > -1) {
+                    $scope.subSlaData.push({
+                        name: slaRawData.name.substring(4),
+                        y: slaRawData.netDuration,
+                        color: Highcharts.Color($scope.faultSlaData[1].color).brighten(brightness).get()
+                    });
+                }
+            }
+            console.log('11111');
+        };
+        $scope.slaDocFiles = [];
+        var getSlaDoc = function () {
+            $http.get(
+                'api/customerService/slaDoc/' + $scope.customerGroup.id
+            ).then(function (response) {
+                    $scope.slaDocFiles = response.data.logs;
+            });
         };
 
         $scope.myInterval = 2000;
@@ -274,117 +312,6 @@ angular.module('netcareApp')
             }
         ];
 
-
-
-
-        $scope.slaRawDatas = [
-            {
-                name: '联通端/第三方',
-                netDuration: 491
-            },
-            {
-                name: '联通端/光电',
-                netDuration: 57
-            },
-            {
-                name: '联通端/异地故障',
-                netDuration: 67
-            },
-            {
-                name: '客户端/原因不明',
-                netDuration: 54
-            },
-            {
-                name: '客户端/客户设备',
-                netDuration: 35
-            }
-        ];
-
-        $scope.buildSlaData = function () {
-            $scope.faultSlaData = [];
-            $scope.subSlaData = [];
-            for (var i = 0; i < $scope.slaRawDatas.length; i++) {
-                var slaRawData = $scope.slaRawDatas[i];
-                if (slaRawData.name.indexOf('联通端') > -1) {
-                    if (!$scope.faultSlaData[0]) {
-                        $scope.faultSlaData[0] = {
-                            name: '联通端',
-                            y: slaRawData.netDuration
-                        };
-                    } else {
-                        $scope.faultSlaData[0].y = $scope.faultSlaData[0].y + slaRawData.netDuration;
-                    }
-                } else if (slaRawData.name.indexOf('客户端') > -1) {
-                    if (!$scope.faultSlaData[1]) {
-                        $scope.faultSlaData[1] = {
-                            name: '客户端',
-                            y: slaRawData.netDuration
-                        };
-                    } else {
-                        $scope.faultSlaData[1].y = $scope.faultSlaData[1].y + slaRawData.netDuration;
-                    }
-                }
-            }
-            ;
-            for (var j = 0; j < $scope.slaRawDatas.length; j++) {
-                var slaRawData = $scope.slaRawDatas[j];
-                if (slaRawData.name.indexOf('联通端') > -1) {
-                    $scope.subSlaData.push({
-                        name: slaRawData.name.substring(4),
-                        y: slaRawData.netDuration
-                    });
-                }
-            }
-            ;
-            for (var k = 0; k < $scope.slaRawDatas.length; k++) {
-                var slaRawData = $scope.slaRawDatas[k];
-                if (slaRawData.name.indexOf('客户端') > -1) {
-                    $scope.subSlaData.push({
-                        name: slaRawData.name.substring(4),
-                        y: slaRawData.netDuration
-                    });
-                }
-            }
-            ;
-        };
-
-        $scope.faultSheets = [
-            {
-                no: '上海-201410-A0386',
-                brokenDate: '2014/10/24',
-                cause: '已恢复，经倒换话务成功后',
-                source: '异地联通',
-                locate: '联通端/异地故障',
-                duration: '67',
-                circuitNo: '95512.0'
-            },
-            {
-                no: '上海-201410-A0388',
-                brokenDate: '2014/10/24',
-                cause: '已报异地联通处理',
-                source: '不明原因',
-                locate: '联通端/第三方',
-                duration: '491',
-                circuitNo: '95511.0'
-            },
-            {
-                no: '上海-201410-A0452',
-                brokenDate: '2014/10/28',
-                cause: '广西反馈联系用户拨测，反馈目前发现可以正幑',
-                source: '不明原因',
-                locate: '客户端/原因不明',
-                duration: '54',
-                circuitNo: '6.0750447E7'
-            }, {
-                no: 'SH-20141030-0035',
-                brokenDate: '2014/10/30',
-                cause: '更换光电已恢复',
-                source: '本地接入段',
-                locate: '联通端/光电',
-                duration: '67',
-                circuitNo: '21T012475'
-            }
-        ];
 
         var bizStatusRawDatas = [
             {

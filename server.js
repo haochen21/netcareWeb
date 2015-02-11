@@ -127,6 +127,15 @@ router.route('/circuit')
 router.route('/customerService/cusResource/:customerGroupId')
     .get(routes.cusServiceInfo.getCusResourceLog);
 
+router.route('/customerService/slaChart')
+    .post(routes.cusServiceInfo.getCusSlaChart);
+
+router.route('/customerService/slaTable')
+    .post(routes.cusServiceInfo.getCusSlaTable);
+
+router.route('/customerService/slaDoc/:customerGroupId')
+    .get(routes.cusServiceInfo.getCusSlaDoc);
+
 app.use('/api', router);
 
 app.use(logErrors);

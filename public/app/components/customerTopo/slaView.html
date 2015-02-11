@@ -50,7 +50,7 @@
             <tbody>
             <tr ng-repeat-start="faultSheet in faultSheets | orderBy:sort:reverse" ng-show="faultSheets.length">
                 <td>{{faultSheet.no}}</td>
-                <td class="text-center">{{faultSheet.brokenDate}}</td>
+                <td class="text-center">{{faultSheet.brokenDate  | date:"yyyy-MM-dd"}}</td>
                 <td class="text-center">{{faultSheet.duration}}</td>
                 <td class="text-center">{{faultSheet.source}}</td>
                 <td class="text-center">{{faultSheet.locate}}</td>
@@ -64,7 +64,15 @@
         </table>
     </div>
     <div class="cusGroupSlaDoc" ng-show="slaDisplayModule == 'doc'">
-        111111111111111111111
+        <div class="slaDocNoData" ng-show="!slaDocFiles.length">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr class="items-null">
+                    <td align="center" colspan="7">无相关记录</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <aside class="slaQueryPanel" ng-class="{'open':slaQueryPanelOpen}">
