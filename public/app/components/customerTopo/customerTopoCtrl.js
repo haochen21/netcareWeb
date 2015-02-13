@@ -54,20 +54,28 @@ angular.module('netcareApp')
             }
             $scope.basicInfoView = true;
             $scope.displayModule = null;
+
+            $scope.cusResourceFileDisplayModule = 'table';
+            $scope.slaDisplayModule = 'chart';
+            $scope.slaDocDisplayModule = 'table';
         };
 
         $scope.showSubModule = function (customerMenu) {
             $scope.basicInfoView = false;
             $scope.displayModule = customerMenu.id;
             if (customerMenu.id === 'cusResourceFile') {
-                $scope.getCusResourceFiles();
+                getCusResourceFiles();
             } else if (customerMenu.id === 'checkService') {
                 $scope.getCheckService();
             } else if (customerMenu.id === 'sla') {
-
+                getSlaDoc();
             } else if (customerMenu.id === 'bizStatus') {
                 $scope.getBizStatusData();
             }
+
+            $scope.cusResourceFileDisplayModule = 'table';
+            $scope.slaDisplayModule = 'chart';
+            $scope.slaDocDisplayModule = 'table';
         };
 
         $scope.download = function () {
@@ -75,7 +83,7 @@ angular.module('netcareApp')
         };
 
         /* ----------Customer Resource File------------------------*/
-        $scope.getCusResourceFiles = function () {
+        var getCusResourceFiles = function () {
             $http.get(
                 'api/customerService/cusResource/' + $scope.customerGroup.id
             ).then(function (response) {
@@ -107,7 +115,7 @@ angular.module('netcareApp')
             $scope.slaDisplayModule = type;
         };
 
-        $scope.slaQueryPanelOpen = true;
+        $scope.slaQueryPanelOpen = false;
         $scope.triggerSlaQueryPanel = function () {
             $scope.slaQueryPanelOpen = !$scope.slaQueryPanelOpen;
         };
@@ -243,7 +251,10 @@ angular.module('netcareApp')
                     });
                 }
             }
-            console.log('11111');
+        };
+        $scope.slaDocDisplayModule = 'table';
+        $scope.goBackSlaFileTable = function () {
+            $scope.cusResourceFileDisplayModule = 'table';
         };
         $scope.slaDocFiles = [];
         var getSlaDoc = function () {
@@ -253,6 +264,17 @@ angular.module('netcareApp')
                     $scope.slaDocFiles = response.data.logs;
             });
         };
+        $scope.downloadSlaFile = function (file) {
+            $scope.file = file;
+            $scope.downloadFileHelper();
+        };
+        $scope.showSlaFile = function (file) {
+            $scope.slaDocDisplayModule = 'pdf';
+            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/5/' + file.fileUrl + '.pdf';
+            $scope.file = file;
+        };
+
+
 
         $scope.myInterval = 2000;
         $scope.myNoTransition = false;

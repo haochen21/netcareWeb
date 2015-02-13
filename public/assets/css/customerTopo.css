@@ -1783,3 +1783,13 @@ a.info-tiles {
 .cusGroupSlaDoc .slaDocNoData .items-null > td {
     line-height: 150px;
 }
+
+.cusGroupSlaDocTable{
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.cusGroupSlaDocTable .panel-body > a {
+    color: #333;
+    text-decoration: none;
+}

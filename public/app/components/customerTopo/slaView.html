@@ -64,14 +64,60 @@
         </table>
     </div>
     <div class="cusGroupSlaDoc" ng-show="slaDisplayModule == 'doc'">
-        <div class="slaDocNoData" ng-show="!slaDocFiles.length">
-            <table class="table table-bordered table-hover">
-                <tbody>
-                <tr class="items-null">
-                    <td align="center" colspan="7">无相关记录</td>
-                </tr>
-                </tbody>
-            </table>
+        <div ng-if="slaDocDisplayModule == 'table'">
+            <div class="slaDocNoData" ng-show="!slaDocFiles.length">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                    <tr class="items-null">
+                        <td align="center" colspan="7">无相关记录</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="cusGroupSlaDocTable" ng-show="slaDocFiles.length">
+                <div class="row">
+                    <div class="col-md-4"
+                         ng-repeat="file in slaDocFiles">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-toolbar">
+                                    <a href="" ng-click="downloadSlaFile(file,$event)">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                </div>
+                                <h5 class="panel-title">
+                                    <small>SLA 合同</small>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                <a href=""  ng-click="showSlaFile(file)">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">文&nbsp;件&nbsp;名&nbsp;:</label>
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{file.fileName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">上传时间:</label>
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{file.taskTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="slaDocDisplayModule == 'pdf'">
+            <ng-pdf
+                    pdf-url="pdfUrl"
+                    on-go-back="goBackSlaFileTable()"
+                    on-download="downloadFileHelper()">
+            </ng-pdf>
         </div>
     </div>
 </div>

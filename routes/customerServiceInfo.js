@@ -24,6 +24,8 @@ exports.downloadFile = function (req, res, next) {
             fileType = '3';
         } else if (fileLog.fileType === '巡检服务(客户端巡检)') {
             fileType = '4';
+        }else if (fileLog.fileType === 'SLA资料') {
+            fileType = '5';
         }
         var fileName = fileLog.fileName;
         var lastIndex = fileName.lastIndexOf('.');
