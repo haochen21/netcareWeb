@@ -136,6 +136,9 @@ router.route('/customerService/slaTable')
 router.route('/customerService/slaDoc/:customerGroupId')
     .get(routes.cusServiceInfo.getCusSlaDoc);
 
+router.route('/customerService/netOps')
+    .post(routes.cusServiceInfo.getNetOpsLog);
+
 app.use('/api', router);
 
 app.use(logErrors);

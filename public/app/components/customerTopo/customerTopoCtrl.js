@@ -33,7 +33,7 @@ angular.module('netcareApp')
         };
         $scope.customerMenus = [
             {name: '客户资料', angle: 'deg0', id: 'cusResourceFile'},
-            {name: '运行报告', angle: 'deg45', id: 'operationReport'},
+            {name: '运行报告', angle: 'deg45', id: 'netOps'},
             {name: '业务状态', angle: 'deg135', id: 'bizStatus'},
             {name: '服务例会', angle: 'deg180', id: 'serviceMeeting'},
             {name: '巡检服务', angle: 'deg225', id: 'checkService'},
@@ -58,6 +58,7 @@ angular.module('netcareApp')
             $scope.cusResourceFileDisplayModule = 'table';
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
+            $scope.netOpsDisplayModule = 'table';
         };
 
         $scope.showSubModule = function (customerMenu) {
@@ -71,11 +72,14 @@ angular.module('netcareApp')
                 getSlaDoc();
             } else if (customerMenu.id === 'bizStatus') {
                 $scope.getBizStatusData();
+            }else if (customerMenu.id === 'netOps') {
+                $scope.queryNetOps();
             }
 
             $scope.cusResourceFileDisplayModule = 'table';
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
+            $scope.netOpsDisplayModule = 'table';
         };
 
         $scope.download = function () {
@@ -147,14 +151,14 @@ angular.module('netcareApp')
             $scope.datepicker = {'slaQueryEdOpened': true};
         };
 
-        $scope.is_loading = false;
+        $scope.slaQuery_is_loading = false;
         $scope.cusGroupSlaDonutTitle = '故障统计';
         $scope.querySla = function () {
             $scope.slaQueryParam.beginDate = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth(), 1, 0, 0, 0);
             $scope.slaQueryParam.endDate = new Date($scope.slaQueryParam.ed.getFullYear(), $scope.slaQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
             var beginDateValue = $filter('date')($scope.slaQueryParam.beginDate, 'yyyy-M');
             var endDateValue = $filter('date')($scope.slaQueryParam.endDate, 'yyyy-M');
-            $scope.is_loading = true;
+            $scope.slaQuery_is_loading = true;
             if (beginDateValue === endDateValue) {
                 $scope.cusGroupSlaDonutTitle = beginDateValue + ' 故障统计';
             } else {
@@ -184,7 +188,7 @@ angular.module('netcareApp')
 
             var slaPromises = $q.all([chartPromise, tablePromise]);
             slaPromises.then(function () {
-                $scope.is_loading = false;
+                $scope.slaQuery_is_loading = false;
                 $scope.triggerSlaQueryPanel();
             });
         };
@@ -274,6 +278,70 @@ angular.module('netcareApp')
             $scope.file = file;
         };
 
+
+        /*---------------------- netOps ------------------------------*/
+        $scope.netOpsDisplayModule = 'table';
+        $scope.netOpsQueryPanelOpen = false;
+
+        $scope.triggerNetOpsQueryPanel = function () {
+            $scope.netOpsQueryPanelOpen = !$scope.netOpsQueryPanelOpen;
+        };
+
+        var netOpsNowDate = new Date();
+        $scope.netOpsQueryParam = {};
+        var netOpsQueryBeginDate = function () {
+            $scope.netOpsQueryParam.bd = new Date(netOpsNowDate.getFullYear(), netOpsNowDate.getMonth() - 2);
+        };
+        netOpsQueryBeginDate();
+        $scope.$watch('netOpsQueryParam.bd', function () {
+            $scope.netOpsQueryParam.endMinDate = $scope.netOpsQueryParam.bd;
+            $scope.netOpsQueryParam.ed = new Date($scope.netOpsQueryParam.bd.getFullYear(), $scope.netOpsQueryParam.bd.getMonth());
+        });
+
+        $scope.openNetOpsQueryBeginDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'netOpsQueryBdOpened': true};
+        };
+        $scope.openNetOpsQueryEndDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'netOpsQueryEdOpened': true};
+        };
+
+        $scope.netOpsQuery_is_loading = false;
+        $scope.netOpsFiles = [];
+        $scope.queryNetOps = function () {
+            $scope.netOpsQueryParam.beginDate = new Date($scope.netOpsQueryParam.bd.getFullYear(), $scope.netOpsQueryParam.bd.getMonth(), 1, 0, 0, 0);
+            $scope.netOpsQueryParam.endDate = new Date($scope.netOpsQueryParam.ed.getFullYear(), $scope.netOpsQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
+            $scope.netOpsQuery_is_loading = true;
+
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                beginDate: $scope.netOpsQueryParam.beginDate.getTime(),
+                endDate: $scope.netOpsQueryParam.endDate.getTime()
+            };
+
+            var tablePromise = $http.post('api/customerService/netOps', form);
+            tablePromise.then(function (response) {
+                $scope.netOpsFiles = response.data.logs;
+                $scope.netOpsQuery_is_loading = false;
+                $scope.netOpsQueryPanelOpen = false;
+            }, function (response) {
+                throw new Error('get netOps went wrong...');
+            });
+        };
+
+
+        $scope.downloadNetOpsFile = function (file) {
+            $scope.file = file;
+            $scope.downloadFileHelper();
+        };
+        $scope.showNetOpsFile = function (file) {
+            $scope.netOpsDisplayModule = 'pdf';
+            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/2/' + file.fileUrl + '.pdf';
+            $scope.file = file;
+        };
 
 
         $scope.myInterval = 2000;

@@ -1708,12 +1708,13 @@ a.info-tiles {
 
 .cusGroupSlaDonut,
 .cusGroupSlaDoc,
-.customerGroupBizStatus{
+.customerGroupBizStatus,
+.netOpsDocTable{
     border-top: 1px solid transparent;
     border-color: #ddd;
 }
 
-.customerGroupBizStatusBody{
+.customerGroupBizStatusBody,{
     margin: 10px;
 }
 
@@ -1733,13 +1734,15 @@ a.info-tiles {
     width: 100%;
 }
 
-.customerTopo .customerGroupSlaPanel .subPanelToolbar .btn-header > a {
+.customerTopo .customerGroupSlaPanel .subPanelToolbar .btn-header > a,
+.customerTopo .cusGroupNetOpsPanel .subPanelToolbar .pull-right .btn-header > a{
     color: #777;
     border-left: 1px solid rgba(0,0,0,.09);
     border-right:none;
 }
 
-.slaQueryPanel{
+.slaQueryPanel,
+.netOpsQueryPanel{
     position:absolute;
     top: 0;
     height: 100%;
@@ -1755,7 +1758,8 @@ a.info-tiles {
     transition: transform 0.05s ease-in-out;
 }
 
-.slaQueryPanel:after {
+.slaQueryPanel:after,
+.netOpsQueryPanel:after{
     content:"";
     background: #ddd;
     position: absolute;
@@ -1766,21 +1770,24 @@ a.info-tiles {
     width: 1px;
 }
 
-.slaQueryPanel.open {
+.slaQueryPanel.open,
+.netOpsQueryPanel.open{
     display: block;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
     transform: translateX(0);
 }
 
-.customerGroupSlaPanel.searchOpen {
+.customerGroupSlaPanel.searchOpen,
+.cusGroupNetOpsPanel.searchOpen{
     border-right:none;
     -webkit-transform: translateX(-310px);
     -moz-transform: translateX(-310px);
     transform: translateX(-310px);
 }
 
-.cusGroupSlaDoc .slaDocNoData .items-null > td {
+.slaDocNoData .items-null > td,
+.netOpsNoData .items-null > td{
     line-height: 150px;
 }
 
@@ -1789,7 +1796,12 @@ a.info-tiles {
     padding: 0 10px;
 }
 
-.cusGroupSlaDocTable .panel-body > a {
+.cusGroupSlaDocTable .panel-body > a,
+.netOpsDocTable .panel-body > a{
     color: #333;
     text-decoration: none;
+}
+
+.netOpsDocTable {
+    padding: 10px 10px;
 }
