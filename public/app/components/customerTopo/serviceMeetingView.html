@@ -1,0 +1,137 @@
+<div class="cusGroupServiceMeetingPanel" ng-class="{'searchOpen':serviceMeetingQueryPanelOpen}">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
+            <li class="btn-header">
+                <a href="" ng-click="back()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="panelBtnBar pull-right">
+            <li class="btn-header">
+                <a href="" ng-click="triggerServiceMeetingQueryPanel()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <div ng-if="serviceMeetingDisplayModule == 'table'">
+            <div class="serviceMeetingNoData" ng-show="!serviceMeetingFiles.length">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                    <tr class="items-null">
+                        <td align="center" colspan="7">服务例会查无记录</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="serviceMeetingDocTable" ng-show="serviceMeetingFiles.length">
+                <div class="row">
+                    <div class="col-md-4"
+                         ng-repeat="file in serviceMeetingFiles">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-toolbar">
+                                    <a href="" ng-click="downloadServiceMeetingFile(file)">
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                </div>
+                                <h5 class="panel-title">
+                                    <small>服务例会</small>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                <a href="" ng-click="showServiceMeetingFile(file)">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">文&nbsp;件&nbsp;名&nbsp;:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{file.fileName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">上传时间:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{file.taskTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">同步时间:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{file.syncTime | date:"yyyy-MM-dd HH:mm:ss"}}</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="serviceMeetingDisplayModule == 'pdf'">
+            <ng-pdf
+                    pdf-url="pdfUrl"
+                    on-go-back="goBackServiceMeetingTable()"
+                    on-download="downloadFileHelper()">
+            </ng-pdf>
+        </div>
+    </div>
+</div>
+
+<aside class="serviceMeetingQueryPanel" ng-class="{'open':serviceMeetingQueryPanelOpen}">
+    <form role="form">
+        <div class="form-group">
+            <label for="serviceMeetingBeginDate">文件上传开始月份</label>
+
+            <p class="input-group">
+                <input id="serviceMeetingBeginDate" type="text" class="form-control"
+                       ng-model="serviceMeetingQueryParam.bd"
+                       is-open="datepicker.serviceMeetingQueryBdOpened"
+                       datepicker-popup="yyyy-MM"
+                       datepicker-options="{minMode: 'month'}"
+                       datepicker-mode="'month'"
+                       ng-required="true"
+                       current-text="本月"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openServiceMeetingQueryBeginDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="serviceMeetingEndDate">文件上传结束月份</label>
+
+            <p class="input-group">
+                <input id="serviceMeetingEndDate" type="text" class="form-control"
+                       ng-model="serviceMeetingQueryParam.ed"
+                       is-open="datepicker.serviceMeetingQueryEdOpened"
+                       datepicker-popup="yyyy-MM"
+                       min-date="serviceMeetingQueryParam.endMinDate"
+                       datepicker-options="{minMode: 'month'}"
+                       datepicker-mode="'month'"
+                       ng-required="true"
+                       current-text="本月"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openServiceMeetingQueryEndDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button class="btn btn-default" btn-loading="is_loading" data-loading-text="查询中..."
+                        ng-click="queryServiceMeetings()">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</aside>
+

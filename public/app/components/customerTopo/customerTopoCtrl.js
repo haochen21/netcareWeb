@@ -59,6 +59,7 @@ angular.module('netcareApp')
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
+            $scope.serviceMeetingDisplayModule = 'table';
         };
 
         $scope.showSubModule = function (customerMenu) {
@@ -74,12 +75,15 @@ angular.module('netcareApp')
                 $scope.getBizStatusData();
             }else if (customerMenu.id === 'netOps') {
                 $scope.queryNetOps();
+            }else if (customerMenu.id === 'serviceMeeting') {
+                $scope.queryServiceMeetings();
             }
 
             $scope.cusResourceFileDisplayModule = 'table';
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
+            $scope.serviceMeetingDisplayModule = 'table';
         };
 
         $scope.download = function () {
@@ -260,7 +264,6 @@ angular.module('netcareApp')
         $scope.goBackSlaFileTable = function () {
             $scope.cusResourceFileDisplayModule = 'table';
         };
-        $scope.slaDocFiles = [];
         var getSlaDoc = function () {
             $http.get(
                 'api/customerService/slaDoc/' + $scope.customerGroup.id
@@ -290,12 +293,12 @@ angular.module('netcareApp')
         var netOpsNowDate = new Date();
         $scope.netOpsQueryParam = {};
         var netOpsQueryBeginDate = function () {
-            $scope.netOpsQueryParam.bd = new Date(netOpsNowDate.getFullYear(), netOpsNowDate.getMonth() - 2);
+            $scope.netOpsQueryParam.bd = new Date(netOpsNowDate.getFullYear()-1, netOpsNowDate.getMonth());
         };
         netOpsQueryBeginDate();
         $scope.$watch('netOpsQueryParam.bd', function () {
             $scope.netOpsQueryParam.endMinDate = $scope.netOpsQueryParam.bd;
-            $scope.netOpsQueryParam.ed = new Date($scope.netOpsQueryParam.bd.getFullYear(), $scope.netOpsQueryParam.bd.getMonth());
+            $scope.netOpsQueryParam.ed = new Date(netOpsNowDate.getFullYear(), netOpsNowDate.getMonth());
         });
 
         $scope.openNetOpsQueryBeginDate = function ($event) {
@@ -310,7 +313,6 @@ angular.module('netcareApp')
         };
 
         $scope.netOpsQuery_is_loading = false;
-        $scope.netOpsFiles = [];
         $scope.queryNetOps = function () {
             $scope.netOpsQueryParam.beginDate = new Date($scope.netOpsQueryParam.bd.getFullYear(), $scope.netOpsQueryParam.bd.getMonth(), 1, 0, 0, 0);
             $scope.netOpsQueryParam.endDate = new Date($scope.netOpsQueryParam.ed.getFullYear(), $scope.netOpsQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
@@ -332,7 +334,9 @@ angular.module('netcareApp')
             });
         };
 
-
+        $scope.goBackNetOpsTable = function () {
+            $scope.netOpsDisplayModule = 'table';
+        };
         $scope.downloadNetOpsFile = function (file) {
             $scope.file = file;
             $scope.downloadFileHelper();
@@ -340,6 +344,71 @@ angular.module('netcareApp')
         $scope.showNetOpsFile = function (file) {
             $scope.netOpsDisplayModule = 'pdf';
             $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/2/' + file.fileUrl + '.pdf';
+            $scope.file = file;
+        };
+
+        /*---------------------- serviceMeeting ------------------------------*/
+        $scope.serviceMeetingDisplayModule = 'table';
+        $scope.serviceMeetingQueryPanelOpen = false;
+
+        $scope.triggerServiceMeetingQueryPanel = function () {
+            $scope.serviceMeetingQueryPanelOpen = !$scope.serviceMeetingQueryPanelOpen;
+        };
+
+        var serviceMeetingNowDate = new Date();
+        $scope.serviceMeetingQueryParam = {};
+        var serviceMeetingQueryBeginDate = function () {
+            $scope.serviceMeetingQueryParam.bd = new Date(serviceMeetingNowDate.getFullYear()-1, serviceMeetingNowDate.getMonth());
+        };
+        serviceMeetingQueryBeginDate();
+        $scope.$watch('serviceMeetingQueryParam.bd', function () {
+            $scope.serviceMeetingQueryParam.endMinDate = $scope.serviceMeetingQueryParam.bd;
+            $scope.serviceMeetingQueryParam.ed = new Date(serviceMeetingNowDate.getFullYear(), serviceMeetingNowDate.getMonth());
+        });
+
+        $scope.openServiceMeetingQueryBeginDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'serviceMeetingQueryBdOpened': true};
+        };
+        $scope.openServiceMeetingQueryEndDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'serviceMeetingQueryEdOpened': true};
+        };
+
+        $scope.serviceMeetingQuery_is_loading = false;
+        $scope.queryServiceMeetings = function () {
+            $scope.serviceMeetingQueryParam.beginDate = new Date($scope.serviceMeetingQueryParam.bd.getFullYear(), $scope.serviceMeetingQueryParam.bd.getMonth(), 1, 0, 0, 0);
+            $scope.serviceMeetingQueryParam.endDate = new Date($scope.serviceMeetingQueryParam.ed.getFullYear(), $scope.serviceMeetingQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
+            $scope.serviceMeetingQuery_is_loading = true;
+
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                beginDate: $scope.serviceMeetingQueryParam.beginDate.getTime(),
+                endDate: $scope.serviceMeetingQueryParam.endDate.getTime()
+            };
+
+            var tablePromise = $http.post('api/customerService/serviceMeeting', form);
+            tablePromise.then(function (response) {
+                $scope.serviceMeetingFiles = response.data.logs;
+                $scope.serviceMeetingQuery_is_loading = false;
+                $scope.serviceMeetingQueryPanelOpen = false;
+            }, function (response) {
+                throw new Error('get serviceMeeting went wrong...');
+            });
+        };
+
+        $scope.goBackServiceMeetingTable = function () {
+            $scope.serviceMeetingDisplayModule = 'table';
+        };
+        $scope.downloadServiceMeetingFile = function (file) {
+            $scope.file = file;
+            $scope.downloadFileHelper();
+        };
+        $scope.showServiceMeetingFile = function (file) {
+            $scope.serviceMeetingDisplayModule = 'pdf';
+            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/3/' + file.fileUrl + '.pdf';
             $scope.file = file;
         };
 

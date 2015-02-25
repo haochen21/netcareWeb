@@ -1709,7 +1709,8 @@ a.info-tiles {
 .cusGroupSlaDonut,
 .cusGroupSlaDoc,
 .customerGroupBizStatus,
-.netOpsDocTable{
+.netOpsDocTable,
+.serviceMeetingDocTable{
     border-top: 1px solid transparent;
     border-color: #ddd;
 }
@@ -1735,14 +1736,16 @@ a.info-tiles {
 }
 
 .customerTopo .customerGroupSlaPanel .subPanelToolbar .btn-header > a,
-.customerTopo .cusGroupNetOpsPanel .subPanelToolbar .pull-right .btn-header > a{
+.customerTopo .cusGroupNetOpsPanel .subPanelToolbar .pull-right .btn-header > a,
+.customerTopo .cusGroupServiceMeetingPanel .subPanelToolbar .pull-right .btn-header > a{
     color: #777;
     border-left: 1px solid rgba(0,0,0,.09);
     border-right:none;
 }
 
 .slaQueryPanel,
-.netOpsQueryPanel{
+.netOpsQueryPanel,
+.serviceMeetingQueryPanel{
     position:absolute;
     top: 0;
     height: 100%;
@@ -1759,7 +1762,8 @@ a.info-tiles {
 }
 
 .slaQueryPanel:after,
-.netOpsQueryPanel:after{
+.netOpsQueryPanel:after,
+.serviceMeetingQueryPanel:after{
     content:"";
     background: #ddd;
     position: absolute;
@@ -1771,7 +1775,8 @@ a.info-tiles {
 }
 
 .slaQueryPanel.open,
-.netOpsQueryPanel.open{
+.netOpsQueryPanel.open,
+.serviceMeetingQueryPanel.open{
     display: block;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
@@ -1779,7 +1784,8 @@ a.info-tiles {
 }
 
 .customerGroupSlaPanel.searchOpen,
-.cusGroupNetOpsPanel.searchOpen{
+.cusGroupNetOpsPanel.searchOpen,
+.cusGroupServiceMeetingPanel.searchOpen{
     border-right:none;
     -webkit-transform: translateX(-310px);
     -moz-transform: translateX(-310px);
@@ -1787,7 +1793,8 @@ a.info-tiles {
 }
 
 .slaDocNoData .items-null > td,
-.netOpsNoData .items-null > td{
+.netOpsNoData .items-null > td,
+.serviceMeetingNoData .items-null > td{
     line-height: 150px;
 }
 
@@ -1797,11 +1804,13 @@ a.info-tiles {
 }
 
 .cusGroupSlaDocTable .panel-body > a,
-.netOpsDocTable .panel-body > a{
+.netOpsDocTable .panel-body > a,
+.serviceMeetingDocTable .panel-body > a{
     color: #333;
     text-decoration: none;
 }
 
-.netOpsDocTable {
+.netOpsDocTable,
+.serviceMeetingDocTable{
     padding: 10px 10px;
 }
