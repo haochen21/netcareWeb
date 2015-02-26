@@ -1592,81 +1592,9 @@ a.info-tiles {
 .pdfCanvas.rotate180 { transform: rotate(180deg);-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);}
 .pdfCanvas.rotate270 { transform: rotate(270deg);-webkit-transform: rotate(270deg);-moz-transform: rotate(270deg); }
 
-.cusFilePanelTable{
-    margin-top: 10px;
-    padding: 0 10px;
-}
-.cusFilePanel > .subPanelToolbar {
+.cusGroupCheckServicePanel > .subPanelToolbar{
     border-bottom: 1px solid transparent;
     border-color: #ddd;
-}
-
-.cusFilePanelTable .panel-body > a{
-    color:#333;
-    text-decoration: none;
-}
-
-.checkServicePanel > .checkServiceToolbar {
-    height: 36px;
-    background-color: #fafafa;
-    padding:0;
-}
-
-.checkServicePanel > .checkServiceToolbar > ul {
-    list-style: none;
-    position: relative;
-    margin-bottom: 0;
-    padding-left:0;
-}
-
-.checkServicePanel > .checkServiceToolbar > ul > li{
-    float: left;
-}
-
-.checkServicePanel > .checkServiceToolbar > li {
-    float: left;
-    list-style: none;
-    display: block;
-    padding-right:15px;
-}
-
-.checkServicePanel > .checkServiceToolbar .btn-header > a {
-    min-width: 36px;
-    text-align: center;
-    display: inline-block;
-    line-height: 36px;
-    color: #777;
-    border-right: 1px solid rgba(0,0,0,.09);
-}
-
-.checkServicePanel > .checkServiceToolbar .btn-header > a:hover{
-    background-color: rgba(0,0,0,.05);
-}
-
-.checkServicePanel .carousel-inner img{
-    width:100%;
-    height:100%;
-    margin:0 auto;
-    background: #474747;
-}
-
-.checkServicePanel .carousel-caption {
-    top: 15px;
-    bottom: auto;
-    color: #585858;
-}
-
-.checkServicePanel .carousel-indicators li {
-    border: 1px solid #585858;
-}
-
-.checkServicePanel .carousel-indicators .active{
-    background-color: #585858;
-}
-
-.carousel-indicators {
-    top: 15px;
-    bottom: auto;
 }
 
 .customerTopo .subPanelToolbar {
@@ -1710,7 +1638,8 @@ a.info-tiles {
 .cusGroupSlaDoc,
 .customerGroupBizStatus,
 .netOpsDocTable,
-.serviceMeetingDocTable{
+.serviceMeetingDocTable,
+.cusFileDocTable{
     border-top: 1px solid transparent;
     border-color: #ddd;
 }
@@ -1737,7 +1666,9 @@ a.info-tiles {
 
 .customerTopo .customerGroupSlaPanel .subPanelToolbar .btn-header > a,
 .customerTopo .cusGroupNetOpsPanel .subPanelToolbar .pull-right .btn-header > a,
-.customerTopo .cusGroupServiceMeetingPanel .subPanelToolbar .pull-right .btn-header > a{
+.customerTopo .cusGroupServiceMeetingPanel .subPanelToolbar .pull-right .btn-header > a,
+.customerTopo .cusGroupCheckServicePanel .subPanelToolbar .pull-right .btn-header > a,
+.customerTopo .cusGroupCusFilePanel .subPanelToolbar .pull-right .btn-header > a{
     color: #777;
     border-left: 1px solid rgba(0,0,0,.09);
     border-right:none;
@@ -1745,7 +1676,9 @@ a.info-tiles {
 
 .slaQueryPanel,
 .netOpsQueryPanel,
-.serviceMeetingQueryPanel{
+.serviceMeetingQueryPanel,
+.checkServiceQueryPanel,
+.cusFileQueryPanel{
     position:absolute;
     top: 0;
     height: 100%;
@@ -1763,7 +1696,9 @@ a.info-tiles {
 
 .slaQueryPanel:after,
 .netOpsQueryPanel:after,
-.serviceMeetingQueryPanel:after{
+.serviceMeetingQueryPanel:after,
+.checkServiceQueryPanel:after,
+.cusFileQueryPanel:after{
     content:"";
     background: #ddd;
     position: absolute;
@@ -1776,7 +1711,9 @@ a.info-tiles {
 
 .slaQueryPanel.open,
 .netOpsQueryPanel.open,
-.serviceMeetingQueryPanel.open{
+.serviceMeetingQueryPanel.open,
+.checkServiceQueryPanel.open,
+.cusFileQueryPanel.open{
     display: block;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
@@ -1785,7 +1722,9 @@ a.info-tiles {
 
 .customerGroupSlaPanel.searchOpen,
 .cusGroupNetOpsPanel.searchOpen,
-.cusGroupServiceMeetingPanel.searchOpen{
+.cusGroupServiceMeetingPanel.searchOpen,
+.cusGroupCheckServicePanel.searchOpen,
+.cusGroupCusFilePanel.searchOpen{
     border-right:none;
     -webkit-transform: translateX(-310px);
     -moz-transform: translateX(-310px);
@@ -1794,7 +1733,9 @@ a.info-tiles {
 
 .slaDocNoData .items-null > td,
 .netOpsNoData .items-null > td,
-.serviceMeetingNoData .items-null > td{
+.serviceMeetingNoData .items-null > td,
+.checkServiceNoData .items-null > td,
+.cusFileNoData .items-null > td{
     line-height: 150px;
 }
 
@@ -1805,12 +1746,14 @@ a.info-tiles {
 
 .cusGroupSlaDocTable .panel-body > a,
 .netOpsDocTable .panel-body > a,
-.serviceMeetingDocTable .panel-body > a{
+.serviceMeetingDocTable .panel-body > a,
+.cusFileDocTable .panel-body > a{
     color: #333;
     text-decoration: none;
 }
 
 .netOpsDocTable,
-.serviceMeetingDocTable{
+.serviceMeetingDocTable,
+.cusFileDocTable{
     padding: 10px 10px;
 }

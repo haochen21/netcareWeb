@@ -32,13 +32,13 @@ angular.module('netcareApp')
             $window.scrollTo(0, 0);
         };
         $scope.customerMenus = [
-            {name: '客户资料', angle: 'deg0', id: 'cusResourceFile'},
-            {name: '运行报告', angle: 'deg45', id: 'netOps'},
+            {name: '服务评价', angle: 'deg0', id: 'serviceScore'},
+            {name: 'SLA', angle: 'deg45', id: 'sla'},
             {name: '业务状态', angle: 'deg135', id: 'bizStatus'},
             {name: '服务例会', angle: 'deg180', id: 'serviceMeeting'},
             {name: '巡检服务', angle: 'deg225', id: 'checkService'},
-            {name: '服务评价', angle: 'deg270', id: 'serviceScore'},
-            {name: 'SLA', angle: 'deg315', id: 'sla'}
+            {name: '客户资料', angle: 'deg270', id: 'cusResourceFile'},
+            {name: '运行报告', angle: 'deg315', id: 'netOps'}
         ];
         $scope.backToCustomerGroupsView = function () {
             $scope.customerGroupsView = true;
@@ -55,7 +55,7 @@ angular.module('netcareApp')
             $scope.basicInfoView = true;
             $scope.displayModule = null;
 
-            $scope.cusResourceFileDisplayModule = 'table';
+            $scope.cusFileDisplayModule = 'table';
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
@@ -66,9 +66,9 @@ angular.module('netcareApp')
             $scope.basicInfoView = false;
             $scope.displayModule = customerMenu.id;
             if (customerMenu.id === 'cusResourceFile') {
-                getCusResourceFiles();
+                $scope.queryCusFile();
             } else if (customerMenu.id === 'checkService') {
-                $scope.getCheckService();
+                $scope.queryCheckService();
             } else if (customerMenu.id === 'sla') {
                 getSlaDoc();
             } else if (customerMenu.id === 'bizStatus') {
@@ -79,7 +79,7 @@ angular.module('netcareApp')
                 $scope.queryServiceMeetings();
             }
 
-            $scope.cusResourceFileDisplayModule = 'table';
+            $scope.cusFileDisplayModule = 'table';
             $scope.slaDisplayModule = 'chart';
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
@@ -90,32 +90,82 @@ angular.module('netcareApp')
             downloadFileHelper();
         };
 
+        $scope.downloadFileHelper = function () {
+            window.open('/file/assets/cusfile/' + $scope.file.id, '_blank', '');
+        };
+
         /* ----------Customer Resource File------------------------*/
-        var getCusResourceFiles = function () {
-            $http.get(
-                'api/customerService/cusResource/' + $scope.customerGroup.id
-            ).then(function (response) {
-                    $scope.cusResourceFiles = response.data.logs;
-                });
+        $scope.cusFileDisplayModule = 'table';
+        $scope.cusFileQueryPanelOpen = false;
+
+        $scope.triggerCusFileQueryPanel = function () {
+            $scope.cusFileQueryPanelOpen = !$scope.cusFileQueryPanelOpen;
         };
-        $scope.cusResourceFileDisplayModule = 'table';
-        $scope.goBackCusResourceFileTable = function () {
-            $scope.cusResourceFileDisplayModule = 'table';
+
+        var cusFileNowDate = new Date();
+        $scope.cusFileQueryParam = {};
+        var cusFileQueryBeginDate = function () {
+            $scope.cusFileQueryParam.bd = new Date(cusFileNowDate.getFullYear(), cusFileNowDate.getMonth()-3);
         };
-        $scope.showCusResourceFile = function (file) {
-            $scope.cusResourceFileDisplayModule = 'file';
-            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/1/' + file.fileUrl + '.pdf';
-            $scope.file = file;
+        cusFileQueryBeginDate();
+        $scope.$watch('cusFileQueryParam.bd', function () {
+            $scope.cusFileQueryParam.endMinDate = $scope.cusFileQueryParam.bd;
+            $scope.cusFileQueryParam.ed = new Date(cusFileNowDate.getFullYear(), cusFileNowDate.getMonth());
+            if ($scope.cusFileQueryParam.ed.getTime() < $scope.cusFileQueryParam.endMinDate.getTime()) {
+                $scope.cusFileQueryParam.ed = new Date($scope.cusFileQueryParam.bd.getFullYear(), $scope.cusFileQueryParam.bd.getMonth());
+            }
+        });
+
+        $scope.openCusFileQueryBeginDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'cusFileQueryBdOpened': true};
+        };
+        $scope.openCusFileQueryEndDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'cusFileQueryEdOpened': true};
+        };
+
+        $scope.cusFileQuery_is_loading = false;
+        $scope.queryCusFile = function () {
+            $scope.cusFileQueryParam.beginDate = new Date($scope.cusFileQueryParam.bd.getFullYear(), $scope.cusFileQueryParam.bd.getMonth(), 1, 0, 0, 0);
+            $scope.cusFileQueryParam.endDate = new Date($scope.cusFileQueryParam.ed.getFullYear(), $scope.cusFileQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
+            $scope.cusFileQuery_is_loading = true;
+
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                beginDate: $scope.cusFileQueryParam.beginDate.getTime(),
+                endDate: $scope.cusFileQueryParam.endDate.getTime()
+            };
+
+            var tablePromise = $http.post('api/customerService/cusResource', form);
+            tablePromise.then(function (response) {
+                $scope.cusResourceFiles = response.data.logs;
+                if($scope.cusResourceFiles.length){
+                    $scope.cusFileQueryState = 'hasData';
+                }else{
+                    $scope.cusFileQueryState = 'noData';
+                }
+                $scope.cusFileQuery_is_loading = false;
+                $scope.cusFileQueryPanelOpen = false;
+            }, function (response) {
+                throw new Error('get cusFile went wrong...');
+            });
+        };
+
+        $scope.goBackCusFileTable = function () {
+            $scope.cusFileDisplayModule = 'table';
         };
         $scope.downloadCusResourceFile = function (file) {
             $scope.file = file;
             $scope.downloadFileHelper();
         };
-
-        $scope.downloadFileHelper = function () {
-            window.open('/file/assets/cusfile/' + $scope.file.id, '_blank', '');
+        $scope.showCusResourceFile = function (file) {
+            $scope.cusFileDisplayModule = 'pdf';
+            $scope.pdfUrl = '/assets/cusfile/' + $scope.customerGroup.id + '/1/' + file.fileUrl + '.pdf';
+            $scope.file = file;
         };
-
 
         /*---------------------- SLA------------------------------*/
         $scope.slaDisplayModule = 'chart';
@@ -138,12 +188,7 @@ angular.module('netcareApp')
             $scope.slaQueryParam.endMinDate = $scope.slaQueryParam.bd;
             $scope.slaQueryParam.ed = new Date($scope.slaQueryParam.bd.getFullYear(), $scope.slaQueryParam.bd.getMonth());
         });
-        $scope.clearSlaQueryBeginDate = function () {
-            $scope.slaQueryBd = null;
-        };
-        $scope.clearSlaQueryEndDate = function () {
-            $scope.slaQueryEd = null;
-        };
+
         $scope.openSlaQueryBeginDate = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -299,6 +344,9 @@ angular.module('netcareApp')
         $scope.$watch('netOpsQueryParam.bd', function () {
             $scope.netOpsQueryParam.endMinDate = $scope.netOpsQueryParam.bd;
             $scope.netOpsQueryParam.ed = new Date(netOpsNowDate.getFullYear(), netOpsNowDate.getMonth());
+            if ($scope.netOpsQueryParam.ed.getTime() < $scope.netOpsQueryParam.endMinDate.getTime()) {
+                $scope.netOpsQueryParam.ed = new Date($scope.netOpsQueryParam.bd.getFullYear(), $scope.netOpsQueryParam.bd.getMonth());
+            }
         });
 
         $scope.openNetOpsQueryBeginDate = function ($event) {
@@ -327,6 +375,11 @@ angular.module('netcareApp')
             var tablePromise = $http.post('api/customerService/netOps', form);
             tablePromise.then(function (response) {
                 $scope.netOpsFiles = response.data.logs;
+                if($scope.netOpsFiles.length){
+                    $scope.netOpsQueryState = 'hasData';
+                }else{
+                    $scope.netOpsQueryState = 'noData';
+                }
                 $scope.netOpsQuery_is_loading = false;
                 $scope.netOpsQueryPanelOpen = false;
             }, function (response) {
@@ -364,6 +417,9 @@ angular.module('netcareApp')
         $scope.$watch('serviceMeetingQueryParam.bd', function () {
             $scope.serviceMeetingQueryParam.endMinDate = $scope.serviceMeetingQueryParam.bd;
             $scope.serviceMeetingQueryParam.ed = new Date(serviceMeetingNowDate.getFullYear(), serviceMeetingNowDate.getMonth());
+            if ($scope.serviceMeetingQueryParam.ed.getTime() < $scope.serviceMeetingQueryParam.endMinDate.getTime()) {
+                $scope.serviceMeetingQueryParam.ed = new Date($scope.serviceMeetingQueryParam.bd.getFullYear(), $scope.serviceMeetingQueryParam.bd.getMonth());
+            }
         });
 
         $scope.openServiceMeetingQueryBeginDate = function ($event) {
@@ -412,51 +468,79 @@ angular.module('netcareApp')
             $scope.file = file;
         };
 
+        /*---------------------- checkService ------------------------------*/
+        $scope.checkServiceQueryPanelOpen = false;
 
-        $scope.myInterval = 2000;
-        $scope.myNoTransition = false;
-        var slides = $scope.slides = [];
+        $scope.triggerCheckServiceQueryPanel = function () {
+            $scope.checkServiceQueryPanelOpen = !$scope.checkServiceQueryPanelOpen;
+        };
 
-        $scope.getCheckService = function () {
-            slides = $scope.slides = [];
-            slides.push({
-                image: '/assets/checkservice/SA_10005_201303_001.jpg',
-                text: '2013第一季度1'
-            }, {
-                image: '/assets/checkservice/SA_10005_201303_002.jpg',
-                text: '2013第一季度2'
-            }, {
-                image: '/assets/checkservice/SA_10005_201306_001.jpg',
-                text: '2013第二季度1'
-            }, {
-                image: '/assets/checkservice/SA_10005_201306_002.jpg',
-                text: '2013第二季度2'
-            }, {
-                image: '/assets/checkservice/SA_10005_201309_001.jpg',
-                text: '2013第三季度1'
-            }, {
-                image: '/assets/checkservice/SA_10005_201309_002.jpg',
-                text: '2013第三季度2'
-            }, {
-                image: '/assets/checkservice/SA_10005_201309_003.jpg',
-                text: '2013第三季度3'
-            }, {
-                image: '/assets/checkservice/SA_10005_201309_004.jpg',
-                text: '2013第三季度4'
-            }, {
-                image: '/assets/checkservice/SA_10005_201312_001.jpg',
-                text: '2013第四季度1'
-            }, {
-                image: '/assets/checkservice/SA_10005_201312_002.jpg',
-                text: '2013第四季度2'
-            }, {
-                image: '/assets/checkservice/SA_10005_201312_003.jpg',
-                text: '2013第四季度3'
-            }, {
-                image: '/assets/checkservice/SA_10005_201312_004.jpg',
-                text: '2013第四季度4'
+        var checkServiceNowDate = new Date();
+        $scope.checkServiceQueryParam = {};
+        var checkServiceQueryBeginDate = function () {
+            $scope.checkServiceQueryParam.bd = new Date(checkServiceNowDate.getFullYear()-1, checkServiceNowDate.getMonth());
+        };
+        checkServiceQueryBeginDate();
+        $scope.$watch('checkServiceQueryParam.bd', function () {
+            $scope.checkServiceQueryParam.endMinDate = $scope.checkServiceQueryParam.bd;
+            $scope.checkServiceQueryParam.ed = new Date(checkServiceNowDate.getFullYear(), checkServiceNowDate.getMonth());
+            if ($scope.checkServiceQueryParam.ed.getTime() < $scope.checkServiceQueryParam.endMinDate.getTime()) {
+                $scope.checkServiceQueryParam.ed = new Date($scope.checkServiceQueryParam.bd.getFullYear(), $scope.checkServiceQueryParam.bd.getMonth());
+            }
+        });
+
+        $scope.openCheckServiceQueryBeginDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'checkServiceQueryBdOpened': true};
+        };
+        $scope.openCheckServiceQueryEndDate = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.datepicker = {'checkServiceQueryEdOpened': true};
+        };
+
+        $scope.checkServiceInterval = 2000;
+        $scope.checkServiceTransition = false;
+
+
+        $scope.queryCheckService = function () {
+            $scope.checkServiceSlides = [];
+            $scope.checkServiceQuery_is_loading = false;
+            $scope.checkServiceQueryParam.beginDate = new Date($scope.checkServiceQueryParam.bd.getFullYear(), $scope.checkServiceQueryParam.bd.getMonth(), 1, 0, 0, 0);
+            $scope.checkServiceQueryParam.endDate = new Date($scope.checkServiceQueryParam.ed.getFullYear(), $scope.checkServiceQueryParam.ed.getMonth() + 1, 0, 23, 59, 59);
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                beginDate: $scope.checkServiceQueryParam.beginDate.getTime(),
+                endDate: $scope.checkServiceQueryParam.endDate.getTime()
+            };
+
+            var slidesPromise = $http.post('api/customerService/checkService', form);
+            slidesPromise.then(function (response) {
+                var checkServiceFiles = response.data.logs;
+                for(var i=0;i<checkServiceFiles.length;i++){
+                    $scope.checkServiceSlides.push({
+                        image: '/assets/cusfile/' + $scope.customerGroup.id + '/4/' + checkServiceFiles[i].fileUrl,
+                        text: checkServiceFiles[i].fileName
+                    });
+                }
+                if(checkServiceFiles.length){
+                    $scope.checkQueryState = 'hasData';
+                }else{
+                    $scope.checkQueryState = 'noData';
+                }
+                $scope.checkServiceQuery_is_loading = false;
+                $scope.checkServiceQueryPanelOpen = false;
+            }, function (response) {
+                throw new Error('get checkService went wrong...');
             });
         };
+
+
+
+
+
+
 
         $scope.cusCircuitDonutData = [
             {

@@ -17,7 +17,7 @@
     </div>
     <div>
         <div ng-if="netOpsDisplayModule == 'table'">
-            <div class="netOpsNoData" ng-show="!netOpsFiles.length">
+            <div class="netOpsNoData" ng-show="netOpsQueryState === 'noData'">
                 <table class="table table-bordered table-hover">
                     <tbody>
                     <tr class="items-null">
@@ -26,7 +26,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="netOpsDocTable" class="netOpsTable" ng-show="netOpsFiles.length">
+            <div class="netOpsDocTable" class="netOpsTable" ng-show="netOpsQueryState === 'hasData'">
                 <div class="row">
                     <div class="col-md-4"
                          ng-repeat="file in netOpsFiles">

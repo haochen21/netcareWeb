@@ -1,19 +1,90 @@
-<div class="checkServicePanel">
-    <div class="checkServiceToolbar">
-        <ul  class="checkServiceToolbarBtn">
+<div class="cusGroupCheckServicePanel" ng-class="{'searchOpen':checkServiceQueryPanelOpen}">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
             <li class="btn-header">
                 <a href="" ng-click="back()">
                     <i class="fa fa-hand-o-left"></i>
                 </a>
             </li>
         </ul>
+        <ul class="panelBtnBar pull-right">
+            <li class="btn-header">
+                <a href="" ng-click="triggerCheckServiceQueryPanel()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+        </ul>
     </div>
-    <carousel noTransition="myNoTransition" disable-animation="true">
-      <slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}">
-        <div class="carousel-caption">
-          <p>{{slide.text}}</p>
+    <div>
+        <div class="checkServiceNoData" ng-show="checkQueryState == 'noData'">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr class="items-null">
+                    <td align="center" colspan="7">巡检服务查无记录</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-      </slide>
-    </carousel>
-  </div>
+        <carousel ng-show="checkQueryState == 'hasData'" noTransition="checkServiceTransition" disable-animation="true">
+            <slide ng-repeat="slide in checkServiceSlides" active="slide.active">
+                <img ng-src="{{slide.image}}">
+
+                <div class="carousel-caption">
+                    <p>{{slide.text}}</p>
+                </div>
+            </slide>
+        </carousel>
+    </div>
+</div>
+<aside class="checkServiceQueryPanel" ng-class="{'open':checkServiceQueryPanelOpen}">
+    <form role="form">
+        <div class="form-group">
+            <label for="checkServiceBeginDate">文件上传开始月份</label>
+
+            <p class="input-group">
+                <input id="checkServiceBeginDate" type="text" class="form-control"
+                       ng-model="checkServiceQueryParam.bd"
+                       is-open="datepicker.checkServiceQueryBdOpened"
+                       datepicker-popup="yyyy-MM"
+                       datepicker-options="{minMode: 'month'}"
+                       datepicker-mode="'month'"
+                       ng-required="true"
+                       current-text="本月"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openCheckServiceQueryBeginDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="checkServiceEndDate">文件上传结束月份</label>
+
+            <p class="input-group">
+                <input id="checkServiceEndDate" type="text" class="form-control"
+                       ng-model="checkServiceQueryParam.ed"
+                       is-open="datepicker.checkServiceQueryEdOpened"
+                       datepicker-popup="yyyy-MM"
+                       min-date="checkServiceQueryParam.endMinDate"
+                       datepicker-options="{minMode: 'month'}"
+                       datepicker-mode="'month'"
+                       ng-required="true"
+                       current-text="本月"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openCheckServiceQueryEndDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button class="btn btn-default" btn-loading="is_loading" data-loading-text="查询中..."
+                        ng-click="queryCheckService()">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</aside>
+

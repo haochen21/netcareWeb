@@ -124,8 +124,8 @@ router.route('/permissions/:id')
 router.route('/circuit')
     .post(routes.circuit.getCircuit);
 
-router.route('/customerService/cusResource/:customerGroupId')
-    .get(routes.cusServiceInfo.getCusResourceLog);
+router.route('/customerService/cusResource')
+    .post(routes.cusServiceInfo.getCusResourceLog);
 
 router.route('/customerService/slaChart')
     .post(routes.cusServiceInfo.getCusSlaChart);
@@ -141,6 +141,9 @@ router.route('/customerService/netOps')
 
 router.route('/customerService/serviceMeeting')
     .post(routes.cusServiceInfo.getServiceMeetingLog);
+
+router.route('/customerService/checkService')
+    .post(routes.cusServiceInfo.getCheckServiceLog);
 
 app.use('/api', router);
 
