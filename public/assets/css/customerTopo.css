@@ -12,7 +12,7 @@
     position: fixed;
     left: 20px;
     top: 95px;
-    z-index: 1001;
+    z-index: 999;
     width: 36px;
     height: 36px;
     background: #72a7d3;
@@ -1592,7 +1592,7 @@ a.info-tiles {
 .pdfCanvas.rotate180 { transform: rotate(180deg);-webkit-transform: rotate(180deg); -moz-transform: rotate(180deg);}
 .pdfCanvas.rotate270 { transform: rotate(270deg);-webkit-transform: rotate(270deg);-moz-transform: rotate(270deg); }
 
-.cusGroupCheckServicePanel > .subPanelToolbar{
+.customerTopo .subPanelToolbar{
     border-bottom: 1px solid transparent;
     border-color: #ddd;
 }
@@ -1634,16 +1634,6 @@ a.info-tiles {
     background-color: rgba(0,0,0,.05);
 }
 
-.cusGroupSlaDonut,
-.cusGroupSlaDoc,
-.customerGroupBizStatus,
-.netOpsDocTable,
-.serviceMeetingDocTable,
-.cusFileDocTable{
-    border-top: 1px solid transparent;
-    border-color: #ddd;
-}
-
 .customerGroupBizStatusBody,{
     margin: 10px;
 }
@@ -1664,21 +1654,17 @@ a.info-tiles {
     width: 100%;
 }
 
-.customerTopo .customerGroupSlaPanel .subPanelToolbar .btn-header > a,
-.customerTopo .cusGroupNetOpsPanel .subPanelToolbar .pull-right .btn-header > a,
-.customerTopo .cusGroupServiceMeetingPanel .subPanelToolbar .pull-right .btn-header > a,
-.customerTopo .cusGroupCheckServicePanel .subPanelToolbar .pull-right .btn-header > a,
-.customerTopo .cusGroupCusFilePanel .subPanelToolbar .pull-right .btn-header > a{
+.customerTopo .subPanelToolbar .pull-right .btn-header > a{
     color: #777;
     border-left: 1px solid rgba(0,0,0,.09);
-    border-right:none;
 }
 
 .slaQueryPanel,
 .netOpsQueryPanel,
 .serviceMeetingQueryPanel,
 .checkServiceQueryPanel,
-.cusFileQueryPanel{
+.cusFileQueryPanel,
+.serviceScoreQueryPanel{
     position:absolute;
     top: 0;
     height: 100%;
@@ -1698,7 +1684,8 @@ a.info-tiles {
 .netOpsQueryPanel:after,
 .serviceMeetingQueryPanel:after,
 .checkServiceQueryPanel:after,
-.cusFileQueryPanel:after{
+.cusFileQueryPanel:after,
+.serviceScoreQueryPanel:after{
     content:"";
     background: #ddd;
     position: absolute;
@@ -1713,7 +1700,8 @@ a.info-tiles {
 .netOpsQueryPanel.open,
 .serviceMeetingQueryPanel.open,
 .checkServiceQueryPanel.open,
-.cusFileQueryPanel.open{
+.cusFileQueryPanel.open,
+.serviceScoreQueryPanel.open{
     display: block;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
@@ -1724,7 +1712,8 @@ a.info-tiles {
 .cusGroupNetOpsPanel.searchOpen,
 .cusGroupServiceMeetingPanel.searchOpen,
 .cusGroupCheckServicePanel.searchOpen,
-.cusGroupCusFilePanel.searchOpen{
+.cusGroupCusFilePanel.searchOpen,
+.cusGroupServiceScorePanel.searchOpen{
     border-right:none;
     -webkit-transform: translateX(-310px);
     -moz-transform: translateX(-310px);
@@ -1754,6 +1743,7 @@ a.info-tiles {
 
 .netOpsDocTable,
 .serviceMeetingDocTable,
-.cusFileDocTable{
+.cusFileDocTable,
+.serviceScorePolarPanel{
     padding: 10px 10px;
 }

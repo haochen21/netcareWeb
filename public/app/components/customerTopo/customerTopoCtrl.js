@@ -77,6 +77,8 @@ angular.module('netcareApp')
                 $scope.queryNetOps();
             }else if (customerMenu.id === 'serviceMeeting') {
                 $scope.queryServiceMeetings();
+            }else if (customerMenu.id === 'serviceScore') {
+                $scope.queryServiceScore();
             }
 
             $scope.cusFileDisplayModule = 'table';
@@ -537,10 +539,20 @@ angular.module('netcareApp')
         };
 
 
+        /* ----------service score------------------------*/
+        $scope.triggerServiceScoreQueryPanel = function () {
+            $scope.serviceScoreQueryPanelOpen = !$scope.serviceScoreQueryPanelOpen;
+        };
 
-
-
-
+        $scope.cusScorceCategories = ['网络配置','运行状况','服务评价','开通指标','人员配置'];
+        $scope.cusScoreStandardName = "标准值";
+        $scope.cusScoreActualName = "实际值";
+        $scope.cusScorePolarTitle='2015-1 服务质量评分';
+        $scope.queryServiceScore = function(){
+            $scope.cusScorePolarSubtitle = $scope.customerGroup.name;
+            $scope.cusScoreStandard = [100,90,98,95,100];
+            $scope.cusScoreActual = [90,85,70,86,100];
+        };
 
         $scope.cusCircuitDonutData = [
             {

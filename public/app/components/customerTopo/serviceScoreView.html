@@ -1,0 +1,26 @@
+<div class="cusGroupServiceScorePanel" ng-class="{'searchOpen':serviceScoreQueryPanelOpen}">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
+            <li class="btn-header">
+                <a href="" ng-click="back()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="panelBtnBar pull-right">
+            <li class="btn-header">
+                <a href="" ng-click="triggerServiceScoreQueryPanel()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="serviceScorePolarPanel">
+        <div hc-cus-score-polar id="cusGroupCusScorePolar" height="600" first-items="cusScoreStandard"
+             second-items="cusScoreActual" first-item-name="cusScoreStandardName" second-item-name="cusScoreActualName"
+             categories="cusScorceCategories" title="cusScorePolarTitle" subtitle="cusScorePolarSubtitle">
+        </div>
+    </div>
+</div>
+<aside class="serviceScoreQueryPanel" ng-class="{'open':serviceScoreQueryPanelOpen}">
+</aside>

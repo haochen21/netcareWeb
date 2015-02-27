@@ -10,11 +10,11 @@ angular.module('ngHighchart', [])
 
             },
             link: function (scope, element, attrs) {
-                $timeout(function(){
+                $timeout(function () {
                     var outSize = attrs.outSize ? attrs.outSize : '100%',
                         innerSize = attrs.innerSize ? attrs.innerSize : '0%',
                         backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
-                        labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
+                        labelColor = attrs.labelColor ? attrs.labelColor : "#4383b4",
                         labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
                     var chart = new Highcharts.Chart({
                         chart: {
@@ -23,7 +23,7 @@ angular.module('ngHighchart', [])
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
                             plotShadow: false,
-                            backgroundColor:backgroundColor
+                            backgroundColor: backgroundColor
                         },
                         title: {
                             text: null
@@ -62,14 +62,14 @@ angular.module('ngHighchart', [])
                         ]
                     });
                     scope.$watch("items", function (newValue) {
-                       chart.series[0].setData(newValue, true);
+                        chart.series[0].setData(newValue, true);
                     }, true);
-                },0);
+                }, 0);
 
             }
         }
     })
-    .directive('hcPieDonut', function ($window,$timeout) {
+    .directive('hcPieDonut', function ($window, $timeout) {
         return {
             restrict: 'AE',
             replace: true,
@@ -82,11 +82,11 @@ angular.module('ngHighchart', [])
 
             },
             link: function (scope, element, attrs) {
-                $timeout(function(){
+                $timeout(function () {
                     var outSize = attrs.outSize ? attrs.outSize : '100%',
                         innerSize = attrs.innerSize ? attrs.innerSize : '0%',
                         backgroundColor = attrs.backgroundColor ? attrs.backgroundColor : '#FFFFFF',
-                        labelColor =  attrs.labelColor ? attrs.labelColor : "#4383b4",
+                        labelColor = attrs.labelColor ? attrs.labelColor : "#4383b4",
                         labelConnectorColor = attrs.labelConnectorColor ? attrs.labelConnectorColor : "#000000";
 
                     var windowWidth = $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
@@ -99,7 +99,7 @@ angular.module('ngHighchart', [])
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
                             plotShadow: false,
-                            backgroundColor:backgroundColor
+                            backgroundColor: backgroundColor
                         },
                         title: {
                             text: scope.title
@@ -109,7 +109,7 @@ angular.module('ngHighchart', [])
                         },
                         tooltip: {
                             formatter: function () {
-                                return "<b>" + this.point.name +":"+this.point.y+"分钟"+ "</b></b><br/>" + Highcharts.numberFormat(this.percentage, 1) + " %";
+                                return "<b>" + this.point.name + ":" + this.point.y + "分钟" + "</b></b><br/>" + Highcharts.numberFormat(this.percentage, 1) + " %";
                             }
                         },
                         plotOptions: {
@@ -138,7 +138,7 @@ angular.module('ngHighchart', [])
                                     formatter: function () {
                                         return '<b>' + this.point.name + '</b><br><br> ' + this.y + '';
                                     },
-                                    distance: windowWidth>768?40:10
+                                    distance: windowWidth > 768 ? 40 : 10
                                 }
                             }
                         ]
@@ -153,7 +153,7 @@ angular.module('ngHighchart', [])
                     scope.$watch("title", function (newValue) {
                         chart.setTitle({text: newValue});
                     }, true);
-                },0);
+                }, 0);
             }
         }
     })
@@ -168,8 +168,6 @@ angular.module('ngHighchart', [])
 
             },
             link: function (scope, element, attrs) {
-                var aaaaa = angular.element(element).attr('name');
-                console.log(aaaaa);
                 var chart = new Highcharts.Chart({
                     chart: {
                         renderTo: angular.element(element).attr('id'),
@@ -186,7 +184,7 @@ angular.module('ngHighchart', [])
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                        '<td style="padding:0"><b>{point.y}</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -211,7 +209,7 @@ angular.module('ngHighchart', [])
                     },
                     yAxis: {
                         min: 0,
-                        max: Math.max.apply(null,[].map.call(scope.items, function (obj) {
+                        max: Math.max.apply(null, [].map.call(scope.items, function (obj) {
                             return obj.value;
                         })),
                         title: {
@@ -232,6 +230,89 @@ angular.module('ngHighchart', [])
                     chart.series[0].setData(newValue, true);
                 }, true);
 
+            }
+        }
+    })
+    .directive('hcCusScorePolar', function ($window,$timeout) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                firstItems: '=',
+                secondItems: '=',
+                firstItemName: '=',
+                secondItemName: '=',
+                categories: '=',
+                title: '=',
+                subtitle: '='
+            },
+            controller: function ($scope, $element, $attrs) {
+
+            },
+            link: function (scope, element, attrs) {
+                $timeout(function () {
+                    var windowWidth = $window.innerWidth || ($document.body ? $document.body.offsetWidth : 0);
+                    var chart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: angular.element(element).attr('id'),
+                            height: windowWidth > 768 ? angular.element(element).attr('height') : 400,
+                            polar: true,
+                            type: 'line'
+                        },
+                        title: {
+                            text: scope.title
+                        },
+                        subtitle: {
+                            text: scope.subtitle,
+                            margin: 40
+                        },
+                        pane: {
+                            size: '90%'
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        xAxis: {
+                            categories: scope.categories,
+                            tickmarkPlacement: 'on',
+                            lineWidth: 0
+                        },
+                        yAxis: {
+                            gridLineInterpolation: 'polygon',
+                            lineWidth: 0,
+                            min: 0
+                        },
+                        tooltip: {
+                            shared: true,
+                            pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y}</b><br/>'
+                        },
+                        legend: {
+                            itemDistance: 50
+                        },
+                        series: [
+                            {
+                                name: scope.firstItemName,
+                                data: scope.firstItems,
+                                color: Highcharts.getOptions().colors[3],
+                                pointPlacement: 'on'
+                            }, {
+                                name: scope.secondItemName,
+                                data: scope.secondItems,
+                                color: Highcharts.getOptions().colors[0],
+                                pointPlacement: 'on'
+                            }
+                        ]
+                    });
+                    scope.$watch("firstItems", function (newValue) {
+                        chart.series[0].setData(newValue, true);
+                    }, true);
+                    scope.$watch("secondItems", function (newValue) {
+                        chart.series[1].setData(newValue, true);
+                    }, true);
+                    scope.$watch("title", function (newValue) {
+                        chart.setTitle({text: newValue});
+                    }, true);
+                }, 0);
             }
         }
     });
