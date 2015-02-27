@@ -206,3 +206,26 @@ exports.getCheckServiceLog = function (req, res, next) {
         res.status(200).json(jsonObject);
     });
 };
+
+exports.getServiceScoreLog = function (req, res, next) {
+    var customerGroupId = req.body.customerGroupId;
+    var beginDate = req.body.beginDate;
+    var endDate = req.body.endDate;
+    request.post({
+        url: config.netCareServer + '/' + config.customerServiceName + '/serviceScore',
+        form: {
+            customerGroupId: customerGroupId,
+            beginDate: beginDate,
+            endDate: endDate
+        }
+    }, function (err, response, body) {
+        var jsonObject = JSON.parse(body);
+        if (err) {
+            console.error("get service score error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
+};

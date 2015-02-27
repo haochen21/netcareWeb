@@ -23,4 +23,34 @@
     </div>
 </div>
 <aside class="serviceScoreQueryPanel" ng-class="{'open':serviceScoreQueryPanelOpen}">
+    <form role="form">
+        <div class="form-group">
+
+            <label for="serviceScoreBeginDate">文件上传开始月份</label>
+
+            <p class="input-group">
+                <input id="serviceScoreBeginDate" type="text" class="form-control"
+                       ng-model="serviceScoreQueryParam.bd"
+                       is-open="datepicker.serviceScoreQueryBdOpened"
+                       datepicker-popup="yyyy-MM"
+                       datepicker-options="{minMode: 'month'}"
+                       datepicker-mode="'month'"
+                       ng-required="true"
+                       current-text="本月"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openServiceScoreQueryBeginDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+
+        </div>
+        <div class="form-group">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button class="btn btn-default" btn-loading="is_loading" data-loading-text="查询中..."
+                        ng-click="queryServiceScore()">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
 </aside>

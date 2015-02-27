@@ -255,7 +255,7 @@ angular.module('ngHighchart', [])
                     var chart = new Highcharts.Chart({
                         chart: {
                             renderTo: angular.element(element).attr('id'),
-                            height: windowWidth > 768 ? angular.element(element).attr('height') : 400,
+                            height: windowWidth > 768 ? angular.element(element).attr('height') : 450,
                             polar: true,
                             type: 'line'
                         },
@@ -263,11 +263,10 @@ angular.module('ngHighchart', [])
                             text: scope.title
                         },
                         subtitle: {
-                            text: scope.subtitle,
-                            margin: 40
+                            text: scope.subtitle
                         },
                         pane: {
-                            size: '90%'
+                            size: windowWidth > 768 ? '90%':'70%'
                         },
                         credits: {
                             enabled: false
@@ -287,7 +286,7 @@ angular.module('ngHighchart', [])
                             pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y}</b><br/>'
                         },
                         legend: {
-                            itemDistance: 50
+                            itemDistance: 30
                         },
                         series: [
                             {

@@ -145,6 +145,9 @@ router.route('/customerService/serviceMeeting')
 router.route('/customerService/checkService')
     .post(routes.cusServiceInfo.getCheckServiceLog);
 
+router.route('/customerService/serviceScore')
+    .post(routes.cusServiceInfo.getServiceScoreLog);
+
 app.use('/api', router);
 
 app.use(logErrors);
