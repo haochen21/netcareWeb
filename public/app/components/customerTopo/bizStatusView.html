@@ -9,7 +9,7 @@
         </ul>
     </div>
     <div class="customerGroupBizStatus">
-        <div class="customerGroupBizStatusBody" ng-show="bizStatusModule == 'bizStatusPanel'">
+        <div class="customerGroupBizStatusBody" ng-show="bizStatusDisplayModule == 'stats'">
             <div class="row" ng-repeat="row in bizStatusArray">
                 <div class="col-md-3"
                      ng-repeat="bizStatusData in bizStatusDatas.slice(4*$index, 4*$index + 4)">
@@ -18,18 +18,18 @@
                             <a href="" class="pull-right" ng-click="showBizStatusTopo(bizStatusData)">
                                 <i class="fa fa-sitemap fa-lg"></i>
                             </a>
-                            <div class="text-center">{{bizStatusData.type}}</div>
+                            <div class="text-center">{{bizStatusData.name}}</div>
                         </div>
                         <div class="panel-body">
-                            <div class="text-center">电路:{{bizStatusData.circuitNum}}</div>
-                            <div hc-pie class="bizStatusCircuitDonut" id={{bizStatusData.type+'-circuitDonut'}} height="132" items="bizStatusData.dountData"
+                            <div class="text-center">电路:{{bizStatusData.faultCirNum+bizStatusData.normalCirNum}}</div>
+                            <div hc-pie class="bizStatusCircuitDonut" id={{bizStatusData.name+'-circuitDonut'}} height="132" items="bizStatusData.dountData"
                                  out-size="100%" inner-size="90%"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div ng-show="bizStatusModule == 'bizStatusTopo'">
+        <div ng-show="bizStatusDisplayModule == 'topo'">
             <div biz-status-topo class="bizStatusTopo"></div>
         </div>
     </div>

@@ -229,3 +229,22 @@ exports.getServiceScoreLog = function (req, res, next) {
         res.status(200).json(jsonObject);
     });
 };
+
+exports.getBizStatusStats = function (req, res, next) {
+    var customerGroupId = req.body.customerGroupId;
+    request.post({
+        url: config.netCareServer + '/' + config.customerServiceName + '/bizStatusStats',
+        form: {
+            customerGroupId: customerGroupId
+        }
+    }, function (err, response, body) {
+        var jsonObject = JSON.parse(body);
+        if (err) {
+            console.error("get business status stats error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
+};

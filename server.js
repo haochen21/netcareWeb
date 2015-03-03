@@ -148,6 +148,9 @@ router.route('/customerService/checkService')
 router.route('/customerService/serviceScore')
     .post(routes.cusServiceInfo.getServiceScoreLog);
 
+router.route('/customerService/bizStatusStats')
+    .post(routes.cusServiceInfo.getBizStatusStats);
+
 app.use('/api', router);
 
 app.use(logErrors);

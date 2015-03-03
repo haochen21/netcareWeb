@@ -48,8 +48,8 @@ angular.module('netcareApp')
 
         $scope.back = function () {
             if ($scope.displayModule == 'bizStatus'
-                && $scope.bizStatusModule == 'bizStatusTopo') {
-                $scope.bizStatusModule = 'bizStatusPanel';
+                && $scope.bizStatusDisplayModule == 'topo') {
+                $scope.bizStatusDisplayModule = 'stats';
                 return;
             }
             $scope.basicInfoView = true;
@@ -60,6 +60,8 @@ angular.module('netcareApp')
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
             $scope.serviceMeetingDisplayModule = 'table';
+            $scope.serviceScoreDisplayModule = 'chart';
+            $scope.bizStatusDisplayModule = 'stats';
         };
 
         $scope.showSubModule = function (customerMenu) {
@@ -73,11 +75,11 @@ angular.module('netcareApp')
                 getSlaDoc();
             } else if (customerMenu.id === 'bizStatus') {
                 $scope.getBizStatusData();
-            }else if (customerMenu.id === 'netOps') {
+            } else if (customerMenu.id === 'netOps') {
                 $scope.queryNetOps();
-            }else if (customerMenu.id === 'serviceMeeting') {
+            } else if (customerMenu.id === 'serviceMeeting') {
                 $scope.queryServiceMeetings();
-            }else if (customerMenu.id === 'serviceScore') {
+            } else if (customerMenu.id === 'serviceScore') {
                 $scope.queryServiceScore();
             }
 
@@ -86,6 +88,8 @@ angular.module('netcareApp')
             $scope.slaDocDisplayModule = 'table';
             $scope.netOpsDisplayModule = 'table';
             $scope.serviceMeetingDisplayModule = 'table';
+            $scope.serviceScoreDisplayModule = 'chart';
+            $scope.bizStatusDisplayModule = 'stats';
         };
 
         $scope.download = function () {
@@ -107,7 +111,7 @@ angular.module('netcareApp')
         var cusFileNowDate = new Date();
         $scope.cusFileQueryParam = {};
         var cusFileQueryBeginDate = function () {
-            $scope.cusFileQueryParam.bd = new Date(cusFileNowDate.getFullYear(), cusFileNowDate.getMonth()-3);
+            $scope.cusFileQueryParam.bd = new Date(cusFileNowDate.getFullYear(), cusFileNowDate.getMonth() - 3);
         };
         cusFileQueryBeginDate();
         $scope.$watch('cusFileQueryParam.bd', function () {
@@ -144,9 +148,9 @@ angular.module('netcareApp')
             var tablePromise = $http.post('api/customerService/cusResource', form);
             tablePromise.then(function (response) {
                 $scope.cusResourceFiles = response.data.logs;
-                if($scope.cusResourceFiles.length){
+                if ($scope.cusResourceFiles.length) {
                     $scope.cusFileQueryState = 'hasData';
-                }else{
+                } else {
                     $scope.cusFileQueryState = 'noData';
                 }
                 $scope.cusFileQuery_is_loading = false;
@@ -316,7 +320,7 @@ angular.module('netcareApp')
                 'api/customerService/slaDoc/' + $scope.customerGroup.id
             ).then(function (response) {
                     $scope.slaDocFiles = response.data.logs;
-            });
+                });
         };
         $scope.downloadSlaFile = function (file) {
             $scope.file = file;
@@ -340,7 +344,7 @@ angular.module('netcareApp')
         var netOpsNowDate = new Date();
         $scope.netOpsQueryParam = {};
         var netOpsQueryBeginDate = function () {
-            $scope.netOpsQueryParam.bd = new Date(netOpsNowDate.getFullYear()-1, netOpsNowDate.getMonth());
+            $scope.netOpsQueryParam.bd = new Date(netOpsNowDate.getFullYear() - 1, netOpsNowDate.getMonth());
         };
         netOpsQueryBeginDate();
         $scope.$watch('netOpsQueryParam.bd', function () {
@@ -377,9 +381,9 @@ angular.module('netcareApp')
             var tablePromise = $http.post('api/customerService/netOps', form);
             tablePromise.then(function (response) {
                 $scope.netOpsFiles = response.data.logs;
-                if($scope.netOpsFiles.length){
+                if ($scope.netOpsFiles.length) {
                     $scope.netOpsQueryState = 'hasData';
-                }else{
+                } else {
                     $scope.netOpsQueryState = 'noData';
                 }
                 $scope.netOpsQuery_is_loading = false;
@@ -413,7 +417,7 @@ angular.module('netcareApp')
         var serviceMeetingNowDate = new Date();
         $scope.serviceMeetingQueryParam = {};
         var serviceMeetingQueryBeginDate = function () {
-            $scope.serviceMeetingQueryParam.bd = new Date(serviceMeetingNowDate.getFullYear()-1, serviceMeetingNowDate.getMonth());
+            $scope.serviceMeetingQueryParam.bd = new Date(serviceMeetingNowDate.getFullYear() - 1, serviceMeetingNowDate.getMonth());
         };
         serviceMeetingQueryBeginDate();
         $scope.$watch('serviceMeetingQueryParam.bd', function () {
@@ -480,7 +484,7 @@ angular.module('netcareApp')
         var checkServiceNowDate = new Date();
         $scope.checkServiceQueryParam = {};
         var checkServiceQueryBeginDate = function () {
-            $scope.checkServiceQueryParam.bd = new Date(checkServiceNowDate.getFullYear()-1, checkServiceNowDate.getMonth());
+            $scope.checkServiceQueryParam.bd = new Date(checkServiceNowDate.getFullYear() - 1, checkServiceNowDate.getMonth());
         };
         checkServiceQueryBeginDate();
         $scope.$watch('checkServiceQueryParam.bd', function () {
@@ -520,15 +524,15 @@ angular.module('netcareApp')
             var slidesPromise = $http.post('api/customerService/checkService', form);
             slidesPromise.then(function (response) {
                 var checkServiceFiles = response.data.logs;
-                for(var i=0;i<checkServiceFiles.length;i++){
+                for (var i = 0; i < checkServiceFiles.length; i++) {
                     $scope.checkServiceSlides.push({
                         image: '/assets/cusfile/' + $scope.customerGroup.id + '/4/' + checkServiceFiles[i].fileUrl,
                         text: checkServiceFiles[i].fileName
                     });
                 }
-                if(checkServiceFiles.length){
+                if (checkServiceFiles.length) {
                     $scope.checkQueryState = 'hasData';
-                }else{
+                } else {
                     $scope.checkQueryState = 'noData';
                 }
                 $scope.checkServiceQuery_is_loading = false;
@@ -540,6 +544,10 @@ angular.module('netcareApp')
 
 
         /* ----------service score------------------------*/
+        $scope.serviceScoreDisplayModule = 'chart';
+        $scope.changeServiceScorePanel = function (type) {
+            $scope.serviceScoreDisplayModule = type;
+        };
         $scope.triggerServiceScoreQueryPanel = function () {
             $scope.serviceScoreQueryPanelOpen = !$scope.serviceScoreQueryPanelOpen;
         };
@@ -556,18 +564,18 @@ angular.module('netcareApp')
             $scope.datepicker = {'serviceScoreQueryBdOpened': true};
         };
 
-        $scope.cusScorceCategories = ['网络配置','运行状况','服务评价','开通指标','人员配置'];
+        $scope.cusScorceCategories = ['网络配置', '运行状况', '服务评价', '开通指标', '人员配置'];
         $scope.cusScoreStandardName = "标准值";
         $scope.cusScoreActualName = "实际值";
-        $scope.cusScorePolarTitle='服务质量评分';
-        $scope.cusScoreStandard = [100,100,100,100,100];
+        $scope.cusScorePolarTitle = '服务质量评分';
+        $scope.cusScoreStandard = [100, 100, 100, 100, 100];
         $scope.serviceScoreQuery_is_loading = false;
-        $scope.queryServiceScore = function(){
+        $scope.queryServiceScore = function () {
             $scope.serviceScoreQueryParam.beginDate = new Date($scope.serviceScoreQueryParam.bd.getFullYear(), $scope.serviceScoreQueryParam.bd.getMonth(), 1, 0, 0, 0);
             $scope.serviceScoreQueryParam.endDate = new Date($scope.serviceScoreQueryParam.bd.getFullYear(), $scope.serviceScoreQueryParam.bd.getMonth() + 1, 0, 23, 59, 59);
             var beginDateValue = $filter('date')($scope.serviceScoreQueryParam.beginDate, 'yyyy-M');
             $scope.serviceScoreQuery_is_loading = true;
-            $scope.cusScorePolarTitle=beginDateValue+' 服务质量评分';
+            $scope.cusScorePolarTitle = beginDateValue + ' 服务质量评分';
             $scope.cusScorePolarSubtitle = $scope.customerGroup.name;
 
             var form = {
@@ -577,16 +585,24 @@ angular.module('netcareApp')
             };
             var promise = $http.post('api/customerService/serviceScore', form);
             promise.then(function (response) {
-                var score = response.data.scores[0];
-                if(score){
+                $scope.serviceScore = response.data.scores[0];
+                $scope.serviceScoreCategories = [
+                    $scope.serviceScore.netConfig,
+                    $scope.serviceScore.operatingStatus,
+                    $scope.serviceScore.serviceEvalu,
+                    $scope.serviceScore.patencyIndex,
+                    $scope.serviceScore.staff
+                ];
+
+                if ($scope.serviceScore) {
                     $scope.cusScoreActual = [
-                        score.netConfigScore,
-                        score.operatingStatusScore,
-                        score.serviceEvaluScore,
-                        score.patencyIndexScore,
-                        score.staffScore
+                        $scope.serviceScore.netConfig.score,
+                        $scope.serviceScore.operatingStatus.score,
+                        $scope.serviceScore.serviceEvalu.score,
+                        $scope.serviceScore.patencyIndex.score,
+                        $scope.serviceScore.staff.score
                     ];
-                }else{
+                } else {
                     $scope.cusScoreActual = [];
                 }
                 $scope.serviceScoreQuery_is_loading = false;
@@ -595,6 +611,45 @@ angular.module('netcareApp')
                 throw new Error('get serviceScore went wrong...');
             });
 
+        };
+
+        /* ----------business status------------------------*/
+        $scope.bizStatusDisplayModule = 'stats';
+        $scope.bizStatusModule = 'bizStatusPanel';
+        $scope.getBizStatusData = function () {
+            $scope.bizStatusDatas = [];
+            var form = {
+                customerGroupId: $scope.customerGroup.id
+            };
+            var promise = $http.post('api/customerService/bizStatusStats', form);
+            promise.then(function (response) {
+                $scope.bizStatusDatas = response.data.cirStatusStats;
+                for (var i = 0; i < $scope.bizStatusDatas.length; i++) {
+                    $scope.bizStatusDatas[i].dountData = [
+                        {
+                            name: "正常",
+                            y: $scope.bizStatusDatas[i].normalCirNum,
+                            color: Highcharts.getOptions().colors[7]
+                        },
+                        {
+                            name: "故障",
+                            y: $scope.bizStatusDatas[i].faultCirNum,
+                            color: Highcharts.getOptions().colors[5]
+                        }];
+                }
+                var arrayLength = Math.ceil($scope.bizStatusDatas.length / 4);
+                $scope.bizStatusArray = new Array(arrayLength);
+                for (var l = 0; l < arrayLength; l++) {
+                    $scope.bizStatusArray[l] = l;
+                }
+            }, function (response) {
+                throw new Error('get bizStatus went wrong...');
+            });
+        };
+
+        $scope.showBizStatusTopo = function (bizStatusData) {
+            $scope.bizStatusDisplayModule = 'topo';
+            $scope.getBizStatusTopoData();
         };
 
         $scope.cusCircuitDonutData = [
@@ -610,199 +665,129 @@ angular.module('netcareApp')
             }
         ];
 
-
-        var bizStatusRawDatas = [
+        var roomCircuits =[
             {
-                type: "语音数字中继",
-                faultStatus: false,
-                circuitNum: 190
+                id:108745,
+                name:"市北",
+                type:"ROOM",
+                circuits:[
+                    "01T000087",
+                    "01T013500",
+                    "01T015973",
+                    "01T018084"
+                ]
             },
             {
-                type: "语音数字中继",
-                faultStatus: true,
-                circuitNum: 7
+                id:107852,
+                name:"奥力孚商务大楼",
+                type:"ROOM",
+                circuits:[
+                    "01T000087"
+                ]
             },
             {
-                type: "IDC",
-                faultStatus: false,
-                circuitNum: 1
+                id:114539,
+                name:"外汇交易中心二期",
+                type:"ROOM",
+                circuits:[
+                    "01T013500"
+                ]
             },
             {
-                type: "GSM",
-                faultStatus: false,
-                circuitNum: 1
+                id:100847,
+                name:"人民银行大厦",
+                type:"ROOM",
+                circuits:[
+                    "01T015973"
+                ]
             },
             {
-                type: "DPLC",
-                faultStatus: false,
-                circuitNum: 64
+                id:102067,
+                name:"上证通二期",
+                type:"ROOM",
+                circuits:[
+                    "01T018084",
+                    "21T022894",
+                    "21T022894",
+                    "21T022894",
+                    "21T022894"
+                ]
             },
             {
-                type: "3G",
-                faultStatus: false,
-                circuitNum: 2
+                id:106437,
+                name:"平安保险（唐镇）",
+                type:"ROOM",
+                circuits:[
+                    "21T022894",
+                    "21T025509",
+                    "21T025508"
+                ]
             },
             {
-                type: "异地受理",
-                faultStatus: false,
-                circuitNum: 16
+                id:103232,
+                name:"平安保险(上丰路1158号)",
+                type:"ME",
+                circuits:[
+                    "21T025509",
+                    "21T025508"
+                ]
             },
-            {
-                type: "DID",
-                faultStatus: false,
-                circuitNum: 8
-            },
-            {
-                type: "AG",
-                faultStatus: false,
-                circuitNum: 19
-            },
-            {
-                type: "VOIP",
-                faultStatus: false,
-                circuitNum: 2
-            },
-            {
-                type: "互联网LAN专线接入",
-                faultStatus: false,
-                circuitNum: 3
-            },
-            {
-                type: "WLAN",
-                faultStatus: false,
-                circuitNum: 1
-            },
-            {
-                type: "互联网普通专线接入",
-                faultStatus: false,
-                circuitNum: 1
-            },
-            {
-                type: "沪运资调令",
-                faultStatus: false,
-                circuitNum: 6
-            }
         ];
-
-        $scope.bizStatusModule = 'bizStatusPanel';
-        $scope.getBizStatusData = function () {
-            $scope.bizStatusDatas = [];
-            for (var i = 0; i < bizStatusRawDatas.length; i++) {
-                var data = bizStatusRawDatas[i];
-                var isExist = false;
-                for (var j = 0; j < $scope.bizStatusDatas.length; j++) {
-                    if ($scope.bizStatusDatas[j].type === data.type) {
-                        $scope.bizStatusDatas[j].circuitNum = $scope.bizStatusDatas[j].circuitNum + data.circuitNum;
-                        if (data.faultStatus) {
-                            $scope.bizStatusDatas[j].faultCircuitNum = data.circuitNum;
-                            $scope.bizStatusDatas[j].hasFault = true;
-                        }
-                        isExist = true;
-                        break;
-                    }
-                }
-                if (!isExist) {
-                    var bizStatusData = {
-                        type: data.type,
-                        hasFault: false,
-                        faultCircuitNum: 0,
-                        circuitNum: data.circuitNum
-                    };
-                    if (data.faultStatus) {
-                        bizStatusData.faultCircuitNum = data.circuitNum;
-                        bizStatusData.hasFault = true;
-                    }
-                    $scope.bizStatusDatas.push(bizStatusData);
-                }
-            }
-            for (var k = 0; k < $scope.bizStatusDatas.length; k++) {
-                $scope.bizStatusDatas[k].dountData = [{
-                    name: "正常",
-                    y: $scope.bizStatusDatas[k].circuitNum - $scope.bizStatusDatas[k].faultCircuitNum,
-                    color: Highcharts.getOptions().colors[7]
-                },
-                    {
-                        name: "故障",
-                        y: $scope.bizStatusDatas[k].faultCircuitNum,
-                        color: Highcharts.getOptions().colors[5]
-                    }];
-            }
-            var arrayLength = Math.ceil($scope.bizStatusDatas.length / 4);
-            $scope.bizStatusArray = new Array(arrayLength);
-            for (var l = 0; l < arrayLength; l++) {
-                $scope.bizStatusArray[l] = l;
-            }
-            console.log($scope.bizStatusDatas);
-        };
-
-        $scope.showBizStatusTopo = function (bizStatusData) {
-            $scope.bizStatusModule = 'bizStatusTopo';
-            $scope.getBizStatusTopoData();
-        };
-
         $scope.bizStatusTopoDatas = null;
         $scope.getBizStatusTopoData = function () {
             $scope.bizStatusTopoDatas = {};
+            var links = [];
+            for(var i=0;i<roomCircuits.length;i++){
+                var result = roomCircuits[i].circuits.reduce(function(p, c){
+                    if (c in p) {
+                        p[c]++;
+                    } else {
+                        p[c]=1;
+                    }
+                    return p;
+                }, {});
+                var uniqueArray = roomCircuits[i].circuits.filter(function(item, pos) {
+                    return roomCircuits[i].circuits.indexOf(item) == pos;
+                });
+
+                uniqueArray.forEach(function (circuit) {
+                   if(result[circuit] >1){
+                       var circuitNum = result[circuit]/2;
+                       links.push({source: roomCircuits[i], target: roomCircuits[i],value:circuitNum});
+                   }
+                });
+                for(var j=i+1;j<roomCircuits.length;j++){
+                    uniqueArray.forEach(function(aCircuit){
+                        var sameCircuits = roomCircuits[j].circuits.filter(function(zCircuit) { return  aCircuit=== zCircuit; });
+                        if(sameCircuits.length){
+                            var link = topoLinkIsExist(links,roomCircuits[i],roomCircuits[j]);
+                            if(link){
+                              link.value = link.value+1;
+                            }else{
+                                links.push({source: roomCircuits[i], target: roomCircuits[j],value:1});
+                            }
+                        }
+                    });
+                }
+            }
+
             $scope.bizStatusTopoDatas = {
-                nodes: [
-                    {
-                        "name": "市北"
-                    },
-                    {
-                        "name": "平安保险(唐镇)"
-                    },
-                    {
-                        "name": "中国平安金融大厦"
-                    },
-                    {
-                        "name": "平安保险(浦东)"
-                    },
-                    {
-                        "name": "上海润和院"
-                    },
-                    {
-                        "name": "东亚银行(四川中路299号)"
-                    }
-                ],
-                links: [
-                    {
-                        "source": 0,
-                        "target": 1,
-                        "value": 2
-                    },
-                    {
-                        "source": 0,
-                        "target": 2,
-                        "value": 12
-                    },
-                    {
-                        "source": 0,
-                        "target": 3,
-                        "value": 8
-                    },
-                    {
-                        "source": 0,
-                        "target": 4,
-                        "value": 1
-                    },
-                    {
-                        "source": 0,
-                        "target": 5,
-                        "value": 1
-                    },
-                    {
-                        "source": 1,
-                        "target": 1,
-                        "value": 2
-                    }
-                ]
+                nodes: roomCircuits,
+                links: links
             };
         };
 
-
+        var topoLinkIsExist = function(links,source,target){
+            for(var i=0;i<links.length;i++){
+                if((links[i].source.id === source.id && links[i].target.id === target.id)
+                        ||(links[i].source.id === target.id && links[i].target.id === source.id)){
+                    return links[i];
+                }
+            }
+            return undefined;
+        };
         //$scope.customerGroupsView = false;
         //$scope.basicInfoView = false;
         //$scope.displayModule = 'bizStatus';
         //$scope.bizStatusModule = 'bizStatusPanel';
-        $scope.getBizStatusData();
     }]);

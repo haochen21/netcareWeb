@@ -13,11 +13,11 @@ angular.module('netcareApp')
                     .attr("width",width)
                     .attr("height", height);
 
-                scope.$watch('bizStatusTopoDatas', function (topoDatas) {
+                scope.$watch('bizStatusTopoDatas', function (newValue) {
 
                     vis.selectAll('*').remove();
 
-                    if(!topoDatas){
+                    if(!newValue){
                         return;
                     }
 
@@ -26,19 +26,18 @@ angular.module('netcareApp')
                         .linkDistance([250])
                         .gravity(0.3)
                         .size([width, height])
-                        .nodes(topoDatas.nodes)
-                        .links(topoDatas.links)
-                        .start();
+                        .nodes(newValue.nodes)
+                        .links(newValue.links);
 
                     var edges = vis.selectAll("line")
-                        .data(topoDatas.links)
+                        .data(newValue.links)
                         .enter()
                         .append("path")
-                        .attr("id", function(d) { return d.source.index + "_" + d.target.index; })
+                        .attr("id", function(d) { return d.source.id + "_" + d.target.id; })
                         .style("fill", "none")
                         .style("stroke", "#585858")
                         .style("stroke-width", 1)
-                        .attr("marker-end", function(d) { return "url(#" + d.value + ")"; });;
+                        .attr("marker-end", function(d) { return "url(#" + d.value + ")"; });
 
                     var path_label = vis.append("svg:g").selectAll(".path_label")
                         .data(force.links())
@@ -48,13 +47,13 @@ angular.module('netcareApp')
                         .append("svg:textPath")
                         .attr("startOffset", "50%")
                         .attr("text-anchor", "middle")
-                        .attr("xlink:href", function(d) { return "#" + d.source.index + "_" + d.target.index; })
+                        .attr("xlink:href", function(d) { return "#" + d.source.id + "_" + d.target.id; })
                         .style("fill", "#000")
                         .style("font-family", "Arial")
                         .text(function(d) { return d.value; });
 
                     var nodes = vis.selectAll("node")
-                        .data(topoDatas.nodes)
+                        .data(newValue.nodes)
                         .enter()
                         .append("g")
                         .attr("class", "node")
@@ -102,7 +101,8 @@ angular.module('netcareApp')
 
                         nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-                    })
+                    });
+                    force.start();
                 });
             }
         }

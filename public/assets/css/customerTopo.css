@@ -1634,10 +1634,6 @@ a.info-tiles {
     background-color: rgba(0,0,0,.05);
 }
 
-.customerGroupBizStatusBody,{
-    margin: 10px;
-}
-
 .customerGroupBizStatusBody .panel{
     border: 0;
     box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
@@ -1744,6 +1740,8 @@ a.info-tiles {
 .netOpsDocTable,
 .serviceMeetingDocTable,
 .cusFileDocTable,
-.serviceScorePolarPanel{
+.serviceScorePolarPanel,
+.serviceScoreTable,
+.customerGroupBizStatus{
     padding: 10px 10px;
 }
