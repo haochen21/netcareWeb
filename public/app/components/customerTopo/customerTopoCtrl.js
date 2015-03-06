@@ -665,106 +665,167 @@ angular.module('netcareApp')
             }
         ];
 
-        var roomCircuits =[
+        var roomCircuits = [
             {
-                id:108745,
-                name:"市北",
-                type:"ROOM",
-                circuits:[
-                    "01T000087",
-                    "01T013500",
-                    "01T015973",
-                    "01T018084"
+                id: 108745,
+                name: "市北",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true},
+                    {no: "01T013500", hasFault: false},
+                    {no: "01T015973", hasFault: false},
+                    {no: "01T018084", hasFault: false}
                 ]
             },
             {
-                id:107852,
-                name:"奥力孚商务大楼",
-                type:"ROOM",
-                circuits:[
-                    "01T000087"
+                id: 107852,
+                name: "奥力孚商务大楼",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true}
                 ]
             },
             {
-                id:114539,
-                name:"外汇交易中心二期",
-                type:"ROOM",
-                circuits:[
-                    "01T013500"
+                id: 114539,
+                name: "外汇交易中心二期",
+                type: "room",
+                circuits: [
+                    {no: "01T013500", hasFault: false}
                 ]
             },
             {
-                id:100847,
-                name:"人民银行大厦",
-                type:"ROOM",
-                circuits:[
-                    "01T015973"
+                id: 100847,
+                name: "人民银行大厦",
+                type: "room",
+                circuits: [
+                    {no: "01T015973", hasFault: false}
                 ]
             },
             {
-                id:102067,
-                name:"上证通二期",
-                type:"ROOM",
-                circuits:[
-                    "01T018084",
-                    "21T022894",
-                    "21T022894",
-                    "21T022894",
-                    "21T022894"
+                id: 102067,
+                name: "上证通二期",
+                type: "room",
+                circuits: [
+                    {no: "01T018084", hasFault: false},
+                    {no: "21T022894", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022896", hasFault: false},
+                    {no: "21T022896", hasFault: false}
                 ]
             },
             {
-                id:106437,
-                name:"平安保险（唐镇）",
-                type:"ROOM",
-                circuits:[
-                    "21T022894",
-                    "21T025509",
-                    "21T025508"
+                id: 106437,
+                name: "平安保险（唐镇）",
+                type: "room",
+                circuits: [
+                    {no: "21T022894", hasFault: false},
+                    {no: "21T025509", hasFault: false},
+                    {no: "21T025508", hasFault: false}
                 ]
             },
             {
-                id:103232,
-                name:"平安保险(上丰路1158号)",
-                type:"ME",
-                circuits:[
-                    "21T025509",
-                    "21T025508"
+                id: 103232,
+                name: "平安保险(上丰路1158号)",
+                type: "me",
+                circuits: [
+                    {no: "21T025509", hasFault: false},
+                    {no: "21T025508", hasFault: false}
                 ]
-            },
+            }
         ];
-        $scope.bizStatusTopoDatas = null;
+
+        var roomCircuits1 = [
+            {
+                id: 108745,
+                name: "市北",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true},
+                    {no: "01T013500", hasFault: false},
+                    {no: "01T015973", hasFault: false},
+                    {no: "01T018084", hasFault: false}
+                ]
+            },
+            {
+                id: 107852,
+                name: "奥力孚商务大楼",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true},
+                    {no: "01T013500", hasFault: false},
+                    {no: "01T015973", hasFault: false},
+                    {no: "01T018084", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022896", hasFault: false},
+                    {no: "21T022896", hasFault: false}
+                ]
+            }
+        ];
+
+
         $scope.getBizStatusTopoData = function () {
+            //roomCircuits = roomCircuits1;
             $scope.bizStatusTopoDatas = {};
             var links = [];
-            for(var i=0;i<roomCircuits.length;i++){
-                var result = roomCircuits[i].circuits.reduce(function(p, c){
-                    if (c in p) {
-                        p[c]++;
+            for (var i = 0; i < roomCircuits.length; i++) {
+                //统计这个结点下同一电路的数量
+                var result = roomCircuits[i].circuits.reduce(function (previousValue, currentValue) {
+                    if (currentValue.no in previousValue) {
+                        previousValue[currentValue.no]++;
                     } else {
-                        p[c]=1;
+                        previousValue[currentValue.no] = 1;
                     }
-                    return p;
+                    return previousValue;
                 }, {});
-                var uniqueArray = roomCircuits[i].circuits.filter(function(item, pos) {
-                    return roomCircuits[i].circuits.indexOf(item) == pos;
-                });
 
-                uniqueArray.forEach(function (circuit) {
-                   if(result[circuit] >1){
-                       var circuitNum = result[circuit]/2;
-                       links.push({source: roomCircuits[i], target: roomCircuits[i],value:circuitNum});
-                   }
+                var uniqueArray = [];
+                //获取这个机房下电路的唯一值
+                var uniqueCircuits = [];
+                roomCircuits[i].circuits.forEach(function (circuit) {
+                    if (uniqueArray.indexOf(circuit.no) < 0) {
+                        uniqueArray.push(circuit.no);
+                        uniqueCircuits.push(circuit);
+                    }
                 });
-                for(var j=i+1;j<roomCircuits.length;j++){
-                    uniqueArray.forEach(function(aCircuit){
-                        var sameCircuits = roomCircuits[j].circuits.filter(function(zCircuit) { return  aCircuit=== zCircuit; });
-                        if(sameCircuits.length){
-                            var link = topoLinkIsExist(links,roomCircuits[i],roomCircuits[j]);
-                            if(link){
-                              link.value = link.value+1;
-                            }else{
-                                links.push({source: roomCircuits[i], target: roomCircuits[j],value:1});
+                //AZ端都属于一个机房的电路数
+                var aZIsTheSame = 0;
+                uniqueCircuits.forEach(function (circuit) {
+                    if (result[circuit.no] === 2) {
+                        aZIsTheSame++;
+                    }
+                });
+                if(aZIsTheSame >0){
+                    var link = {source: roomCircuits[i], target: roomCircuits[i], subLinksSize: aZIsTheSame};
+                    var subLinks = [];
+                    uniqueCircuits.forEach(function (circuit) {
+                        if (result[circuit.no] === 2) {
+                            circuit.linkNo = subLinks.length+1;
+                            subLinks.push(circuit);
+                        }
+                    });
+                    link.subLinks = subLinks;
+                    links.push(link);
+                }
+
+                //电路分别存在AZ机房里
+                for (var j = i + 1; j < roomCircuits.length; j++) {
+                    uniqueCircuits.forEach(function (aCircuit) {
+                        var sameCircuits = roomCircuits[j].circuits.filter(function (zCircuit) {
+                            return aCircuit.no === zCircuit.no;
+                        });
+                        if (sameCircuits.length) {
+                            var link = topoLinkIsExist(links, roomCircuits[i], roomCircuits[j]);
+                            if (link) {
+                                link.value = link.value + 1;
+                                aCircuit.linkNo = link.subLinks.length+1;
+                                link.subLinks.push(aCircuit);
+                            } else {
+                                var link = {source: roomCircuits[i], target: roomCircuits[j]};
+                                aCircuit.linkNo = 1;
+                                link.subLinks = [aCircuit];
+                                links.push(link);
                             }
                         }
                     });
@@ -777,10 +838,10 @@ angular.module('netcareApp')
             };
         };
 
-        var topoLinkIsExist = function(links,source,target){
-            for(var i=0;i<links.length;i++){
-                if((links[i].source.id === source.id && links[i].target.id === target.id)
-                        ||(links[i].source.id === target.id && links[i].target.id === source.id)){
+        var topoLinkIsExist = function (links, source, target) {
+            for (var i = 0; i < links.length; i++) {
+                if ((links[i].source.id === source.id && links[i].target.id === target.id)
+                    || (links[i].source.id === target.id && links[i].target.id === source.id)) {
                     return links[i];
                 }
             }

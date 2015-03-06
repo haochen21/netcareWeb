@@ -1745,3 +1745,7 @@ a.info-tiles {
 .customerGroupBizStatus{
     padding: 10px 10px;
 }
+
+.roomLink.hide {
+    display:none;
+}
