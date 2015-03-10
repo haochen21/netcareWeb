@@ -1749,3 +1749,13 @@ a.info-tiles {
 .roomLink.hide {
     display:none;
 }
+
+.customerGroupBizStatus .bizStatusTopoCircuit,
+.customerGroupBizStatus .bizStatusTopoAlarm{
+    margin:-10px;
+}
+
+.bizStatusTopoCircuit .table-bordered,
+.bizStatusTopoAlarm .table-bordered{
+    border:none;
+}

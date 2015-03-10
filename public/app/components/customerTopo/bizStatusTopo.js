@@ -2,6 +2,10 @@ angular.module('netcareApp')
     .directive('bizStatusTopo', function () {
         return {
             restrict: 'A',
+            scope: {
+                siteMapData: '=',
+                clickLinkCircuits: '='
+            },
             link: function (scope, element) {
                 var width = element[0].offsetWidth,
                     height = element[0].offsetHeight,
@@ -221,7 +225,7 @@ angular.module('netcareApp')
                 var pathLabel = topoContainer.selectAll(".roomPath_label");
 
 
-                scope.$watch('bizStatusTopoDatas', function (newValue) {
+                scope.$watch('siteMapData', function (newValue) {
                     if (!newValue) {
                         return;
                     }
@@ -288,11 +292,76 @@ angular.module('netcareApp')
                             return "url(#" + d.value + ")";
                         })
                         .on('click', function (d) {
+                            var id = "";
+                            if (d.linkNo) {//单条电路
+                                id = d.source.id + "_" + d.target.id + "_" + d.circuit.no;
+                            } else {
+                                id = d.source.id + "_" + d.target.id;
+                            }
+                            var clickCircuits = [];
+                            var isSelected = topoContainer.select('path[id="' + id + '"]').classed("selected");
+                            if (isSelected) {
+                                topoContainer.select('path[id="' + id + '"]')
+                                    .classed("selected", false)
+                                    .style("stroke", function (d) {
+                                        var hasFault = false;
+                                        if (d.subLinks) {
+                                            d.subLinks.forEach(function (subLink) {
+                                                if (subLink.hasFault) {
+                                                    hasFault = true;
+                                                }
+                                            });
+                                        } else if (d.circuit.hasFault) {
+                                            hasFault = true;
+                                        }
+                                        if (hasFault) {
+                                            return "red";
+                                        } else {
+                                            return "#585858";
+                                        }
+                                    });
+                            } else {
+                                topoContainer.selectAll('.roomLink.selected')
+                                    .style("stroke", function (d) {
+                                        var hasFault = false;
+                                        if (d.subLinks) {
+                                            d.subLinks.forEach(function (subLink) {
+                                                if (subLink.hasFault) {
+                                                    hasFault = true;
+                                                }
+                                            });
+                                        } else if (d.circuit.hasFault) {
+                                            hasFault = true;
+                                        }
+                                        if (hasFault) {
+                                            return "red";
+                                        } else {
+                                            return "#585858";
+                                        }
+                                    });
+                                topoContainer.select('path[id="' + id + '"]')
+                                    .classed("selected", true)
+                                    .style("stroke", function (d) {
+                                        return "blue";
+                                    });
+                                if (d.linkNo) {//单条电路
+                                    clickCircuits.push(d.circuit.no);
+                                } else {
+                                    d.subLinks.forEach(function (subLink) {
+                                        clickCircuits.push(subLink.no);
+                                    });
+                                }
+                            }
+                            scope.$apply(function () {
+                                scope.clickLinkCircuits = clickCircuits.join(',');
+                            });
+                        })
+                        .on('dblclick', function (d) {
                             if (d.linkNo) {//单条电路
                                 var parentId = d.source.id + "_" + d.target.id;
-                                d3.select('path[id="' + parentId + '"]')
+                                topoContainer.select('path[id="' + parentId + '"]')
                                     .classed("hide", false);
-                                d3.select('text[id="' + parentId + '"]')
+                                topoContainer.select('text[id="' + parentId + '"]')
                                     .classed("hide", false);
                                 var parentLink = null;
                                 links.forEach(function (link) {
@@ -304,25 +373,28 @@ angular.module('netcareApp')
                                 });
                                 parentLink.subLinks.forEach(function (subLink) {
                                     var linkId = d.source.id + "_" + d.target.id + "_" + subLink.no;
-                                    d3.select('path[id="' + linkId + '"]')
+                                    topoContainer.select('path[id="' + linkId + '"]')
                                         .classed("hide", true);
-                                    d3.select('text[id="' + linkId + '"]')
+                                    topoContainer.select('text[id="' + linkId + '"]')
                                         .classed("hide", true);
                                 });
                             } else if (d.subLinks.length > 1) {//如果有多个电路
                                 var parentId = d.source.id + "_" + d.target.id;
-                                d3.select('path[id="' + parentId + '"]')
+                                topoContainer.select('path[id="' + parentId + '"]')
                                     .classed("hide", true);
-                                d3.select('text[id="' + parentId + '"]')
+                                topoContainer.select('text[id="' + parentId + '"]')
                                     .classed("hide", true);
                                 d.subLinks.forEach(function (subLink) {
                                     var linkId = d.source.id + "_" + d.target.id + "_" + subLink.no;
-                                    d3.select('path[id="' + linkId + '"]')
+                                    topoContainer.select('path[id="' + linkId + '"]')
                                         .classed("hide", false);
-                                    d3.select('text[id="' + linkId + '"]')
+                                    topoContainer.select('text[id="' + linkId + '"]')
                                         .classed("hide", false);
                                 });
                             }
+                            scope.$apply(function () {
+                                scope.clickLinkCircuits = [];
+                            });
                         });
                     link.exit().remove();
 

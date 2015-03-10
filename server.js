@@ -124,6 +124,9 @@ router.route('/permissions/:id')
 router.route('/circuit')
     .post(routes.circuit.getCircuit);
 
+router.route('/alarm')
+    .post(routes.alarm.getAlarm);
+
 router.route('/customerService/cusResource')
     .post(routes.cusServiceInfo.getCusResourceLog);
 

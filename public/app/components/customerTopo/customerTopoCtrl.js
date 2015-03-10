@@ -62,6 +62,7 @@ angular.module('netcareApp')
             $scope.serviceMeetingDisplayModule = 'table';
             $scope.serviceScoreDisplayModule = 'chart';
             $scope.bizStatusDisplayModule = 'stats';
+            $scope.bizStatusTopoDisplayModule = 'siteTopo';
         };
 
         $scope.showSubModule = function (customerMenu) {
@@ -90,6 +91,7 @@ angular.module('netcareApp')
             $scope.serviceMeetingDisplayModule = 'table';
             $scope.serviceScoreDisplayModule = 'chart';
             $scope.bizStatusDisplayModule = 'stats';
+            $scope.bizStatusTopoDisplayModule = 'siteTopo';
         };
 
         $scope.download = function () {
@@ -616,6 +618,9 @@ angular.module('netcareApp')
         /* ----------business status------------------------*/
         $scope.bizStatusDisplayModule = 'stats';
         $scope.bizStatusModule = 'bizStatusPanel';
+        //点击机房连线后对应的电路
+        $scope.bizStatusClickCircuit = {nos:""};
+
         $scope.getBizStatusData = function () {
             $scope.bizStatusDatas = [];
             var form = {
@@ -647,126 +652,30 @@ angular.module('netcareApp')
             });
         };
 
+        $scope.backToBizStatusStats = function () {
+            $scope.bizStatusDisplayModule = 'stats';
+            $scope.bizStatusTopoDisplayModule = 'siteTopo';
+        };
+
+        $scope.changeBizStatusTopoPanel = function () {
+            $scope.bizStatusTopoDisplayModule = 'siteTopo';
+        };
+
         $scope.showBizStatusTopo = function (bizStatusData) {
+            $scope.bizStatusData = bizStatusData;
             $scope.bizStatusDisplayModule = 'topo';
+            $scope.bizStatusTopoDisplayModule = 'siteTopo';
             $scope.getBizStatusTopoData();
         };
 
-        $scope.cusCircuitDonutData = [
-            {
-                name: "正常",
-                y: 820,
-                color: '#ffffff'
-            },
-            {
-                name: "故障",
-                y: 20,
-                color: '#3bbfb4'
-            }
-        ];
-
-        var roomCircuits = [
-            {
-                id: 108745,
-                name: "市北",
-                type: "room",
-                circuits: [
-                    {no: "01T000087", hasFault: true},
-                    {no: "01T013500", hasFault: false},
-                    {no: "01T015973", hasFault: false},
-                    {no: "01T018084", hasFault: false}
-                ]
-            },
-            {
-                id: 107852,
-                name: "奥力孚商务大楼",
-                type: "room",
-                circuits: [
-                    {no: "01T000087", hasFault: true}
-                ]
-            },
-            {
-                id: 114539,
-                name: "外汇交易中心二期",
-                type: "room",
-                circuits: [
-                    {no: "01T013500", hasFault: false}
-                ]
-            },
-            {
-                id: 100847,
-                name: "人民银行大厦",
-                type: "room",
-                circuits: [
-                    {no: "01T015973", hasFault: false}
-                ]
-            },
-            {
-                id: 102067,
-                name: "上证通二期",
-                type: "room",
-                circuits: [
-                    {no: "01T018084", hasFault: false},
-                    {no: "21T022894", hasFault: false},
-                    {no: "21T022895", hasFault: false},
-                    {no: "21T022895", hasFault: false},
-                    {no: "21T022896", hasFault: false},
-                    {no: "21T022896", hasFault: false}
-                ]
-            },
-            {
-                id: 106437,
-                name: "平安保险（唐镇）",
-                type: "room",
-                circuits: [
-                    {no: "21T022894", hasFault: false},
-                    {no: "21T025509", hasFault: false},
-                    {no: "21T025508", hasFault: false}
-                ]
-            },
-            {
-                id: 103232,
-                name: "平安保险(上丰路1158号)",
-                type: "me",
-                circuits: [
-                    {no: "21T025509", hasFault: false},
-                    {no: "21T025508", hasFault: false}
-                ]
-            }
-        ];
-
-        var roomCircuits1 = [
-            {
-                id: 108745,
-                name: "市北",
-                type: "room",
-                circuits: [
-                    {no: "01T000087", hasFault: true},
-                    {no: "01T013500", hasFault: false},
-                    {no: "01T015973", hasFault: false},
-                    {no: "01T018084", hasFault: false}
-                ]
-            },
-            {
-                id: 107852,
-                name: "奥力孚商务大楼",
-                type: "room",
-                circuits: [
-                    {no: "01T000087", hasFault: true},
-                    {no: "01T013500", hasFault: false},
-                    {no: "01T015973", hasFault: false},
-                    {no: "01T018084", hasFault: false},
-                    {no: "21T022895", hasFault: false},
-                    {no: "21T022895", hasFault: false},
-                    {no: "21T022896", hasFault: false},
-                    {no: "21T022896", hasFault: false}
-                ]
-            }
-        ];
-
-
+        var aaaaa = 0;
+        var roomCircuits;
         $scope.getBizStatusTopoData = function () {
-            //roomCircuits = roomCircuits1;
+            aaaaa++
+            if (aaaaa % 2 === 0)
+                roomCircuits = roomCircuits2;
+            else
+                roomCircuits = roomCircuits1;
             $scope.bizStatusTopoDatas = {};
             var links = [];
             for (var i = 0; i < roomCircuits.length; i++) {
@@ -796,12 +705,12 @@ angular.module('netcareApp')
                         aZIsTheSame++;
                     }
                 });
-                if(aZIsTheSame >0){
+                if (aZIsTheSame > 0) {
                     var link = {source: roomCircuits[i], target: roomCircuits[i], subLinksSize: aZIsTheSame};
                     var subLinks = [];
                     uniqueCircuits.forEach(function (circuit) {
                         if (result[circuit.no] === 2) {
-                            circuit.linkNo = subLinks.length+1;
+                            circuit.linkNo = subLinks.length + 1;
                             subLinks.push(circuit);
                         }
                     });
@@ -819,7 +728,7 @@ angular.module('netcareApp')
                             var link = topoLinkIsExist(links, roomCircuits[i], roomCircuits[j]);
                             if (link) {
                                 link.value = link.value + 1;
-                                aCircuit.linkNo = link.subLinks.length+1;
+                                aCircuit.linkNo = link.subLinks.length + 1;
                                 link.subLinks.push(aCircuit);
                             } else {
                                 var link = {source: roomCircuits[i], target: roomCircuits[j]};
@@ -847,8 +756,171 @@ angular.module('netcareApp')
             }
             return undefined;
         };
+
+        $scope.bizStatusCircuitFilter = function (element) {
+            if ($scope.bizStatusClickCircuit.nos.length) {
+                var index = $scope.bizStatusClickCircuit.nos.indexOf(element.no);
+                if (index < 0)
+                    return false;
+                else
+                    return true;
+            } else {
+                return true;
+            }
+        };
+
+        $scope.showBizStatusCircuit = function () {
+            $scope.bizStatusTopoDisplayModule = 'circuit';
+            var params = {
+                customerGroupId: $scope.customerGroup.id,
+                cirServcieType: $scope.bizStatusData.name
+            };
+            $http.post('api/circuit', params).success(function (data) {
+                $scope.bizStatusTopoCircuits = data.circuits;
+            });
+        };
+
+        $scope.bizStatusAlarmFilter = function (element) {
+            if ($scope.bizStatusClickCircuit.nos.length) {
+                var circuitNos = element.circuits.split(',');
+                var hasCircuit = false;
+                for(var i=0;i<circuitNos.length;i++){
+                    var index = $scope.bizStatusClickCircuit.nos.indexOf(circuitNos[i]);
+                    if (index >= 0){
+                        hasCircuit = true;
+                        break;
+                    }
+                }
+                return hasCircuit;
+            } else {
+                return true;
+            }
+        };
+
+        $scope.showBizStatusAlarm = function () {
+            $scope.bizStatusTopoDisplayModule = 'alarm';
+            var params = {
+                customerGroupId: $scope.customerGroup.id,
+                cirServcieType: $scope.bizStatusData.name
+            };
+            $http.post('api/alarm', params).success(function (data) {
+                $scope.bizStatusTopoAlarms = data.alarms;
+            });
+        };
         //$scope.customerGroupsView = false;
         //$scope.basicInfoView = false;
         //$scope.displayModule = 'bizStatus';
         //$scope.bizStatusModule = 'bizStatusPanel';
+        $scope.cusCircuitDonutData = [
+            {
+                name: "正常",
+                y: 820,
+                color: '#ffffff'
+            },
+            {
+                name: "故障",
+                y: 20,
+                color: '#3bbfb4'
+            }
+        ];
+
+        var roomCircuits1 = [
+            {
+                id: 108745,
+                name: "市北",
+                type: "room",
+                circuits: [
+                    {no: "00T030822", hasFault: true},
+                    {no: "21V000324", hasFault: false},
+                    {no: "00T030823", hasFault: true},
+                    {no: "21D110522", hasFault: false}
+                ]
+            },
+            {
+                id: 107852,
+                name: "奥力孚商务大楼",
+                type: "room",
+                circuits: [
+                    {no: "00T030822", hasFault: true}
+                ]
+            },
+            {
+                id: 114539,
+                name: "外汇交易中心二期",
+                type: "room",
+                circuits: [
+                    {no: "21V000324", hasFault: false}
+                ]
+            },
+            {
+                id: 100847,
+                name: "人民银行大厦",
+                type: "room",
+                circuits: [
+                    {no: "00T030823", hasFault: true}
+                ]
+            },
+            {
+                id: 102067,
+                name: "上证通二期",
+                type: "room",
+                circuits: [
+                    {no: "21D110522", hasFault: false},
+                    {no: "21Z203050EXI", hasFault: false},
+                    {no: "21Z216699VOT", hasFault: false},
+                    {no: "21Z216699VOT", hasFault: false},
+                    {no: "21T030821", hasFault: false},
+                    {no: "21T030821", hasFault: false}
+                ]
+            },
+            {
+                id: 106437,
+                name: "平安保险（唐镇）",
+                type: "room",
+                circuits: [
+                    {no: "21Z203050EXI", hasFault: false},
+                    {no: "21Z201516VOT", hasFault: false},
+                    {no: "21Z201547VOT", hasFault: false}
+                ]
+            },
+            {
+                id: 103232,
+                name: "平安保险(上丰路1158号)",
+                type: "me",
+                circuits: [
+                    {no: "21Z201516VOT", hasFault: false},
+                    {no: "21Z201547VOT", hasFault: false}
+                ]
+            }
+        ];
+
+        var roomCircuits2 = [
+            {
+                id: 108745,
+                name: "市北",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true},
+                    {no: "01T013500", hasFault: false},
+                    {no: "01T015973", hasFault: false},
+                    {no: "01T018084", hasFault: false}
+                ]
+            },
+            {
+                id: 107852,
+                name: "奥力孚商务大楼",
+                type: "room",
+                circuits: [
+                    {no: "01T000087", hasFault: true},
+                    {no: "01T013500", hasFault: false},
+                    {no: "01T015973", hasFault: false},
+                    {no: "01T018084", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022895", hasFault: false},
+                    {no: "21T022896", hasFault: false},
+                    {no: "21T022896", hasFault: false}
+                ]
+            }
+        ];
+
     }]);
