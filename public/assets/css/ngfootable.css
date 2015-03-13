@@ -41,7 +41,7 @@ tbody > tr.open-detail-row > td > span > :first-child {
 .ngfootable-row-detail-name {
     display: table-cell;
     font-weight: bold;
-    width: 75px;
+    width: 95px;
     padding-right: 0.5em;
 }
 

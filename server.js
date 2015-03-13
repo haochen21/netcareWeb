@@ -124,8 +124,14 @@ router.route('/permissions/:id')
 router.route('/circuit')
     .post(routes.circuit.getCircuit);
 
+router.route('/circuitService/cusGroupAndServiceType')
+    .post(routes.circuit.getByCusGroupAndServiceType);
+
 router.route('/alarm')
     .post(routes.alarm.getAlarm);
+
+router.route('/alarmService/cusGroupAndServiceType')
+    .post(routes.alarm.getByCusGroupAndServiceType);
 
 router.route('/customerService/cusResource')
     .post(routes.cusServiceInfo.getCusResourceLog);
@@ -153,6 +159,9 @@ router.route('/customerService/serviceScore')
 
 router.route('/customerService/bizStatusStats')
     .post(routes.cusServiceInfo.getBizStatusStats);
+
+router.route('/customerService/bizStatusSiteMap')
+    .post(routes.cusServiceInfo.getBizStatusSiteMap);
 
 app.use('/api', router);
 

@@ -1647,7 +1647,7 @@ a.info-tiles {
     position: absolute;
     top: 36px;
     bottom: 0;
-    width: 100%;
+    width: 98%;
 }
 
 .customerTopo .subPanelToolbar .pull-right .btn-header > a{
@@ -1753,6 +1753,10 @@ a.info-tiles {
 .customerGroupBizStatus .bizStatusTopoCircuit,
 .customerGroupBizStatus .bizStatusTopoAlarm{
     margin:-10px;
+}
+
+.customerGroupBizStatus div.row {
+    margin:0;
 }
 
 .bizStatusTopoCircuit .table-bordered,

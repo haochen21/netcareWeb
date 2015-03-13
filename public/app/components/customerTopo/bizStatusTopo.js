@@ -226,11 +226,12 @@ angular.module('netcareApp')
 
 
                 scope.$watch('siteMapData', function (newValue) {
-                    if (!newValue) {
-                        return;
-                    }
 
                     topoContainer.selectAll('*').remove();
+
+                    if (!newValue || !newValue.links) {
+                        return;
+                    }
 
                     node = topoContainer.selectAll(".roomNode");
                     link = topoContainer.selectAll(".roomLink");

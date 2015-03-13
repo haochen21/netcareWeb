@@ -1,8 +1,13 @@
 angular.module('netcareApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngTouch', 'uiNavMenu',
-    'uiCheckbox', 'ngFootable', 'ngFootablePagination', 'ngHighchart', 'ui.select', 'pdf', 'ui.bootstrap'])
+    'uiCheckbox', 'ngFootable', 'ngFootablePagination', 'ngHighchart', 'ui.select', 'pdf', 'ui.bootstrap',
+    'angular-loading-bar'])
     .config(function (socketServiceProvider) {
         socketServiceProvider.init();
-    }).directive('disableAnimation', ['$animate', function ($animate) {
+    })
+    .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = false;
+    }])
+    .directive('disableAnimation', ['$animate', function ($animate) {
         return {
             restrict: 'A',
             link: function ($scope, $element, $attrs) {

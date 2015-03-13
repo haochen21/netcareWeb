@@ -83,8 +83,8 @@
                         <td class="text-center">{{circuit.resStatus}}</td>
                         <td class="text-center">{{circuit.serviceType}}</td>
                         <td class="text-center">{{circuit.aMe}}</td>
-                        <td class="text-center">{{circuit.zMe}}</td>
                         <td class="text-center">{{circuit.aPort}}</td>
+                        <td class="text-center">{{circuit.zMe}}</td>
                         <td class="text-center">{{circuit.zPort}}</td>
                         <td class="text-center">{{circuit.groupNo}}</td>
                         <td class="text-center">{{circuit.customer}}</td>
@@ -108,23 +108,24 @@
                     <th data-hide="phone" class="text-center">网元</th>
                     <th data-hide="phone" class="text-center">故障定位</th>
                     <th data-hide="all" class="text-center">影响电路</th>
+                    <th data-hide="all" class="text-center">影响大客户</th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat-start="alarm in bizStatusTopoAlarms  | filter:bizStatusAlarmFilter">
+                    <tr ng-repeat-start="alarm in (filteredBizStatusTopoAlarms = (bizStatusTopoAlarms | filter: bizStatusAlarmFilter))">
                         <td>{{alarm.name}}</td>
                         <td class="text-center">{{alarm.meCreateTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                         <td class="text-center">{{alarm.severity}}</td>
                         <td class="text-center">{{alarm.meName}}</td>
                         <td class="text-center">{{alarm.deviceName}}</td>
                         <td class="text-center">{{alarm.circuits}}</td>
+                        <td class="text-center">{{alarm.customerGroups}}</td>
                     </tr>
-                    <tr class="items-null" ng-show="!bizStatusTopoAlarms.length">
+                    <tr class="items-null" ng-show="!bizStatusTopoAlarms.length || (bizStatusTopoAlarms.length && !filteredBizStatusTopoAlarms.length)">
                         <td align="center" colspan="{{$columns.length}}">无记录</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>

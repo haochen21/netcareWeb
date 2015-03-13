@@ -24,7 +24,7 @@ angular.module('netcareApp')
 
         $scope.basicInfoView = false;
         $scope.singleCustomerGroup = function (customerGroup) {
-            customerGroup.id = 10005;
+            customerGroup.id = 15421;
             customerGroup.name = '中国平安保险(集团)股份有限公司';
             $scope.customerGroupsView = false;
             $scope.basicInfoView = true;
@@ -618,8 +618,10 @@ angular.module('netcareApp')
         /* ----------business status------------------------*/
         $scope.bizStatusDisplayModule = 'stats';
         $scope.bizStatusModule = 'bizStatusPanel';
+        var firstQueryCircuitByBizStatus = false;
+        var firstQueryBizAlarmByBizStatus = false;
         //点击机房连线后对应的电路
-        $scope.bizStatusClickCircuit = {nos:""};
+        $scope.bizStatusClickCircuit = {nos: ""};
 
         $scope.getBizStatusData = function () {
             $scope.bizStatusDatas = [];
@@ -665,86 +667,93 @@ angular.module('netcareApp')
             $scope.bizStatusData = bizStatusData;
             $scope.bizStatusDisplayModule = 'topo';
             $scope.bizStatusTopoDisplayModule = 'siteTopo';
+            $scope.bizStatusClickCircuit.nos = "";
+            firstQueryCircuitByBizStatus = false;
+            firstQueryBizAlarmByBizStatus = false;
             $scope.getBizStatusTopoData();
         };
 
-        var aaaaa = 0;
-        var roomCircuits;
         $scope.getBizStatusTopoData = function () {
-            aaaaa++
-            if (aaaaa % 2 === 0)
-                roomCircuits = roomCircuits2;
-            else
-                roomCircuits = roomCircuits1;
             $scope.bizStatusTopoDatas = {};
-            var links = [];
-            for (var i = 0; i < roomCircuits.length; i++) {
-                //统计这个结点下同一电路的数量
-                var result = roomCircuits[i].circuits.reduce(function (previousValue, currentValue) {
-                    if (currentValue.no in previousValue) {
-                        previousValue[currentValue.no]++;
-                    } else {
-                        previousValue[currentValue.no] = 1;
-                    }
-                    return previousValue;
-                }, {});
 
-                var uniqueArray = [];
-                //获取这个机房下电路的唯一值
-                var uniqueCircuits = [];
-                roomCircuits[i].circuits.forEach(function (circuit) {
-                    if (uniqueArray.indexOf(circuit.no) < 0) {
-                        uniqueArray.push(circuit.no);
-                        uniqueCircuits.push(circuit);
-                    }
-                });
-                //AZ端都属于一个机房的电路数
-                var aZIsTheSame = 0;
-                uniqueCircuits.forEach(function (circuit) {
-                    if (result[circuit.no] === 2) {
-                        aZIsTheSame++;
-                    }
-                });
-                if (aZIsTheSame > 0) {
-                    var link = {source: roomCircuits[i], target: roomCircuits[i], subLinksSize: aZIsTheSame};
-                    var subLinks = [];
+            var form = {
+                customerGroupId: $scope.customerGroup.id,
+                serviceType: $scope.bizStatusData.name
+            };
+            var siteMapPromise = $http.post('api/customerService/bizStatusSiteMap', form);
+            siteMapPromise.then(function (response) {
+                var roomCircuits = response.data.bizStatusSiteMap;
+
+                var links = [];
+                for (var i = 0; i < roomCircuits.length; i++) {
+                    //统计这个结点下同一电路的数量
+                    var result = roomCircuits[i].circuits.reduce(function (previousValue, currentValue) {
+                        if (currentValue.no in previousValue) {
+                            previousValue[currentValue.no]++;
+                        } else {
+                            previousValue[currentValue.no] = 1;
+                        }
+                        return previousValue;
+                    }, {});
+
+                    var uniqueArray = [];
+                    //获取这个机房下电路的唯一值
+                    var uniqueCircuits = [];
+                    roomCircuits[i].circuits.forEach(function (circuit) {
+                        if (uniqueArray.indexOf(circuit.no) < 0) {
+                            uniqueArray.push(circuit.no);
+                            uniqueCircuits.push(circuit);
+                        }
+                    });
+                    //AZ端都属于一个机房的电路数
+                    var aZIsTheSame = 0;
                     uniqueCircuits.forEach(function (circuit) {
                         if (result[circuit.no] === 2) {
-                            circuit.linkNo = subLinks.length + 1;
-                            subLinks.push(circuit);
+                            aZIsTheSame++;
                         }
                     });
-                    link.subLinks = subLinks;
-                    links.push(link);
-                }
-
-                //电路分别存在AZ机房里
-                for (var j = i + 1; j < roomCircuits.length; j++) {
-                    uniqueCircuits.forEach(function (aCircuit) {
-                        var sameCircuits = roomCircuits[j].circuits.filter(function (zCircuit) {
-                            return aCircuit.no === zCircuit.no;
-                        });
-                        if (sameCircuits.length) {
-                            var link = topoLinkIsExist(links, roomCircuits[i], roomCircuits[j]);
-                            if (link) {
-                                link.value = link.value + 1;
-                                aCircuit.linkNo = link.subLinks.length + 1;
-                                link.subLinks.push(aCircuit);
-                            } else {
-                                var link = {source: roomCircuits[i], target: roomCircuits[j]};
-                                aCircuit.linkNo = 1;
-                                link.subLinks = [aCircuit];
-                                links.push(link);
+                    if (aZIsTheSame > 0) {
+                        var link = {source: roomCircuits[i], target: roomCircuits[i], subLinksSize: aZIsTheSame};
+                        var subLinks = [];
+                        uniqueCircuits.forEach(function (circuit) {
+                            if (result[circuit.no] === 2) {
+                                circuit.linkNo = subLinks.length + 1;
+                                subLinks.push(circuit);
                             }
-                        }
-                    });
-                }
-            }
+                        });
+                        link.subLinks = subLinks;
+                        links.push(link);
+                    }
 
-            $scope.bizStatusTopoDatas = {
-                nodes: roomCircuits,
-                links: links
-            };
+                    //电路分别存在AZ机房里
+                    for (var j = i + 1; j < roomCircuits.length; j++) {
+                        uniqueCircuits.forEach(function (aCircuit) {
+                            var sameCircuits = roomCircuits[j].circuits.filter(function (zCircuit) {
+                                return aCircuit.no === zCircuit.no;
+                            });
+                            if (sameCircuits.length) {
+                                var link = topoLinkIsExist(links, roomCircuits[i], roomCircuits[j]);
+                                if (link) {
+                                    link.value = link.value + 1;
+                                    aCircuit.linkNo = link.subLinks.length + 1;
+                                    link.subLinks.push(aCircuit);
+                                } else {
+                                    var link = {source: roomCircuits[i], target: roomCircuits[j]};
+                                    aCircuit.linkNo = 1;
+                                    link.subLinks = [aCircuit];
+                                    links.push(link);
+                                }
+                            }
+                        });
+                    }
+                }
+                $scope.bizStatusTopoDatas = {
+                    nodes: roomCircuits,
+                    links: links
+                };
+            }, function (response) {
+                throw new Error('get bizStatusSiteMap went wrong...');
+            });
         };
 
         var topoLinkIsExist = function (links, source, target) {
@@ -771,22 +780,34 @@ angular.module('netcareApp')
 
         $scope.showBizStatusCircuit = function () {
             $scope.bizStatusTopoDisplayModule = 'circuit';
-            var params = {
-                customerGroupId: $scope.customerGroup.id,
-                cirServcieType: $scope.bizStatusData.name
-            };
-            $http.post('api/circuit', params).success(function (data) {
-                $scope.bizStatusTopoCircuits = data.circuits;
-            });
+            if(!firstQueryCircuitByBizStatus){
+                firstQueryCircuitByBizStatus = true;
+                $scope.bizStatusTopoCircuits = [];
+                var form = {
+                    customerGroupId: $scope.customerGroup.id,
+                    serviceType: $scope.bizStatusData.name
+                };
+                var circuitPromise = $http.post('api/circuitService/cusGroupAndServiceType', form);
+                circuitPromise.then(function (response) {
+                    $scope.bizStatusTopoCircuits = response.data.circuits;
+                }, function (response) {
+                    throw new Error('get siteMap circuit went wrong...');
+                });
+            }
         };
 
         $scope.bizStatusAlarmFilter = function (element) {
             if ($scope.bizStatusClickCircuit.nos.length) {
                 var circuitNos = element.circuits.split(',');
                 var hasCircuit = false;
-                for(var i=0;i<circuitNos.length;i++){
-                    var index = $scope.bizStatusClickCircuit.nos.indexOf(circuitNos[i]);
-                    if (index >= 0){
+                for (var i = 0; i < circuitNos.length; i++) {
+                    var oldCircuitNo = circuitNos[i];
+                    var signIndex = oldCircuitNo.indexOf('@');
+                    if(signIndex > 0){
+                        oldCircuitNo = oldCircuitNo.substr(0,signIndex);
+                    }
+                    var index = $scope.bizStatusClickCircuit.nos.indexOf(oldCircuitNo);
+                    if (index >= 0) {
                         hasCircuit = true;
                         break;
                     }
@@ -799,13 +820,20 @@ angular.module('netcareApp')
 
         $scope.showBizStatusAlarm = function () {
             $scope.bizStatusTopoDisplayModule = 'alarm';
-            var params = {
-                customerGroupId: $scope.customerGroup.id,
-                cirServcieType: $scope.bizStatusData.name
-            };
-            $http.post('api/alarm', params).success(function (data) {
-                $scope.bizStatusTopoAlarms = data.alarms;
-            });
+            if(!firstQueryBizAlarmByBizStatus){
+                firstQueryBizAlarmByBizStatus = true;
+                $scope.bizStatusTopoAlarms = [];
+                var form = {
+                    customerGroupId: $scope.customerGroup.id,
+                    serviceType: $scope.bizStatusData.name
+                };
+                var circuitPromise = $http.post('api/alarmService/cusGroupAndServiceType', form);
+                circuitPromise.then(function (response) {
+                    $scope.bizStatusTopoAlarms = response.data.alarms;
+                }, function (response) {
+                    throw new Error('get siteMap bizAlarm went wrong...');
+                });
+            }
         };
         //$scope.customerGroupsView = false;
         //$scope.basicInfoView = false;

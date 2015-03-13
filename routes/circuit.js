@@ -1,4 +1,6 @@
 var fs = require('fs');
+var request = require("request");
+var config = require('../config');
 
 exports.getCircuit = function (req, res, next) {
     fs.readFile('./public/json/circuit.json', function (err, data) {
@@ -12,4 +14,25 @@ exports.getCircuit = function (req, res, next) {
             }
         }
     )
+};
+
+exports.getByCusGroupAndServiceType = function (req, res, next) {
+    var customerGroupId = req.body.customerGroupId;
+    var serviceType = req.body.serviceType;
+    request.post({
+        url: config.netCareServer + '/circuits/findByServiceType',
+        form: {
+            customerGroupId: customerGroupId,
+            serviceType: serviceType
+        }
+    }, function (err, response, body) {
+        var jsonObject = JSON.parse(body);
+        if (err) {
+            console.error("get business status site circuit error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
 };
