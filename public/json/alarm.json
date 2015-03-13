@@ -1,0 +1,70 @@
+{
+  "alarms": [
+    {
+      "id": "28412452",
+      "name": "ETH_LOS",
+      "severity": "紧急",
+      "meCreateTime": 1419955200000,
+      "meName": "华为U2000XHP-3@12487-上海市国家税务局",
+      "deviceName": "6-EFT-1",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030822,21Z201516,21Z204004"
+    },
+    {
+      "id": "28411264",
+      "name": "TU_AIS_VC12",
+      "severity": "重要",
+      "meCreateTime": 1419955200000,
+      "meName": "华为U2000XHP-3@12398-上海市国税局",
+      "deviceName": "11-N2EGS2-25-VC4:12 VC12:32",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030823"
+    },
+    {
+      "id": "28411266",
+      "name": "TU_AIS_VC12",
+      "severity": "重要",
+      "meCreateTime": 1418140800000,
+      "meName": "华为U2000XHP-3@12398-上海市国税局",
+      "deviceName": "11-N2EGS2-25-VC4:12 VC12:34",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030823"
+    },
+    {
+      "id": "28411265",
+      "name": "TU_AIS_VC12",
+      "severity": "重要",
+      "meCreateTime": 1418572800000,
+      "meName": "华为U2000XHP-3@12398-上海市国税局",
+      "deviceName": "11-N2EGS2-25-VC4:12 VC12:35",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030823"
+    },
+    {
+      "id": "28411271",
+      "name": "TU_AIS_VC12",
+      "severity": "重要",
+      "meCreateTime": 1418572800000,
+      "meName": "华为U2000XHP-3@12398-上海市国税局",
+      "deviceName": "11-N2EGS2-25-VC4:12 VC12:33",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030823"
+    },
+    {
+      "id": "28411259",
+      "name": "TU_AIS_VC12",
+      "severity": "重要",
+      "meCreateTime": 1418140800000,
+      "meName": "华为U2000XHP-3@12398-上海市国税局",
+      "deviceName": "11-N2EGS2-25-VC4:12 VC12:36",
+      "isAck": true,
+      "isBusiness": true,
+      "circuits": "00T030823"
+    }
+  ]
+}
