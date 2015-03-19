@@ -1,4 +1,4 @@
-angular.module('netcareApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngTouch', 'uiNavMenu',
+angular.module('netcareApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngTouch','ngSanitize', 'uiNavMenu',
     'uiCheckbox', 'ngFootable', 'ngFootablePagination', 'ngHighchart', 'ui.select', 'pdf', 'ui.bootstrap',
     'angular-loading-bar'])
     .config(function (socketServiceProvider) {

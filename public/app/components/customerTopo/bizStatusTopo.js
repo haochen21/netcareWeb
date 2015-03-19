@@ -255,11 +255,11 @@ angular.module('netcareApp')
                     link = link.data(links);
                     link.enter()
                         .append("path")
-                        .attr("id", function (d) {
-                            if (d.subLinks) {//机房
-                                return d.source.id + "_" + d.target.id;
+                        .attr("id", function (l) {
+                            if (l.subLinks) {//机房
+                                return l.source.id + "_" + l.target.id;
                             } else {//电路
-                                return d.source.id + "_" + d.target.id + "_" + d.circuit.no;
+                                return l.source.id + "_" + l.target.id + "_" + l.circuit.no;
                             }
                         })
                         .attr("class", function (l) {

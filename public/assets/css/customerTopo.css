@@ -1643,7 +1643,8 @@ a.info-tiles {
     margin-top: 10px;
 }
 
-.bizStatusTopo {
+.bizStatusTopo,
+.bizStatusCirMgmtTopo{
     position: absolute;
     top: 36px;
     bottom: 0;

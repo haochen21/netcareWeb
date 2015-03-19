@@ -167,3 +167,7 @@
 .queryPanel .moreOptions .morePanel {
     padding-top: 5px;
 }
+
+.bizStatusCirMgmtAlarm {
+    margin:-10px;
+}
