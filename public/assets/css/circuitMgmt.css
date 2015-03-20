@@ -171,3 +171,19 @@
 .bizStatusCirMgmtAlarm {
     margin:-10px;
 }
+
+.meinfo-row-detail-row {
+    display: table-row;
+    line-height: 1.9em;
+}
+
+.meinfo-row-detail-name {
+    display: table-cell;
+    font-weight: bold;
+    padding-right: 0.5em;
+    width: 75px;
+}
+
+.meinfo-row-detail-value {
+    display: table-cell;
+}

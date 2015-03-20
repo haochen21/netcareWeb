@@ -70,11 +70,11 @@
                 <table class="table table-bordered table-hover" ng-footable>
                     <thead>
                     <th data-sort="no" data-toggle="true">电路编码</th>
-                    <th data-sort="fault" class="text-center">状态</th>
+                    <th class="text-center">状态</th>
                     <th data-hide="phone" class="text-center">速率</th>
-                    <th data-sort="bizStatus" data-hide="phone" class="text-center">业务状态</th>
+                    <th data-hide="phone" class="text-center">业务状态</th>
                     <th data-hide="phone" class="text-center">资源状态</th>
-                    <th data-sort="serviceType" data-hide="phone" class="text-center">业务类型</th>
+                    <th data-hide="phone" class="text-center">业务类型</th>
                     <th data-hide="all">Ａ端网元</th>
                     <th data-hide="all">Ａ端端口</th>
                     <th data-hide="all">Ｚ端网元</th>
@@ -84,7 +84,7 @@
                     <th data-noexpand="true" data-hide="phone,tablet"></th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat-start="circuit in bizStatusTopoCircuits  | filter:bizStatusCircuitFilter">
+                    <tr ng-repeat-start="circuit in bizStatusTopoCircuits  | filter:bizStatusCircuitFilter | orderBy:sort:reverse">
                         <td>{{circuit.no}}</td>
                         <td class="text-center"><span class="label"
                                                       ng-class="circuit.fault?'label-danger':'label-info'">{{circuit.fault | circuitFaultFilter}}</span>
@@ -171,7 +171,7 @@
             </table>
         </div>
         <div ng-show="bizStatusDisplayModule == 'circuitMgmtTopo'" circuit-topo class="bizStatusCirMgmtTopo"
-             route-data="circuitRoute" show-text="isShowChannelText">
+             route-data="circuitRoute" circuit="selectCircuit" show-text="isShowChannelText">
         </div>
     </div>
     <div>

@@ -1,6 +1,6 @@
 angular.module('netcareApp')
-    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window', '$timeout', '$q', '$modal',
-        function ($scope, $http, $filter, $window, $timeout, $q, $modal) {
+    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window', '$timeout', '$q', '$modal','netcareCache',
+        function ($scope, $http, $filter, $window, $timeout, $q, $modal,netcareCache) {
 
             $scope.customerGroupsView = true;
             var orderBy = $filter('orderBy');
@@ -620,7 +620,7 @@ angular.module('netcareApp')
             /* ----------business status------------------------*/
             $scope.bizStatusDisplayModule = 'stats';
             $scope.bizStatusModule = 'bizStatusPanel';
-            $scopefirstQueryCircuitByBizStatus = false;
+            $scope.firstQueryCircuitByBizStatus = false;
             $scope.firstQueryBizAlarmByBizStatus = false;
             //点击机房连线后对应的电路
             $scope.bizStatusClickCircuit = {nos: ""};
@@ -780,6 +780,8 @@ angular.module('netcareApp')
                 }
             };
 
+            $scope.sort = '$index';
+            $scope.reverse = true;
             $scope.showBizStatusCircuit = function () {
                 $scope.bizStatusTopoDisplayModule = 'circuit';
                 if (!$scope.firstQueryCircuitByBizStatus) {
@@ -846,28 +848,60 @@ angular.module('netcareApp')
 
             $scope.showCirTextRoute = function ($event, circuit) {
                 $event.stopPropagation();
-                $scope.bizStatusCirTextRoute = cirTextRouteTestData;
-                var modalInstance = $modal.open({
-                    templateUrl: 'bizStatusCirTextRoute.html',
-                    controller: 'BizStatusCirTextRouteInstanceCtrl',
-                    resolve: {
-                        bizStatusCirTextRoute: function () {
-                            return $scope.bizStatusCirTextRoute;
+                var form = {
+                    circuitId: circuit.id
+                };
+                var queryPromise = $http.post('api/circuit/textRoute', form);
+                queryPromise.then(function (response) {
+                    $scope.bizStatusCirTextRoute = response.data.textRoute;
+                    var modalInstance = $modal.open({
+                        templateUrl: 'bizStatusCirTextRoute.html',
+                        controller: 'BizStatusCirTextRouteInstanceCtrl',
+                        resolve: {
+                            bizStatusCirTextRoute: function () {
+                                return $scope.bizStatusCirTextRoute;
+                            }
                         }
-                    }
+                    });
+                }, function (response) {
+                    throw new Error('get circuit text route wrong...');
                 });
             };
 
             $scope.showCirRoute = function ($event, circuit) {
                 $event.stopPropagation();
+                $scope.circuitRoute = {};
                 $scope.bizStatusDisplayModule = 'circuitMgmtTopo';
-                $scope.circuitRoute = cirRouteTestData;
+                var user = netcareCache.get("user");
+                user.id = 100400;
+                var form = {
+                    circuitId: circuit.id,
+                    operatorId: user.id
+                };
+                var queryPromise = $http.post('api/circuit/route', form);
+                queryPromise.then(function (response) {
+                    $scope.selectCircuit = circuit;
+                    $scope.circuitRoute = response.data;
+                }, function (response) {
+                    throw new Error('get circuit text route wrong...');
+                });
+                //$scope.selectCircuit = circuit;
+                //$scope.circuitRoute = cirRouteTestData;
             };
 
             $scope.showCirFault = function ($event, circuit) {
                 $event.stopPropagation();
+                $scope.bizStatusCirMgmtAlarms = [];
                 $scope.bizStatusDisplayModule = 'circuitMgmtAlarm';
-                $scope.bizStatusCirMgmtAlarms = cirBizAlarmsTestData;
+                var form = {
+                    circuitId: circuit.id
+                };
+                var queryPromise = $http.post('api/alarm/bizAlarmByCircuit', form);
+                queryPromise.then(function (response) {
+                    $scope.bizStatusCirMgmtAlarms = response.data.alarms;
+                }, function (response) {
+                    throw new Error('get circuit biz alarm wrong...');
+                });
             };
 
             $scope.isShowChannelText = true;

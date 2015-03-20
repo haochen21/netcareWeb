@@ -124,11 +124,20 @@ router.route('/permissions/:id')
 router.route('/circuit')
     .post(routes.circuit.getCircuit);
 
+router.route('/circuit/textRoute')
+    .post(routes.circuit.getTextRoute);
+
+router.route('/circuit/route')
+    .post(routes.circuit.getRoute);
+
 router.route('/circuitService/cusGroupAndServiceType')
     .post(routes.circuit.getByCusGroupAndServiceType);
 
 router.route('/alarm')
     .post(routes.alarm.getAlarm);
+
+router.route('/alarm/bizAlarmByCircuit')
+    .post(routes.alarm.getBizAlarmByCircuit);
 
 router.route('/alarmService/cusGroupAndServiceType')
     .post(routes.alarm.getByCusGroupAndServiceType);

@@ -4,7 +4,8 @@ angular.module('netcareApp')
             restrict: 'A',
             scope: {
                 routeData: '=',
-                showText: '='
+                showText: '=',
+                circuit: '='
             },
             link: function (scope, element) {
                 var width = element[0].offsetWidth,
@@ -385,7 +386,51 @@ angular.module('netcareApp')
                         .attr("x", -16)
                         .attr("y", -16)
                         .attr("width", 32)
-                        .attr("height", 32);
+                        .attr("height", 32)
+                        .on("click",function(n){
+                            var html = ''
+                                +'<div class="meinfo-row-detail-row">'
+                                +'<div class="meinfo-row-detail-name">设备类型:'
+                                +'</div>'
+                                +'<div class="meinfo-row-detail-value">'+n.deviceType
+                                +'</div>'
+                                +'</div>';
+                            if(n.meid === routeData.ameid){
+                                html+= '<div class="meinfo-row-detail-row">'
+                                +'<div class="meinfo-row-detail-name">端口名称:'
+                                +'</div>'
+                                +'<div class="meinfo-row-detail-value">'+scope.circuit.aPort
+                                +'</div>'
+                                +'</div><!-- ./me info detail row -->';
+                            }else if(n.meid === routeData.zmeid){
+                                html+= '<div class="meinfo-row-detail-row">'
+                                +'<div class="meinfo-row-detail-name">端口名称:'
+                                +'</div>'
+                                +'<div class="meinfo-row-detail-value">'+scope.circuit.zPort
+                                +'</div>'
+                                +'</div>'
+                            }
+
+                            if (d3.event.defaultPrevented){
+                                return;
+                            }
+                            if(d3.select(this).classed('pop')) {
+                                $(this)
+                                    .popover('hide');
+                                d3.select(this).classed('pop',false);
+                            } else{
+                                $(this).popover({
+                                    trigger: 'manual',
+                                    title: n.mename,
+                                    container: 'body',
+                                    placement: 'top',
+                                    html: true,
+                                    content: html
+                                })
+                                    .popover('show');
+                                d3.select(this).classed('pop',true);
+                            }
+                        });
 
                     node.append("text")
                         .attr("dx", 22)

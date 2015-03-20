@@ -36,3 +36,45 @@ exports.getByCusGroupAndServiceType = function (req, res, next) {
         res.status(200).json(jsonObject);
     });
 };
+
+exports.getTextRoute = function (req, res, next) {
+    var circuitId = req.body.circuitId;
+    var url =  config.netCareServer + '/circuits/textRoute/?circuitId='+circuitId;
+    request(url, function (err, response, body) {
+        var jsonpData = body;
+        var startPos = jsonpData.indexOf('({');
+        var endPos = jsonpData.indexOf('})');
+        var jsonString = jsonpData.substring(startPos+1, endPos+1);
+        var jsonObject = JSON.parse(jsonString);
+        if (err) {
+            console.error("get circuit text route error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
+};
+
+exports.getRoute = function (req, res, next) {
+    var circuitId = req.body.circuitId;
+    var operatorId = req.body.operatorId;
+    var url =  config.netCareServer + '/circuits/route/?opId='+operatorId+'&circuitId='+circuitId;
+    request(url, function (err, response, body) {
+        var jsonpData = body;
+        var startPos = jsonpData.indexOf('( {');
+        if(startPos === -1){
+            startPos = jsonpData.indexOf('({');
+        }
+        var endPos = jsonpData.indexOf('})');
+        var jsonString = jsonpData.substring(startPos+1, endPos+1);
+        var jsonObject = JSON.parse(jsonString);
+        if (err) {
+            console.error("get circuit route error:", err, " (status: " + err.status + ")");
+            if (err.status) {
+                res.status(err.status).end();
+            }
+        }
+        res.status(200).json(jsonObject);
+    });
+};
