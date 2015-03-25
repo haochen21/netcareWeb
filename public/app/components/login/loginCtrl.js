@@ -9,7 +9,7 @@ angular.module('netcareApp')
             $scope.errorUserName = '';
 
             $scope.user = {};
-            $scope.user.name = 'admin';
+            $scope.user.name = 'chenhao';
             $scope.user.password = 'abcd1234';
 
             $scope.login = function () {
@@ -24,19 +24,18 @@ angular.module('netcareApp')
                     "password": $scope.user.password
                 };
 
-                $scope.user.name = '';
-                $scope.user.password = '';
-
                 console.log(params);
                 $http.post('api/login', params).success(function (data) {
-                    if (data.type === 'AUTHORIZED') {
+                    $scope.user.name = '';
+                    $scope.user.password = '';
+                    if (data.result === 'AUTHORIZED') {
                         netcareCache.put("user", data.user);
                         $scope.loadUserData();
-                    } else if (data.type === 'LOGINNAMEERROR') {
+                    } else if (data.result === 'LOGINNAMEERROR') {
                         $scope.errorUserName = params.loginName;
                         $scope.userNameError = true;
                         $scope.is_loading = false;
-                    } else if (data.type === 'PASSWORDERROR') {
+                    } else if (data.result === 'PASSWORDERROR') {
                         $scope.user.name = params.loginName;
                         $scope.userPasswordError = true;
                         $scope.is_loading = false;
@@ -47,13 +46,6 @@ angular.module('netcareApp')
             $scope.loadUserData = function () {
                 var user = netcareCache.get("user");
 
-                var getPermissionPromise = $http.get('/api/user/permissions/' + user._id);
-                getPermissionPromise.then(function (response) {
-                    netcareCache.put('permissions', response.data);
-                }, function (response) {
-                    throw new Error('getPermissions went wrong...');
-                });
-
                 var getMenusPromise = $http.get('json/menu.json');
                 getMenusPromise.then(function (response) {
                     netcareCache.put('menus', response.data);
@@ -61,7 +53,16 @@ angular.module('netcareApp')
                     throw new Error('getMenus went wrong...');
                 });
 
-                var loginPromises = $q.all([getPermissionPromise, getMenusPromise]);
+                var queryCustomerGroupsPromise = $http.post('api/customers/getByOperatorId', {
+                    operatorId: user.id
+                });
+                queryCustomerGroupsPromise.then(function (response) {
+                    netcareCache.put('customerGroups', response.data.customerGroups);
+                }, function (response) {
+                    throw new Error('get customerGroups wrong...');
+                });
+
+                var loginPromises = $q.all([queryCustomerGroupsPromise, getMenusPromise]);
                 loginPromises.then($scope.loginComplete);
             };
 
@@ -73,7 +74,7 @@ angular.module('netcareApp')
                 $scope.showing = false;
             };
 
-            $scope.login();
+            //$scope.login();
         }
     ]);
 

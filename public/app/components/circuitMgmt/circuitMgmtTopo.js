@@ -10,7 +10,7 @@ angular.module('netcareApp')
             link: function (scope, element) {
                 var width = element[0].offsetWidth,
                     height = element[0].offsetHeight,
-                    charge = element[0].offsetWidth > 768 ? -6000 : -600;
+                    charge = element[0].offsetWidth > 768 ? -6000 : -1200;
 
                 var force = d3.layout.force()
                     .charge([charge])

@@ -3,13 +3,16 @@
         <div class="row" ng-repeat="row in customerGroupsArray">
             <div class="col-md-3"
                  ng-repeat="customerGroup in customerGroups.slice(4*$index, 4*$index + 4) | filter:customerGroupCriteria">
-                <a class="info-tiles shortcut-tiles" href=""
-                   ng-class="{'tiles-midnightblue':customerGroup.classify === '集团直管客户','tiles-info':customerGroup.classify === '钻石客户','tiles-inverse':customerGroup.classify === '金牌客户'}"
-                   ng-click="singleCustomerGroup(customerGroup)">
-                    <div class="tiles-body">
-                        <span>{{customerGroup.name}}</span>
+                <div ng-click="singleCustomerGroup(customerGroup)">
+                    <div class="databox radius-bordered">
+                        <div class="tiles-body-left">
+                            <rating ng-model="customerGroup.rate" max="customerGroupRateMax" readonly="true"></rating>
+                            <span class="tiles-body-left-bottom">{{customerGroup.profession}}</span>
+                        </div>
+
+                        <span class="tiles-body-right bordered">{{customerGroup.name}}</span>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     </div>

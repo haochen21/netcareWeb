@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var request = require("request");
+var config = require('../config');
 var User = mongoose.model('User');
 
 exports.checkAdmin = function (request, response, next) {
@@ -28,7 +30,7 @@ exports.checkApplicant = function (req, res, next) {
 	}
 };
 
-exports.login = function (req, res, next) {
+exports.loginMongDb = function (req, res, next) {
 	User.findOne({
 			loginName: req.body.loginName
 		},
@@ -73,5 +75,26 @@ exports.logout = function (req, res) {
 		if (!error) {
             res.redirect('/');
 		}
+	});
+};
+
+exports.login = function (req, res, next) {
+	var loginName = req.body.loginName;
+	var password = req.body.password;
+	request.post({
+		url: config.netCareServer + '/operators/login',
+		form: {
+			loginName: loginName,
+			password: password
+		}
+	}, function (err, response, body) {
+		var jsonObject = JSON.parse(body);
+		if (err) {
+			console.error("login error:", err, " (status: " + err.status + ")");
+			if (err.status) {
+				res.status(err.status).end();
+			}
+		}
+		res.status(200).json(jsonObject);
 	});
 };

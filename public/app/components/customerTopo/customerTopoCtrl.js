@@ -5,33 +5,60 @@ angular.module('netcareApp')
             $scope.customerGroupsView = true;
             var orderBy = $filter('orderBy');
             $scope.getCustomerGroups = function (name) {
-                var params = {name: name, sensor: false};
-                return $http.get(
-                    'json/customerGroups.json'
-                ).then(function (response) {
-                        $scope.customerGroups = orderBy(response.data.customerGroups, 'classify', true);
-                        var customerGroupsArrayLength = Math.ceil($scope.customerGroups.length / 4);
-                        $scope.customerGroupsArray = new Array(customerGroupsArrayLength);
-                        for (var i = 0; i < customerGroupsArrayLength; i++) {
-                            $scope.customerGroupsArray[i] = i;
-                        }
-                    });
+                $scope.customerGroups = orderBy(netcareCache.get('customerGroups'), 'classify', true);
+                var customerGroupsArrayLength = Math.ceil($scope.customerGroups.length / 4);
+                $scope.customerGroupsArray = new Array(customerGroupsArrayLength);
+                for (var i = 0; i < customerGroupsArrayLength; i++) {
+                    $scope.customerGroupsArray[i] = i;
+                }
             };
             $scope.$on('shellSearch', function (event, searchText) {
                 $scope.customerGroupCriteria = searchText;
             });
             $scope.getCustomerGroups();
 
+            //customerGroup rating
+            $scope.customerGroupRateMax = 3;
 
             $scope.basicInfoView = false;
             $scope.singleCustomerGroup = function (customerGroup) {
-                customerGroup.id = 15421;
+                //customerGroup.id = 15421;
+                //银行间市场清算所股份有限
                 //customerGroup.id = 10005;
-                customerGroup.name = '中国平安保险(集团)股份有限公司';
+                //customerGroup.name = '中国平安保险(集团)股份有限公司';
                 $scope.customerGroupsView = false;
                 $scope.basicInfoView = true;
                 $scope.customerGroup = customerGroup;
+                getCustomerGroupCircuitStats();
                 $window.scrollTo(0, 0);
+            };
+
+            var getCustomerGroupCircuitStats = function(){
+                $scope.cusCircuitDonutData  = [];
+                var form = {
+                    customerGroupId: $scope.customerGroup.id
+                };
+                var statsPromise = $http.post('api//customers/statCusGroupCircuit', form);
+                statsPromise.then(function (response) {
+                    var statsData = response.data.circuitStats;
+                    for(var i=0;i<statsData.length;i++){
+                        if(statsData[i].name === '正常' ){
+                            $scope.cusCircuitDonutData.push({
+                                name: "正常",
+                                y: statsData[i].circuitNum,
+                                color: '#ffffff'
+                            });
+                        }else if(statsData[i].name === '故障' ){
+                            $scope.cusCircuitDonutData.push({
+                                name: "故障",
+                                y: statsData[i].circuitNum,
+                                color: '#3bbfb4'
+                            });
+                        }
+                    }
+                }, function (response) {
+                    throw new Error('get customerGroup circuit stats wrong...');
+                });
             };
             $scope.customerMenus = [
                 {name: '服务评价', angle: 'deg0', id: 'serviceScore'},
@@ -912,7 +939,7 @@ angular.module('netcareApp')
             //$scope.basicInfoView = false;
             //$scope.displayModule = 'bizStatus';
             //$scope.bizStatusModule = 'bizStatusPanel';
-            $scope.cusCircuitDonutData = [
+            var cusCircuitDonutTestData = [
                 {
                     name: "正常",
                     y: 820,

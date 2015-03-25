@@ -142,6 +142,12 @@ router.route('/alarm/bizAlarmByCircuit')
 router.route('/alarmService/cusGroupAndServiceType')
     .post(routes.alarm.getByCusGroupAndServiceType);
 
+router.route('/customers/getByOperatorId')
+    .post(routes.customer.getByOperatorId);
+
+router.route('/customers/statCusGroupCircuit')
+    .post(routes.customer.statCusGroupCircuit);
+
 router.route('/customerService/cusResource')
     .post(routes.cusServiceInfo.getCusResourceLog);
 

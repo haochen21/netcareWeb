@@ -31,10 +31,10 @@ exports.initialize = function (server) {
     });
     rabbitMq.on('ready', function () {
         console.log('rabbitMq is ready!');
-        rabbitMq.queue('fault-nodeJs', {
-            durable: true,
-            autoDelete: false,
-            exclusive: true
+        rabbitMq.queue('fault-nodeJs-test', {
+            durable: false,//true 重启之后会重新建立
+            autoDelete: true,//最后一个消费者断开的时候自动删除
+            exclusive: false //True，只有创建这个队列的消费者程序才允许连接到该队列
         }, function (queue) {
             queue.bind('netcare-fault', '');
             queue.subscribe(function (message, headers, deliveryInfo, messageObject) {
@@ -43,10 +43,10 @@ exports.initialize = function (server) {
                 io.to('faultSocket').emit('faultMessage', msg);
             });
         });
-        rabbitMq.queue('alarm-nodeJs', {
-            durable: true,
-            autoDelete: false,
-            exclusive: true
+        rabbitMq.queue('alarm-nodeJs-test', {
+            durable: false,
+            autoDelete: true,
+            exclusive: false
         }, function (queue) {
             queue.bind('netcare-currAlarm', '');
             queue.subscribe(function (message, headers, deliveryInfo) {

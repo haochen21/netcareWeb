@@ -3,8 +3,8 @@
 </a>
 <div class="circle-container">
     <figure class="center">
-        <img src="assets/img/pabx.jpg">
-        <figcaption class="image-name">{{customerGroup.name}}</figcaption>
+        <img ng-src="assets/customerImages/{{customerGroup.logoName===''?'unicom_snap.png':customerGroup.logoName}}">
+        <figcaption class="image-name">{{customerGroup.alias ===''?customerGroup.name:customerGroup.alias}}</figcaption>
     </figure>
     <div ng-repeat="customerMenu in customerMenus"
          ng-class="{true: customerMenu.angle, false: '' }[true]"
@@ -27,21 +27,21 @@
                             <label class="col-sm-4 control-label">客户级别:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">钻石客户</p>
+                                <p class="form-control-static">{{customerGroup.classify}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">所属行业:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">保险</p>
+                                <p class="form-control-static">{{customerGroup.profession}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">上海市浦东唐镇上丰路1158号</p>
+                                <p class="form-control-static">{{customerGroup.address}}</p>
                             </div>
                         </div>
                     </form>
@@ -58,27 +58,6 @@
                 </div>
                 <div class="tiles-body">
                     <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">姓名:</label>
-
-                            <div class="col-sm-8">
-                                <p class="form-control-static">孙磊</p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">电话:</label>
-
-                            <div class="col-sm-8">
-                                <p class="form-control-static">18602188588</p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Email:</label>
-
-                            <div class="col-sm-8">
-                                <p class="form-control-static">sunlei@chinaunicom.cn</p>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">姓名:</label>
 
@@ -100,6 +79,27 @@
                                 <p class="form-control-static">fanjiming1@chinaunicom.cn</p>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">姓名:</label>
+
+                            <div class="col-sm-8">
+                                <p class="form-control-static">{{customerGroup.managerName}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">电话:</label>
+
+                            <div class="col-sm-8">
+                                <p class="form-control-static">{{customerGroup.managerTel}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Email:</label>
+
+                            <div class="col-sm-8">
+                                <p class="form-control-static">{{customerGroup.managerEmail}}</p>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </a>
@@ -115,21 +115,21 @@
                             <label class="col-sm-4 control-label">姓名:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">蒋辉</p>
+                                <p class="form-control-static">{{customerGroup.contactorName}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">电话:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">13701905307</p>
+                                <p class="form-control-static">{{customerGroup.telephone}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Email:</label>
 
                             <div class="col-sm-8">
-                                <p class="form-control-static">JIANGHUI006@pingan.com.cn</p>
+                                <p class="form-control-static">{{customerGroup.email}}</p>
                             </div>
                         </div>
                     </form>
