@@ -84,7 +84,7 @@
                     <th data-noexpand="true" data-hide="phone,tablet"></th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat-start="circuit in bizStatusTopoCircuits  | filter:bizStatusCircuitFilter | orderBy:sort:reverse">
+                    <tr ng-repeat-start="circuit in bizStatusTopoCircuits  | filter:bizStatusCircuitFilter |  filter: searchCircuitKeyword | orderBy:sort:reverse">
                         <td>{{circuit.no}}</td>
                         <td class="text-center"><span class="label"
                                                       ng-class="circuit.fault?'label-danger':'label-info'">{{circuit.fault | circuitFaultFilter}}</span>

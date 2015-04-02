@@ -66,6 +66,16 @@ angular.module('netcareApp')
                 $scope.websocketStatus = value;
             });
         });
+
+        //显示查询按钮
+        $scope.showSearchBtn = false;
+
+        $scope.$on('shellSearchShow', function (event, searchText) {
+            $scope.showSearchBtn = true;
+        });
+        $scope.$on('shellSearchHide', function (event, searchText) {
+            $scope.showSearchBtn = false;
+        });
     })
     .controller('shellSearchCtrl', function ($scope,$rootScope) {
 
@@ -75,6 +85,11 @@ angular.module('netcareApp')
                 $scope.clickShellSearch(false);
             }
         };
+
+        $scope.$on('shellSearchHide', function (event, searchText) {
+            $scope.shellSearchText = '';
+            $scope.clickShellSearch(false);
+        });
 
         $scope.submit = function(){
             $scope.clickShellSearch(false);

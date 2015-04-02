@@ -1,6 +1,6 @@
 angular.module('netcareApp', ['ngResource', 'ngRoute', 'ngAnimate', 'ngTouch','ngSanitize', 'uiNavMenu',
     'uiCheckbox', 'ngFootable', 'ngFootablePagination', 'ngHighchart', 'ui.select', 'pdf', 'ui.bootstrap',
-    'angular-loading-bar'])
+    'angular-loading-bar','notyModule'])
     .config(function (socketServiceProvider) {
         socketServiceProvider.init();
     })

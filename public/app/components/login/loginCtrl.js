@@ -74,7 +74,7 @@ angular.module('netcareApp')
                 $scope.showing = false;
             };
 
-            //$scope.login();
+            $scope.login();
         }
     ]);
 

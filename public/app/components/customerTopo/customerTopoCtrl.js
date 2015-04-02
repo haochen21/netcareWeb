@@ -1,6 +1,11 @@
 angular.module('netcareApp')
-    .controller('customerTopoCtrl', ['$scope', '$http', '$filter', '$window', '$timeout', '$q', '$modal','netcareCache',
-        function ($scope, $http, $filter, $window, $timeout, $q, $modal,netcareCache) {
+    .controller('customerTopoCtrl', ['$scope','$rootScope', '$http', '$filter', '$window', '$timeout', '$q', '$modal','noty','netcareCache',
+        function ($scope, $rootScope,$http, $filter, $window, $timeout, $q, $modal,noty,netcareCache) {
+
+            var user = netcareCache.get("user");
+
+            //打开查询按钮
+            $rootScope.$broadcast('shellSearchShow','');
 
             $scope.customerGroupsView = true;
             var orderBy = $filter('orderBy');
@@ -13,7 +18,14 @@ angular.module('netcareApp')
                 }
             };
             $scope.$on('shellSearch', function (event, searchText) {
-                $scope.customerGroupCriteria = searchText;
+                if($scope.customerGroupsView){
+                    $scope.customerGroupCriteria = searchText;
+                }else{
+                    if($scope.bizStatusDisplayModule === 'topo'
+                        && $scope.bizStatusTopoDisplayModule === 'circuit'){
+                        $scope.searchCircuitKeyword  = searchText;
+                    }
+                }
             });
             $scope.getCustomerGroups();
 
@@ -31,6 +43,10 @@ angular.module('netcareApp')
                 $scope.customerGroup = customerGroup;
                 getCustomerGroupCircuitStats();
                 $window.scrollTo(0, 0);
+
+                //关闭查询按钮
+                $rootScope.$broadcast('shellSearchHide','');
+                $scope.customerGroupCriteria = '';
             };
 
             var getCustomerGroupCircuitStats = function(){
@@ -61,24 +77,26 @@ angular.module('netcareApp')
                 });
             };
             $scope.customerMenus = [
-                {name: '服务评价', angle: 'deg0', id: 'serviceScore'},
-                {name: 'SLA', angle: 'deg45', id: 'sla'},
-                {name: '业务状态', angle: 'deg135', id: 'bizStatus'},
-                {name: '服务例会', angle: 'deg180', id: 'serviceMeeting'},
-                {name: '巡检服务', angle: 'deg225', id: 'checkService'},
-                {name: '客户资料', angle: 'deg270', id: 'cusResourceFile'},
-                {name: '运行报告', angle: 'deg315', id: 'netOps'}
+                {name: '服务评价', angle: 'deg0', id: 'serviceScore',permission:'CNS_SSP_SERVICESCORE'},
+                {name: 'SLA', angle: 'deg45', id: 'sla',permission:'CNS_SSP_SLA1'},
+                {name: '业务状态', angle: 'deg135', id: 'bizStatus',permission:'CNS_SSP_BIZSTATUS'},
+                {name: '服务例会', angle: 'deg180', id: 'serviceMeeting',permission:'CNS_SSP_SERVICEMEETING'},
+                {name: '巡检服务', angle: 'deg225', id: 'checkService',permission:'CNS_SSP_CHECKSERVICE'},
+                {name: '客户资料', angle: 'deg270', id: 'cusResourceFile',permission:'CNS_SSP_RESOURCEFILE'},
+                {name: '运行报告', angle: 'deg315', id: 'netOps',permission:'CNS_SSP_NETOPS'}
             ];
             $scope.backToCustomerGroupsView = function () {
                 $scope.customerGroupsView = true;
                 $scope.basicInfoView = false;
                 $scope.customerGroup = null;
+                $rootScope.$broadcast('shellSearchShow','');
             };
 
             $scope.back = function () {
                 if ($scope.displayModule == 'bizStatus'
                     && $scope.bizStatusDisplayModule == 'topo') {
                     $scope.bizStatusDisplayModule = 'stats';
+                    $rootScope.$broadcast('shellSearchHide','');
                     return;
                 }
                 $scope.basicInfoView = true;
@@ -95,6 +113,18 @@ angular.module('netcareApp')
             };
 
             $scope.showSubModule = function (customerMenu) {
+                //判断权限
+                var hasPermission = false
+                for(var i=0;i<user.permission.length;i++){
+                    if(user.permission[i].name === customerMenu.permission){
+                        hasPermission = true;
+                        break;
+                    }
+                }
+                if(!hasPermission){
+                    noty.show('请先获取功能权限',"information")
+                    return;
+                }
                 $scope.basicInfoView = false;
                 $scope.displayModule = customerMenu.id;
                 if (customerMenu.id === 'cusResourceFile') {
@@ -699,6 +729,7 @@ angular.module('netcareApp')
                 $scope.bizStatusClickCircuit.nos = "";
                 $scope.firstQueryCircuitByBizStatus = false;
                 $scope.firstQueryBizAlarmByBizStatus = false;
+                $rootScope.$broadcast('shellSearchShow','');
                 $scope.getBizStatusTopoData();
             };
 
@@ -899,7 +930,7 @@ angular.module('netcareApp')
                 $event.stopPropagation();
                 $scope.circuitRoute = {};
                 $scope.bizStatusDisplayModule = 'circuitMgmtTopo';
-                var user = netcareCache.get("user");
+
                 user.id = 100400;
                 var form = {
                     circuitId: circuit.id,

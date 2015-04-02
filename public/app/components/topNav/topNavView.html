@@ -35,7 +35,7 @@
         </ul>
         <ul class="top-nav top-navbar-nav pull-right">
             <li ng-click="clickShellSearch(true)">
-                <a href="">
+                <a href=""  ng-show="showSearchBtn">
                     <i class="fa fa-search"></i>
                 </a>
             </li>
@@ -69,7 +69,7 @@
           ng-class="{'open':openShellSearch}" ng-submit="submit()">
         <div class="form-group">
             <input type="text" class="form-control" id="shellSearchText" ng-model="shellSearchText"
-                   placeholder="输入客户名称或电路编码" ng-change="shellSearchUpdate()">
+                   ng-change="shellSearchUpdate()">
 
             <div class="fa fa-times form-control-feedback" ng-click="clickShellSearch(false)"></div>
         </div>
