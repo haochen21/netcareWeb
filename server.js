@@ -178,6 +178,21 @@ router.route('/customerService/bizStatusStats')
 router.route('/customerService/bizStatusSiteMap')
     .post(routes.cusServiceInfo.getBizStatusSiteMap);
 
+router.route('/dataFlow/getCircuit')
+    .post(routes.circuitPortFlow.getCircuit);
+
+router.route('/dataFlow/getDailyFlow')
+    .post(routes.circuitPortFlow.getDailyFlow);
+
+router.route('/dataFlow/getWeekFlow')
+    .post(routes.circuitPortFlow.getWeekFlow);
+
+router.route('/dataFlow/getMonthFlow')
+    .post(routes.circuitPortFlow.getMonthFlow);
+
+router.route('/dataFlow/getYearFlow')
+    .post(routes.circuitPortFlow.getYearFlow);
+
 app.use('/api', router);
 
 app.use(logErrors);

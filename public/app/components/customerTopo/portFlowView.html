@@ -1,0 +1,136 @@
+<div class="portFlowPanel" ng-class="{'searchOpen':portFlowQueryPanelOpen}">
+    <div class="subPanelToolbar">
+        <ul class="panelBtnBar">
+            <li class="btn-header">
+                <a href="" ng-click="back()">
+                    <i class="fa fa-hand-o-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="panelBtnBar pull-right">
+            <li class="btn-header">
+                <a href="" ng-click="triggerPortFlowQueryPanel()">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <div ng-if="portFlowDisplayModule == 'table'">
+            <div class="portFlowNoData" ng-show="portFlowQueryState === 'noData'">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                    <tr class="items-null">
+                        <td align="center" colspan="7">无相关电路信息</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="portFlowTable" ng-show="portFlowQueryState === 'hasData'">
+                <div class="row">
+                    <div class="col-md-4"
+                         ng-repeat="circuit in portFlowCircuits">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">
+                                    <small>电路信息</small>
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                <a href="" ng-click="showPortFlow(circuit)">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">电路编码:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{circuit.no}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">业务类型:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{circuit.serviceType}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">网元信息:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{circuit.neInfo}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">端口信息:</label>
+
+                                            <div class="col-sm-7">
+                                                <p class="form-control-static">{{circuit.portInfo}}</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="portFlowDisplayModule == 'chart'" class="portFlowDisplayChart">
+            <div class="row">
+                <div class="col-md-6">
+                    <div hc-port-flow-chart id="hcPortFlowDaily" height="300"
+                         in-flow="portFlowDaily.inFlow" out-flow="portFlowDaily.outFlow"
+                         chart-name="日流量" sub-title='portFlowQueryParam.dayBd | date:"yyyy-MM-dd"' x-aixe-label="%H:%M">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div hc-port-flow-chart id="hcPortFlowWeek" height="300"
+                         in-flow="portFlowWeek.inFlow" out-flow="portFlowWeek.outFlow"
+                         chart-name="周流量" sub-title=getWeekMargin() x-aixe-label="%m月%e日">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div hc-port-flow-chart id="hcPortFlowMonth" height="300"
+                         in-flow="portFlowMonth.inFlow" out-flow="portFlowMonth.outFlow"
+                         chart-name="月流量" sub-title=getMonthMargin() x-aixe-label="%m月%e日">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div hc-port-flow-chart id="hcPortFlowYear" height="300"
+                         in-flow="portFlowYear.inFlow" out-flow="portFlowYear.outFlow"
+                         chart-name="年流量" sub-title=getYearMargin() x-aixe-label="%m月%e日">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<aside class="portFlowQueryPanel" ng-class="{'open':portFlowQueryPanelOpen}">
+    <form role="form">
+        <div class="form-group">
+            <label for="portFlowBeginDate">开始日期</label>
+            <p class="input-group">
+                <input id="portFlowBeginDate" type="text" class="form-control"
+                       ng-model="portFlowQueryParam.ed"
+                       datepicker-popup
+                       is-open="datepicker.portFlowQueryBdOpened"
+                       ng-required="true"
+                       current-text="今日"
+                       clear-text="清除"
+                       close-text="关闭"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPortFlowQueryBeginDate($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-5 col-xs-offset-3">
+                <button class="btn btn-default" btn-loading="is_loading" data-loading-text="查询中..."
+                        ng-click="queryPortFlow()">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</aside>

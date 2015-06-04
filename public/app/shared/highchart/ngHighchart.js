@@ -314,4 +314,86 @@ angular.module('ngHighchart', [])
                 }, 0);
             }
         }
+    })
+    .directive('hcPortFlowChart', function ($window,$timeout) {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                inFlow: '=',
+                outFlow: '=',
+                subTitle: '='
+            },
+            controller: function ($scope, $element, $attrs) {
+
+            },
+            link: function (scope, element, attrs) {
+                $timeout(function () {
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: false
+                        }
+                    });
+                    var chart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: angular.element(element).attr('id'),
+                            height: angular.element(element).attr('height'),
+                            type: 'line'
+                        },
+                        title: {
+                            text: angular.element(element).attr('chart-name')
+                        },
+                        subtitle: {
+                            text:scope.subTitle
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            dateTimeLabelFormats: {
+                                day: angular.element(element).attr('x-aixe-label'),
+                                week: angular.element(element).attr('x-aixe-label'),
+                                month: angular.element(element).attr('x-aixe-label')
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: '流量'
+                            },
+                            labels: {
+                                formatter: function () {
+                                    return (this.value/1024).toFixed(0) + 'M/s';
+                                }
+                            }
+                        },
+                        tooltip: {
+                            formatter: function() {
+                                return Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x) + ' ' + (this.y/1024).toFixed(2) + 'M/s'
+                            },
+                            useHTML: true
+                        },
+                        series: [{
+                            name: '发送流量',
+                            color: Highcharts.getOptions().colors[4],
+                            data: scope.outFlow
+                        },{
+                                name: '接收流量',
+                                type: 'area',
+                                color: Highcharts.getOptions().colors[2],
+                                data: scope.inFlow
+                            }]
+                    });
+                    scope.$watch("outFlow", function (newValue) {
+                        chart.series[0].setData(newValue, true);
+                    }, true);
+                    scope.$watch("inFlow", function (newValue) {
+                        chart.series[1].setData(newValue, true);
+                    }, true);
+                    scope.$watch("subTitle", function (newValue) {
+                        chart.setTitle(null,{text: newValue});
+                    }, true);
+                }, 0);
+            }
+        }
     });

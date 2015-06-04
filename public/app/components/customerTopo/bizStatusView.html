@@ -41,8 +41,8 @@
     <div class="customerGroupBizStatus">
         <div class="customerGroupBizStatusBody" ng-show="bizStatusDisplayModule == 'stats'">
             <div class="row" ng-repeat="row in bizStatusArray">
-                <div class="col-md-3"
-                     ng-repeat="bizStatusData in bizStatusDatas.slice(4*$index, 4*$index + 4)">
+                <div class="col-md-4"
+                     ng-repeat="bizStatusData in bizStatusDatas.slice(3*$index, 3*$index + 3)">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a href="" class="pull-right" ng-click="showBizStatusTopo(bizStatusData)">

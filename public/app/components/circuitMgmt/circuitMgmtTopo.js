@@ -30,29 +30,33 @@ angular.module('netcareApp')
                             var expandDistance = 40;
                             var total = d.total;
                             var index = d.linkNo;
-                            if (minPerAngle * (total - 1) < maxAngle) {
-                                maxAngle = minPerAngle * (total - 1);
-                            }
-                            var distanceBetweenAZ = Math.sqrt((target_x - source_x) * (target_x - source_x)
-                            + (target_y - source_y) * (target_y - source_y));
-                            if (distanceBetweenAZ < 2 * expandDistance) {
-                                expandDistance = distanceBetweenAZ / 2;
-                            }
-                            var tan = (target_y - source_y) / (target_x - source_x);
-                            var sin = Math.abs(Math.sin(Math.atan(tan)));
-                            var cos = Math.cos(Math.atan(tan));
-                            var staightDistance = Math.tan(maxAngle / 2 * Math.PI / 180) * expandDistance * 2;
-                            var bassXFrom = d.source.x + cos * expandDistance - sin * staightDistance / 2;
-                            var bassYFrom = d.source.y + sin * expandDistance + staightDistance / 2;
-                            var stepX = staightDistance * sin / (total - 1);
-                            var stepY = staightDistance * cos / (total - 1);
-                            var xFrom = bassXFrom + (index - 1) * stepX;
-                            var yFrom = bassYFrom - (index - 1) * stepY;
 
-                            var bassXTo = target_x - cos * expandDistance - sin * staightDistance / 2;
-                            var bassYTo = target_y - sin * expandDistance + cos * staightDistance / 2;
-                            var xTo = bassXTo + (index - 1) * stepX;
-                            var yTo = bassYTo - (index - 1) * stepY;
+                            if (minPerAngle*(total-1)<maxAngle) {
+                                maxAngle=minPerAngle*(total-1);
+                            }
+
+                            var distanceBetweenAZ=Math.pow((target_x-source_x)*(target_x-source_x)
+                            + (target_y-source_y)*(target_y-source_y),0.5);
+                            if (distanceBetweenAZ<2*expandDistance) {
+                                expandDistance=distanceBetweenAZ/2;
+                            }
+                            var tan=(target_y-source_y)/(target_x-source_x);
+                            var sin=(target_y-source_y>=0?1:-1)*Math.abs(Math.sin(Math.atan(tan)));
+                            var cos=(target_x-source_x>=0?1:-1)*Math.cos(Math.atan(tan));
+                            var staightDistance=Math.tan(maxAngle/2*Math.PI/180)*expandDistance*2;
+                            var bassXFrom=source_x+cos*expandDistance-sin*staightDistance/2;
+                            var bassYFrom=source_y+sin*expandDistance+cos*staightDistance/2;
+                            var stepX=staightDistance*sin/(total-1);
+                            var stepY=staightDistance*cos/(total-1);
+                            var xFrom=bassXFrom+(index-1)*stepX;
+                            var yFrom=bassYFrom-(index-1)*stepY;
+
+                            var bassXTo=target_x-cos*expandDistance-sin*staightDistance/2;
+                            var bassYTo=target_y-sin*expandDistance+cos*staightDistance/2;
+
+                            var xTo=bassXTo+(index-1)*stepX;
+                            var yTo=bassYTo-(index-1)*stepY;
+
                             return "M " + source_x + " " + source_y
                                 + " L " + xFrom + " " + yFrom
                                 + " L " + xTo + " " + yTo
@@ -103,34 +107,37 @@ angular.module('netcareApp')
                                 var expandDistance = 40;
                                 var total = d.total;
                                 var index = d.linkNo;
-                                if (minPerAngle * (total - 1) < maxAngle) {
-                                    maxAngle = minPerAngle * (total - 1);
-                                }
-                                var distanceBetweenAZ = Math.sqrt((target_x - source_x) * (target_x - source_x)
-                                + (target_y - source_y) * (target_y - source_y));
-                                if (distanceBetweenAZ < 2 * expandDistance) {
-                                    expandDistance = distanceBetweenAZ / 2;
-                                }
-                                var tan = (target_y - source_y) / (target_x - source_x);
-                                var sin = Math.abs(Math.sin(Math.atan(tan)));
-                                var cos = Math.cos(Math.atan(tan));
-                                var staightDistance = Math.tan(maxAngle / 2 * Math.PI / 180) * expandDistance * 2;
-                                var bassXFrom = d.source.x + cos * expandDistance - sin * staightDistance / 2;
-                                var bassYFrom = d.source.y + sin * expandDistance + staightDistance / 2;
-                                var stepX = staightDistance * sin / (total - 1);
-                                var stepY = staightDistance * cos / (total - 1);
-                                var xFrom = bassXFrom + (index - 1) * stepX;
-                                var yFrom = bassYFrom - (index - 1) * stepY;
 
-                                var bassXTo = target_x - cos * expandDistance - sin * staightDistance / 2;
-                                var bassYTo = target_y - sin * expandDistance + cos * staightDistance / 2;
-                                var xTo = bassXTo + (index - 1) * stepX;
-                                var yTo = bassYTo - (index - 1) * stepY;
+                                if (minPerAngle*(total-1)<maxAngle) {
+                                    maxAngle=minPerAngle*(total-1);
+                                }
+
+                                var distanceBetweenAZ=Math.pow((target_x-source_x)*(target_x-source_x)
+                                + (target_y-source_y)*(target_y-source_y),0.5);
+                                if (distanceBetweenAZ<2*expandDistance) {
+                                    expandDistance=distanceBetweenAZ/2;
+                                }
+                                var tan=(target_y-source_y)/(target_x-source_x);
+                                var sin=(target_y-source_y>=0?1:-1)*Math.abs(Math.sin(Math.atan(tan)));
+                                var cos=(target_x-source_x>=0?1:-1)*Math.cos(Math.atan(tan));
+                                var staightDistance=Math.tan(maxAngle/2*Math.PI/180)*expandDistance*2;
+                                var bassXFrom=source_x+cos*expandDistance-sin*staightDistance/2;
+                                var bassYFrom=source_y+sin*expandDistance+cos*staightDistance/2;
+                                var stepX=staightDistance*sin/(total-1);
+                                var stepY=staightDistance*cos/(total-1);
+                                var xFrom=bassXFrom+(index-1)*stepX;
+                                var yFrom=bassYFrom-(index-1)*stepY;
+
+                                var bassXTo=target_x-cos*expandDistance-sin*staightDistance/2;
+                                var bassYTo=target_y-sin*expandDistance+cos*staightDistance/2;
+
+                                var xTo=bassXTo+(index-1)*stepX;
+                                var yTo=bassYTo-(index-1)*stepY;
+
                                 return "M " + source_x + " " + source_y
                                     + " L " + xFrom + " " + yFrom
                                     + " L " + xTo + " " + yTo
                                     + " L " + target_x + " " + target_y;
-
                             } else {
                                 return "M" +
                                     d.source.x + "," +

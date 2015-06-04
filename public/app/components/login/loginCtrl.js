@@ -9,7 +9,7 @@ angular.module('netcareApp')
             $scope.errorUserName = '';
 
             $scope.user = {};
-            $scope.user.name = 'chenhao';
+            $scope.user.name = 'jtyh';
             $scope.user.password = 'abcd1234';
 
             $scope.login = function () {

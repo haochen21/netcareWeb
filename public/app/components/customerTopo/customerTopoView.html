@@ -1,8 +1,8 @@
 <div class="customerTopo" ng-controller="customerTopoCtrl">
     <div class="customerGroupsPanel" ng-show="customerGroupsView">
         <div class="row" ng-repeat="row in customerGroupsArray">
-            <div class="col-md-3"
-                 ng-repeat="customerGroup in customerGroups.slice(4*$index, 4*$index + 4) | filter:customerGroupCriteria">
+            <div class="col-md-4"
+                 ng-repeat="customerGroup in customerGroups.slice(3*$index, 3*$index + 3) | filter:customerGroupCriteria">
                 <div ng-click="singleCustomerGroup(customerGroup)">
                     <div class="databox radius-bordered">
                         <div class="tiles-body-left">
@@ -38,5 +38,8 @@
     </div>
     <div ng-if="displayModule == 'bizStatus'">
         <ng-include src="'app/components/customerTopo/bizStatusView.html'"></ng-include>
+    </div>
+    <div ng-if="displayModule == 'portFlow'">
+        <ng-include src="'app/components/customerTopo/portFlowView.html'"></ng-include>
     </div>
 </div>

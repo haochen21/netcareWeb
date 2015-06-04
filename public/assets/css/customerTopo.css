@@ -1708,7 +1708,8 @@ a.info-tiles {
 .serviceMeetingQueryPanel,
 .checkServiceQueryPanel,
 .cusFileQueryPanel,
-.serviceScoreQueryPanel{
+.serviceScoreQueryPanel,
+.portFlowQueryPanel{
     position:absolute;
     top: 0;
     height: 100%;
@@ -1729,7 +1730,8 @@ a.info-tiles {
 .serviceMeetingQueryPanel:after,
 .checkServiceQueryPanel:after,
 .cusFileQueryPanel:after,
-.serviceScoreQueryPanel:after{
+.serviceScoreQueryPanel:after,
+.portFlowQueryPanel:after{
     content:"";
     background: #ddd;
     position: absolute;
@@ -1745,7 +1747,8 @@ a.info-tiles {
 .serviceMeetingQueryPanel.open,
 .checkServiceQueryPanel.open,
 .cusFileQueryPanel.open,
-.serviceScoreQueryPanel.open{
+.serviceScoreQueryPanel.open,
+.portFlowQueryPanel.open{
     display: block;
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
@@ -1757,7 +1760,8 @@ a.info-tiles {
 .cusGroupServiceMeetingPanel.searchOpen,
 .cusGroupCheckServicePanel.searchOpen,
 .cusGroupCusFilePanel.searchOpen,
-.cusGroupServiceScorePanel.searchOpen{
+.cusGroupServiceScorePanel.searchOpen,
+.portFlowPanel.searchOpen{
     border-right:none;
     -webkit-transform: translateX(-310px);
     -moz-transform: translateX(-310px);
@@ -1768,7 +1772,8 @@ a.info-tiles {
 .netOpsNoData .items-null > td,
 .serviceMeetingNoData .items-null > td,
 .checkServiceNoData .items-null > td,
-.cusFileNoData .items-null > td{
+.cusFileNoData .items-null > td,
+.portFlowNoData .items-null > td{
     line-height: 150px;
 }
 
@@ -1780,7 +1785,8 @@ a.info-tiles {
 .cusGroupSlaDocTable .panel-body > a,
 .netOpsDocTable .panel-body > a,
 .serviceMeetingDocTable .panel-body > a,
-.cusFileDocTable .panel-body > a{
+.cusFileDocTable .panel-body > a,
+.portFlowTable .panel-body > a{
     color: #333;
     text-decoration: none;
 }
@@ -1790,7 +1796,8 @@ a.info-tiles {
 .cusFileDocTable,
 .serviceScorePolarPanel,
 .serviceScoreTable,
-.customerGroupBizStatus{
+.customerGroupBizStatus,
+.portFlowTable{
     padding: 10px 10px;
 }
 
@@ -1810,4 +1817,9 @@ a.info-tiles {
 .bizStatusTopoCircuit .table-bordered,
 .bizStatusTopoAlarm .table-bordered{
     border:none;
+}
+
+.portFlowDisplayChart >.row{
+    margin-right: 0;
+    margin-left: 0;
 }
