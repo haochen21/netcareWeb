@@ -22,6 +22,11 @@
 .login-container .panel-body {
     min-height: 300px;
 }
+.form-horizontal .form-group.loginName,
+.form-horizontal .form-group.password{
+    margin-left: 0px;
+    margin-right: 0px;
+}
 #login-submit {
     width: 100%;
     padding: 0 8px;
@@ -52,6 +57,7 @@
     font-weight: 300;
     padding-top: 10px;
 }
+
 .fadeInUp {
     animation-name: fadeInUp;
     -webkit-animation-name: fadeInUp;

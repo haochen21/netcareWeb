@@ -2,7 +2,7 @@
     <div class="panel-heading text-center">Netcare</div>
     <div class="panel-body">
         <image class="login-img bounceIn animation-delay2" src="assets/img/photo.png"></image>
-        <form name="loginForm" role="form">
+        <form name="loginForm" role="form" class="form-horizontal">
             <div class="form-group bounceIn animation-delay4 loginName">
                 <label for="login-name" class="sr-only">用户名</label>
 
@@ -15,23 +15,39 @@
             </div>
             <div class="form-group bounceIn animation-delay4 password">
                 <label for="login-password" class="sr-only">密码</label>
-
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
                     <input type="password" class="form-control" id="login-password"  name="loginPassoword"
                            required placeholder="密   码" ng-model="user.password">
                 </div>
-                <p class="help-block login-errorMsg" ng-show="userPasswordError">密码不正确</p>
             </div>
+            <p class="help-block login-errorMsg" ng-show="userPasswordError">密码不正确</p>
+            <div class="form-group bounceIn animation-delay6 smsCode">
+                <label for="login-sms" class="sr-only">验证码</label>
+                <div class="col-xs-7 smsCode-text">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></div>
+                        <input type="text" class="form-control" id="login-sms" name="loginName"
+                               required placeholder="短信密码" required ng-model="user.sms">
+                    </div>
+                </div>
+                <div class="col-xs-5 smsCode-btn">
+                    <button type="button" class="btn btn-primary btn-block col-sm-3" ng-click="sendSms()">短信密码</button>
+                </div>
+            </div>
+            <p class="help-block login-smsSend" ng-show="smsSended">短信已发送,2分钟内有效</p>
+            <p class="help-block login-errorMsg" ng-show="smsCodeError">验证码不正确</p>
             <button type="submit" btn-loading="is_loading" data-loading-text="登录中..." ng-click="login()"
                     class="btn btn-primary btn-block bounceIn animation-delay6"
                     ng-disabled="loginForm.$invalid">
                 登&nbsp;&nbsp;&nbsp;录
             </button>
+            <!--
             <label class="login-remember bounceIn animation-delay6">
                 <input id="login-check" type="checkbox" value="yes" checked="checked">
                 <span class="custom-checkbox padding-6"></span>在这台电脑免登录
             </label>
+            -->
         </form>
     </div>
     <div class="panel-footer hidden text-center bounceIn animation-delay10">

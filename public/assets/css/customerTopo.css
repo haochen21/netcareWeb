@@ -41,7 +41,7 @@
     }
 
     .customerTopo .circle-container {
-       margin: 8em auto 0;
+        margin: 8em auto 0;
     }
 
     .backToCustomerGroupsView {
@@ -94,7 +94,7 @@
 }
 
 .customerTopo .small-circle:hover{
-     background: #5b99cb;
+    background: #5b99cb;
 }
 
 .deg0 {
@@ -264,6 +264,91 @@
         0% {  opacity: 0; -o-transform: rotate(45deg);}
         50% { opacity: 0.5 ; -o-transform:rotate(45deg) translate(12em); }
         100% { opacity: 1; -o-transform: rotate(45deg) translate(12em) rotate(-45deg);}
+    }
+}
+
+.deg90 {
+    animation-name: deg90;
+    -webkit-animation-name: deg90;
+    -moz-animation-name: deg90;
+    -ms-animation-name: deg90;
+    -o-animation-name: deg90;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -ms-animation-duration: 1s;
+    -o-animation-duration: 1s;
+    animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-timing-function: ease-in;
+    -ms-animation-timing-function: ease-in;
+    -o-animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -ms-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+}
+
+@keyframes deg90 {
+    0% {  opacity: 0; transform: rotate(90deg);}
+    50% { opacity: 0.5 ; transform: rotate(90deg) translate(10em); }
+    100% { opacity: 1; transform: rotate(90deg) translate(10em) rotate(-90deg);}
+}
+
+@-webkit-keyframes deg90 {
+    0% {  opacity: 0; -webkit-transform: rotate(90deg);}
+    50% { opacity: 0.5 ; -webkit-transform: rotate(90deg) translate(10em); }
+    100% { opacity: 1; -webkit-transform: rotate(90deg) translate(10em) rotate(-90deg);}
+}
+
+@-moz-keyframes deg90 {
+    0% {  opacity: 0; -moz-transform: rotate(90deg);}
+    50% { opacity: 0.5 ; -moz-transform: rotate(90deg) translate(10em); }
+    100% { opacity: 1; -moz-transform: rotate(90deg) translate(10em) rotate(-90deg);}
+}
+
+@-ms-keyframes deg90 {
+    0% {  opacity: 0; -ms-transform: rotate(90deg);}
+    50% { opacity: 0.5 ; -ms-transform: rotate(90deg) translate(12em); }
+    100% { opacity: 1; -ms-transform: rotate(90deg) translate(12em) rotate(-90deg);}
+}
+
+@-o-keyframes deg90 {
+    0% {  opacity: 0; -o-transform: rotate(90deg);}
+    50% { opacity: 0.5 ; -o-transform:rotate(90deg) translate(10em); }
+    100% { opacity: 1; -o-transform: rotate(90deg) translate(10em) rotate(-90deg);}
+}
+
+@media (min-width: 768px) {
+    @keyframes deg90 {
+        0% {  opacity: 0; transform: rotate(90deg);}
+        50% { opacity: 0.5 ; transform: rotate(90deg) translate(12em); }
+        100% { opacity: 1; transform: rotate(90deg) translate(12em) rotate(-90deg);}
+    }
+
+    @-webkit-keyframes deg90 {
+        0% {  opacity: 0; -webkit-transform: rotate(90deg);}
+        50% { opacity: 0.5 ; -webkit-transform: rotate(90deg) translate(12em); }
+        100% { opacity: 1; -webkit-transform: rotate(90deg) translate(12em) rotate(-90deg);}
+    }
+
+    @-moz-keyframes deg90 {
+        0% {  opacity: 0; -moz-transform: rotate(90deg);}
+        50% { opacity: 0.5 ; -moz-transform: rotate(90deg) translate(12em); }
+        100% { opacity: 1; -moz-transform: rotate(90deg) translate(12em) rotate(-90deg);}
+    }
+
+    @-ms-keyframes deg90 {
+        0% {  opacity: 0; -ms-transform: rotate(90deg);}
+        50% { opacity: 0.5 ; -ms-transform: rotate(90deg) translate(12em); }
+        100% { opacity: 1; -ms-transform: rotate(90deg) translate(12em) rotate(-90deg);}
+    }
+
+    @-o-keyframes deg90 {
+        0% {  opacity: 0; -o-transform: rotate(90deg);}
+        50% { opacity: 0.5 ; -o-transform:rotate(90deg) translate(12em); }
+        100% { opacity: 1; -o-transform: rotate(90deg) translate(12em) rotate(-90deg);}
     }
 }
 
@@ -693,7 +778,7 @@
 }
 
 .customerTopo .customerInfoPanel{
-    margin-top:10px;
+    margin-top:20px;
     padding: 20px;
 }
 
@@ -1822,4 +1907,16 @@ a.info-tiles {
 .portFlowDisplayChart >.row{
     margin-right: 0;
     margin-left: 0;
+}
+
+.portFlowDisplayChart >.row{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .portFlowDisplayChart >.row>[class*="col-"]{
+        padding-right: 15px;
+        padding-left: 0px;
+    }
 }

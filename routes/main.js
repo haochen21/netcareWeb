@@ -78,14 +78,35 @@ exports.logout = function (req, res) {
 	});
 };
 
+exports.sendSms = function (req, res, next) {
+	var loginName = req.body.loginName;
+	request.post({
+		url: config.netCareServer + '/operators/sms',
+		form: {
+			loginName: loginName
+		}
+	}, function (err, response, body) {
+		var jsonObject = JSON.parse(body);
+		if (err) {
+			console.error("send sms error:", err, " (status: " + err.status + ")");
+			if (err.status) {
+				res.status(err.status).end();
+			}
+		}
+		res.status(200).json(jsonObject);
+	});
+};
+
 exports.login = function (req, res, next) {
 	var loginName = req.body.loginName;
 	var password = req.body.password;
+	var sms = req.body.sms;
 	request.post({
-		url: config.netCareServer + '/operators/login',
+		url: config.netCareServer + '/operators/loginBySms',
 		form: {
 			loginName: loginName,
-			password: password
+			password: password,
+			sms:sms
 		}
 	}, function (err, response, body) {
 		var jsonObject = JSON.parse(body);

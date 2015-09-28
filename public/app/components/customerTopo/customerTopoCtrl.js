@@ -94,6 +94,7 @@ angular.module('netcareApp')
                     $scope.customerMenus = [
                         {name: '服务评价', angle: 'deg0', id: 'serviceScore',permission:'CNS_SSP_SERVICESCORE'},
                         {name: 'SLA', angle: 'deg45', id: 'sla',permission:'CNS_SSP_SLA'},
+                        {name: '业务状态', angle: 'deg90', id: 'bizStatus',permission:'CNS_SSP_BIZSTATUS'},
                         {name: '端口流量', angle: 'deg135', id: 'portFlow',permission:'CNS_SSP_DATAFLOW'},
                         {name: '服务例会', angle: 'deg180', id: 'serviceMeeting',permission:'CNS_SSP_SERVICEMEETING'},
                         {name: '巡检服务', angle: 'deg225', id: 'checkService',permission:'CNS_SSP_CHECKSERVICE'},
@@ -1188,9 +1189,9 @@ angular.module('netcareApp')
             };
 
             $scope.getWeekMargin = function(){
-              var beginDate = $filter('date')($scope.portFlowQueryParam.weekBd,'yyyy-MM-dd');
-              var endDate = $filter('date')($scope.portFlowQueryParam.ed,'yyyy-MM-dd');
-              return beginDate+" 至 "+endDate;
+                var beginDate = $filter('date')($scope.portFlowQueryParam.weekBd,'yyyy-MM-dd');
+                var endDate = $filter('date')($scope.portFlowQueryParam.ed,'yyyy-MM-dd');
+                return beginDate+" 至 "+endDate;
             };
 
             $scope.getMonthMargin = function(){

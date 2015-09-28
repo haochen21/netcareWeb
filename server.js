@@ -82,6 +82,9 @@ checkUser = routes.main.checkUser;
 checkAdmin = routes.main.checkAdmin;
 checkApplicant = routes.main.checkApplicant;
 
+router.route('/sendSms')
+    .post(routes.main.sendSms);
+
 router.route('/login')
     .post(routes.main.login);
 

@@ -6,28 +6,44 @@ angular.module('netcareApp')
             $scope.is_loading = false;
             $scope.userNameError = false;
             $scope.userPasswordError = false;
+            $scope.smsSended = false;
+            $scope.smsCodeError = false;
             $scope.errorUserName = '';
 
             $scope.user = {};
-            $scope.user.name = 'jtyh';
-            $scope.user.password = 'abcd1234';
+            //$scope.user.name = 'jtyh';
+            //$scope.user.password = 'abc123';
+
+            $scope.sendSms = function(){
+                var params = {
+                    'loginName': $scope.user.name
+                };
+                $http.post('api/sendSms', params).success(function (data) {
+                    console.log("send sms success");
+                    $scope.smsSended = true;
+                });
+            };
 
             $scope.login = function () {
                 $scope.is_loading = true;
 
                 $scope.userNameError = false;
                 $scope.userPasswordError = false;
+                $scope.smsCodeError = false;
+                $scope.smsSended = false;
                 $scope.errorUserName = '';
 
                 var params = {
                     'loginName': $scope.user.name,
-                    "password": $scope.user.password
+                    "password": $scope.user.password,
+                    "sms": $scope.user.sms
                 };
 
                 console.log(params);
                 $http.post('api/login', params).success(function (data) {
                     $scope.user.name = '';
                     $scope.user.password = '';
+                    $scope.user.sms = '';
                     if (data.result === 'AUTHORIZED') {
                         netcareCache.put("user", data.user);
                         $scope.loadUserData();
@@ -38,6 +54,11 @@ angular.module('netcareApp')
                     } else if (data.result === 'PASSWORDERROR') {
                         $scope.user.name = params.loginName;
                         $scope.userPasswordError = true;
+                        $scope.is_loading = false;
+                    }else if (data.result === 'SMSCODEERROR') {
+                        $scope.user.name = params.loginName;
+                        $scope.user.password = params.password;
+                        $scope.smsCodeError = true;
                         $scope.is_loading = false;
                     }
                 });
@@ -74,7 +95,7 @@ angular.module('netcareApp')
                 $scope.showing = false;
             };
 
-            $scope.login();
+            //$scope.login();
         }
     ]);
 
